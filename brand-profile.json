@@ -1,0 +1,24 @@
+{
+  "name": "Acción Fútbol",
+  "industry": "Academia de fútbol / formación deportiva",
+  "location": "Club Oriente, Nueva Bilbao 9495, Las Condes, Santiago de Chile",
+  "language": "es-CL",
+  "tagline": "Despierta con pasión",
+  "mission": "Entrenar con metodología profesional a personas de toda edad y nivel, construyendo una comunidad deportiva positiva.",
+  "audience": [
+    "Adultos 25+ que quieren volver a jugar y mantenerse activos",
+    "Padres que buscan formación deportiva real para sus hijos (4-14)",
+    "Jóvenes 13-18 con proyección competitiva",
+    "Mujeres adultas que buscan su propio espacio en la cancha"
+  ],
+  "differentiators": [
+    "Metodología planificada como un club profesional",
+    "Grupos segmentados por edad y nivel real",
+    "Sede en canchas profesionales de Club Oriente",
+    "Comunidad y cultura deportiva positiva"
+  ],
+  "tone": ["cercano", "intenso", "motivador", "profesional sin tecnicismos"],
+  "voice": "Habla de tú, directo y con energía deportiva. Cero corporativismo. Apela a la emoción de volver a jugar.",
+  "primaryAction": "Agendar una clase de prueba gratis",
+  "visualDirection": "Estadio nocturno — cine deportivo, alto rendimiento"
+}

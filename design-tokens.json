@@ -1,0 +1,40 @@
+{
+  "direction": "Estadio nocturno",
+  "color": {
+    "background": "oklch(0.16 0.018 158)",
+    "foreground": "oklch(0.97 0.005 120)",
+    "surface": "oklch(0.20 0.022 158)",
+    "surface-2": "oklch(0.24 0.026 158)",
+    "muted": "oklch(0.62 0.012 150)",
+    "border": "oklch(1 0 0 / 0.1)",
+    "primary": "oklch(0.82 0.21 150)",
+    "primary-foreground": "oklch(0.16 0.04 158)",
+    "accent": "oklch(0.86 0.16 92)",
+    "_notes": "primary ≈ verde eléctrico estilo #00E676 sobre fondo verde-negro profundo"
+  },
+  "typography": {
+    "display": "Inter Tight (500-800)",
+    "body": "Inter",
+    "scale": "clamp fluido; hero clamp(3rem, 8vw, 7rem); h2 ~3rem; line-height ajustado",
+    "headingMaxSizesPerViewport": 3
+  },
+  "radius": { "base": "1rem", "card": "1.5rem", "pill": "9999px" },
+  "motion": {
+    "ease": "[0.22, 1, 0.36, 1]",
+    "heroRevealTotal": "~1.2s",
+    "reducedMotion": "MotionConfig reducedMotion='user'",
+    "effects": [
+      "blur-to-focus headline (SplitText)",
+      "spotlight cursor-follow",
+      "aurora gradient blobs",
+      "magnetic CTA",
+      "scroll reveal fade+slide",
+      "number ticker",
+      "parallax images",
+      "shimmer button",
+      "hover lift en tarjetas",
+      "barra CTA móvil"
+    ]
+  },
+  "imagery": "Fotografía real de fútbol con tratamiento oscuro/cinematográfico. WebP ≤ 500KB."
+}
