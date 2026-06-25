@@ -13,10 +13,11 @@
     "_notes": "primary = naranjo de marca Acción Fútbol (≈ #F26B21) sobre fondo negro neutro. Blanco para texto."
   },
   "typography": {
-    "display": "Inter Tight (500-800)",
-    "body": "Inter",
-    "scale": "clamp fluido; hero clamp(3rem, 8vw, 7rem); h2 ~3rem; line-height ajustado",
-    "headingMaxSizesPerViewport": 3
+    "display": "Archivo (600-900) — grotesca pesada, hero en mayúsculas estilo gráfica de transmisión deportiva",
+    "body": "Hanken Grotesk (400-700) — grotesca humanista, contraste con el display",
+    "scale": "clamp fluido; hero clamp(2.75rem, 8vw, 6rem) uppercase; h2 ~3rem; line-height 1.6 cuerpo / 1.02 títulos",
+    "headingMaxSizesPerViewport": 3,
+    "note": "Se descartó Inter/Inter Tight (default de IA) por una pareja atlética con carácter."
   },
   "radius": { "base": "1rem", "card": "1.5rem", "pill": "9999px" },
   "motion": {
