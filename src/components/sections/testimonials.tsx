@@ -16,7 +16,7 @@ export function Testimonials() {
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {TESTIMONIALS.map((t, i) => (
             <Reveal key={t.name} delay={i * 0.12}>
-              <figure className="flex h-full flex-col rounded-[1.5rem] border border-border bg-surface/50 p-7">
+              <figure className="glass flex h-full flex-col rounded-[1.5rem] p-7">
                 <Quote className="size-7 text-primary" />
                 <blockquote className="mt-4 flex-1 text-lg leading-relaxed text-foreground/85">
                   “{t.quote}”

@@ -105,7 +105,7 @@ export function EnrollForm() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="rounded-[1.75rem] border border-border bg-surface/70 p-6 backdrop-blur-xl sm:p-8">
+          <div className="glass-panel relative rounded-[1.75rem] p-6 sm:p-8">
             {status === "success" ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.96 }}

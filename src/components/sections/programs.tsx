@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "motion/react";
 import { ArrowRight, Clock, MapPin, Users } from "lucide-react";
 import { PROGRAMS, type Program } from "@/lib/site";
 import { Reveal } from "@/components/ui/reveal";
+import { TiltCard } from "@/components/ui/tilt-card";
 
 function selectProgram(id: string) {
   window.dispatchEvent(new CustomEvent("select-program", { detail: id }));
@@ -13,11 +13,7 @@ function selectProgram(id: string) {
 function ProgramCard({ program, index }: { program: Program; index: number }) {
   return (
     <Reveal delay={(index % 3) * 0.1} className="h-full">
-      <motion.article
-        whileHover={{ y: -6 }}
-        transition={{ type: "spring", stiffness: 300, damping: 22 }}
-        className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-border bg-surface/50"
-      >
+      <TiltCard className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] glass">
         <div className="relative aspect-[16/10] overflow-hidden">
           <Image
             src={program.image}
@@ -71,7 +67,7 @@ function ProgramCard({ program, index }: { program: Program; index: number }) {
             <ArrowRight className="size-4" />
           </a>
         </div>
-      </motion.article>
+      </TiltCard>
     </Reveal>
   );
 }

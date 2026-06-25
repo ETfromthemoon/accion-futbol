@@ -34,7 +34,15 @@ export function ParallaxImage({
         style={{ y }}
         className="relative h-[118%] -top-[9%] will-change-transform"
       >
-        <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
+        <motion.div
+          initial={{ clipPath: "inset(8% round 24px)", opacity: 0.4 }}
+          whileInView={{ clipPath: "inset(0% round 24px)", opacity: 1 }}
+          viewport={{ once: true, margin: "-15% 0px" }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0"
+        >
+          <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
+        </motion.div>
       </motion.div>
     </div>
   );

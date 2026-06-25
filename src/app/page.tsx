@@ -1,4 +1,5 @@
 import { Providers } from "@/components/providers";
+import { CursorGlow } from "@/components/ui/cursor-glow";
 import { SiteNav } from "@/components/sections/site-nav";
 import { Hero } from "@/components/sections/hero";
 import { TrustBand } from "@/components/sections/trust-band";
@@ -15,6 +16,7 @@ import { MobileCtaBar } from "@/components/sections/mobile-cta-bar";
 export default function Home() {
   return (
     <Providers>
+      <CursorGlow />
       <SiteNav />
       <main>
         <Hero />

@@ -18,7 +18,7 @@ export function HowItWorks() {
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {STEPS.map((step, i) => (
             <Reveal key={step.number} delay={i * 0.12}>
-              <div className="relative h-full rounded-[1.5rem] border border-border bg-background/40 p-7">
+              <div className="glass relative h-full rounded-[1.5rem] p-7">
                 <span className="font-display text-5xl font-extrabold text-primary/30">
                   {step.number}
                 </span>
