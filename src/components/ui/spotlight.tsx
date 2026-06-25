@@ -14,7 +14,7 @@ export function Spotlight() {
   const background = useTransform(
     [xSpring, ySpring],
     ([cx, cy]) =>
-      `radial-gradient(500px circle at ${cx}px ${cy}px, oklch(0.82 0.21 150 / 0.16), transparent 60%)`,
+      `radial-gradient(500px circle at ${cx}px ${cy}px, oklch(0.7 0.19 47 / 0.18), transparent 60%)`,
   );
 
   useEffect(() => {
