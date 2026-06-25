@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from "motion/react";
-
 type Props = {
   text: string;
   delay?: number;
@@ -9,8 +5,10 @@ type Props = {
   startIndex?: number;
 };
 
-// Reveal blur-to-focus. Todas las palabras ocupan su lugar final desde el
-// primer frame; solo se enfocan secuencialmente (layout-estable).
+// Reveal blur-to-focus vía CSS (no JS): cada palabra ocupa su lugar final desde
+// el primer frame y se enfoca secuencialmente. Al ser CSS, funciona sin
+// JavaScript y nunca deja el texto oculto de forma permanente (a diferencia de
+// un reveal basado en estado que se congela en pestañas en segundo plano).
 export function SplitText({
   text,
   delay = 0,
@@ -24,18 +22,12 @@ export function SplitText({
         const i = startIndex + wIdx;
         return (
           <span key={wIdx} className="inline-block">
-            <motion.span
-              className="inline-block will-change-[filter,opacity,transform]"
-              initial={{ opacity: 0.12, filter: "blur(14px)", y: 14 }}
-              animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-              transition={{
-                delay: delay + i * stagger,
-                duration: 0.7,
-                ease: [0.22, 1, 0.36, 1],
-              }}
+            <span
+              className="split-word inline-block"
+              style={{ animationDelay: `${delay + i * stagger}s` }}
             >
               {word}
-            </motion.span>
+            </span>
             {wIdx < words.length - 1 && <span>&nbsp;</span>}
           </span>
         );
