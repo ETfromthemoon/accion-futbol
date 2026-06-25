@@ -9,9 +9,7 @@ export function HowItWorks() {
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal className="max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
-            Cómo funciona
-          </p>
+          <p className="section-tag">Cómo funciona</p>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl text-balance">
             De la duda a la cancha en tres pasos.
           </h2>

@@ -142,7 +142,7 @@ export const STEPS: readonly Step[] = [
     number: "03",
     title: "Inscríbete y sigue jugando",
     description:
-      "Si te enganchaste —y va a pasar— formalizas tu inscripción y quedas dentro de la comunidad Acción Fútbol.",
+      "Si te enganchaste (y va a pasar), formalizas tu inscripción y quedas dentro de la comunidad Acción Fútbol.",
   },
 ];
 

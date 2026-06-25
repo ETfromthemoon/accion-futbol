@@ -28,10 +28,10 @@ function ProgramCard({ program, index }: { program: Program; index: number }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent" />
           <div className="absolute bottom-3 left-4">
-            <p className="font-mono text-[11px] uppercase tracking-widest text-primary">
+            <p className="text-xs font-semibold text-primary">
               {program.tagline}
             </p>
-            <h3 className="font-display text-2xl font-extrabold">
+            <h3 className="font-display text-2xl font-extrabold uppercase tracking-tight">
               {program.name}
             </h3>
           </div>
@@ -81,9 +81,7 @@ export function Programs() {
     <section id="programas" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal className="max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
-            Programas
-          </p>
+          <p className="section-tag">Programas</p>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl text-balance">
             Un grupo para cada edad, cada horario y cada nivel.
           </h2>

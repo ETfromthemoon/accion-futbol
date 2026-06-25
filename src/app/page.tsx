@@ -4,6 +4,7 @@ import { Hero } from "@/components/sections/hero";
 import { TrustBand } from "@/components/sections/trust-band";
 import { Method } from "@/components/sections/method";
 import { Programs } from "@/components/sections/programs";
+import { StatementBreak } from "@/components/sections/statement-break";
 import { HowItWorks } from "@/components/sections/how-it-works";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Location } from "@/components/sections/location";
@@ -20,6 +21,7 @@ export default function Home() {
         <TrustBand />
         <Method />
         <Programs />
+        <StatementBreak />
         <HowItWorks />
         <Testimonials />
         <Location />

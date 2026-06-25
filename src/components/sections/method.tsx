@@ -16,15 +16,13 @@ export function Method() {
 
         <div>
           <Reveal>
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
-              El método
-            </p>
+            <p className="section-tag">Nuestro método</p>
             <h2 className="mt-4 font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl text-balance">
               No es picarse un partido. Es entrenar como en un club.
             </h2>
             <p className="mt-5 text-lg text-foreground/75">
               Cada sesión tiene un plan: técnica, táctica y físico que avanzan
-              contigo. Da igual si vienes del sillón o si jugaste toda la vida —
+              contigo. Da igual si vienes del sillón o si jugaste toda la vida:
               te ubicamos en el grupo correcto y te hacemos mejorar.
             </p>
           </Reveal>

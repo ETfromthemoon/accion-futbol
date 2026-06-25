@@ -8,9 +8,7 @@ export function Location() {
     <section id="sede" className="relative py-24 sm:py-32">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
         <Reveal>
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
-            La sede
-          </p>
+          <p className="section-tag">La sede</p>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl text-balance">
             Entrenamos en Club Oriente, Las Condes.
           </h2>
@@ -22,7 +20,7 @@ export function Location() {
           <ul className="mt-8 flex flex-col gap-4">
             <li className="flex items-center gap-3">
               <MapPin className="size-5 shrink-0 text-primary" />
-              <span>Nueva Bilbao 9495, Las Condes — Club Oriente</span>
+              <span>Nueva Bilbao 9495, Las Condes · Club Oriente</span>
             </li>
             <li className="flex items-center gap-3">
               <Phone className="size-5 shrink-0 text-primary" />

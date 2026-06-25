@@ -81,9 +81,7 @@ export function EnrollForm() {
 
       <div className="relative z-10 mx-auto grid max-w-6xl items-start gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
         <Reveal>
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
-            Clase de prueba gratis
-          </p>
+          <p className="section-tag">Clase de prueba gratis</p>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl text-balance">
             Déjanos tus datos y nos vemos en la cancha.
           </h2>

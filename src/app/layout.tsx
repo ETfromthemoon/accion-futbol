@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight } from "next/font/google";
+import { Archivo, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Display: grotesca pesada estilo gráfica de transmisión deportiva.
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
   display: "swap",
 });
 
-const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
+// Cuerpo: grotesca humanista, legible y cálida (contraste con el display).
+const hanken = Hanken_Grotesk({
+  variable: "--font-hanken",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -49,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="es-CL"
-      className={`${inter.variable} ${interTight.variable} h-full antialiased`}
+      className={`${archivo.variable} ${hanken.variable} h-full antialiased`}
     >
       <body className="grain min-h-full">{children}</body>
     </html>

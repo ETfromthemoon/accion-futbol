@@ -35,8 +35,8 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-accent: var(--accent);
 
-  --font-display: var(--font-inter-tight), system-ui, sans-serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-archivo), system-ui, sans-serif;
+  --font-sans: var(--font-hanken), system-ui, sans-serif;
 
   --radius-lg: var(--radius);
 
@@ -72,8 +72,51 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Viñeta cinematográfica: oscurece los bordes para foco central. */
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 75% at 50% 38%,
+    transparent 42%,
+    oklch(0.08 0.01 50 / 0.55) 100%
+  );
+}
+
+/* Etiqueta de sección discreta (no eyebrow mayúsculas repetido). */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--primary);
+}
+.section-tag::before {
+  content: "";
+  width: 1.75rem;
+  height: 2px;
+  background: var(--primary);
+  border-radius: 2px;
 }
 
 ::selection {

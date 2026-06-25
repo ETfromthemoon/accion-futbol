@@ -7,9 +7,7 @@ export function Testimonials() {
     <section className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal className="max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
-            La comunidad
-          </p>
+          <p className="section-tag">La comunidad</p>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl text-balance">
             Quienes ya volvieron a jugar.
           </h2>

@@ -12,20 +12,27 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] items-center overflow-hidden"
+      className="vignette relative flex min-h-[100svh] items-center overflow-hidden"
     >
-      {/* Imagen de fondo: partido nocturno bajo reflectores */}
-      <Image
-        src="/images/hero-night.webp"
-        alt="Partido de fútbol nocturno bajo los reflectores del estadio"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
-      />
+      {/* Imagen de fondo con ken-burns: zoom lento de cine al cargar */}
+      <motion.div
+        initial={{ scale: 1.16 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 9, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute inset-0 will-change-transform"
+      >
+        <Image
+          src="/images/hero-night.webp"
+          alt="Partido de fútbol nocturno bajo los reflectores del estadio"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </motion.div>
       {/* Capas de oscurecimiento para legibilidad cinematográfica */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/55 to-background" />
-      <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/45 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/45 to-transparent" />
       <Spotlight />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pt-28 pb-20 sm:px-8">
@@ -33,13 +40,13 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.08, duration: 0.6 }}
-          className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-background/40 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-muted backdrop-blur"
+          className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-border bg-background/40 px-4 py-1.5 text-sm font-medium text-foreground/80 backdrop-blur"
         >
-          <span className="size-1.5 rounded-full bg-primary" />
+          <span className="size-1.5 rounded-full bg-primary shadow-[0_0_8px_2px_oklch(0.7_0.19_47_/_0.6)]" />
           Academia de fútbol · Club Oriente, Las Condes
         </motion.p>
 
-        <h1 className="font-display text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[0.92] tracking-tight text-balance">
+        <h1 className="font-display text-[clamp(2.75rem,8vw,6rem)] font-black uppercase leading-[0.9] tracking-[-0.03em]">
           <span className="block">
             <SplitText text="Despierta" delay={0.12} />
           </span>
@@ -86,9 +93,13 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.3, duration: 0.6 }}
-          className="mt-8 font-mono text-xs uppercase tracking-widest text-muted"
+          className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-foreground/55"
         >
-          +350 jugadores · 6 programas · Entrenadores profesionales
+          <span><strong className="font-semibold text-foreground/85">+350</strong> jugadores</span>
+          <span className="text-foreground/25">/</span>
+          <span><strong className="font-semibold text-foreground/85">6</strong> programas</span>
+          <span className="text-foreground/25">/</span>
+          <span>Entrenadores profesionales</span>
         </motion.p>
       </div>
 
@@ -104,7 +115,7 @@ export function Hero() {
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
         >
-          <span className="font-mono text-[10px] uppercase tracking-widest text-muted">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-foreground/50">
             Scroll
           </span>
           <span className="h-7 w-px bg-gradient-to-b from-muted to-transparent" />
