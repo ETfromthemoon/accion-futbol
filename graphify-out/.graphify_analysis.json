@@ -1,0 +1,340 @@
+{
+  "communities": {
+    "0": [
+      "src_app_page",
+      "src_app_page_home",
+      "src_components_providers",
+      "src_components_providers_providers",
+      "src_components_sections_enroll_form",
+      "src_components_sections_enroll_form_enrollform",
+      "src_components_sections_enroll_form_status",
+      "src_components_sections_how_it_works",
+      "src_components_sections_how_it_works_howitworks",
+      "src_components_sections_location",
+      "src_components_sections_location_location",
+      "src_components_sections_method",
+      "src_components_sections_method_method",
+      "src_components_sections_mobile_cta_bar",
+      "src_components_sections_mobile_cta_bar_mobilectabar",
+      "src_components_sections_site_footer",
+      "src_components_sections_site_footer_sitefooter",
+      "src_components_sections_statement_break",
+      "src_components_sections_statement_break_statementbreak",
+      "src_components_sections_testimonials",
+      "src_components_sections_testimonials_testimonials",
+      "src_components_sections_trust_band",
+      "src_components_sections_trust_band_trustband",
+      "src_components_ui_cursor_glow",
+      "src_components_ui_cursor_glow_cursorglow",
+      "src_components_ui_parallax_image",
+      "src_components_ui_parallax_image_parallaximage",
+      "src_components_ui_reveal",
+      "src_components_ui_reveal_reveal",
+      "src_lib_site",
+      "src_lib_site_contact",
+      "src_lib_site_metric",
+      "src_lib_site_metrics",
+      "src_lib_site_navlink",
+      "src_lib_site_pillar",
+      "src_lib_site_pillars",
+      "src_lib_site_program_options",
+      "src_lib_site_step",
+      "src_lib_site_steps",
+      "src_lib_site_testimonial",
+      "src_lib_site_testimonials"
+    ],
+    "1": [
+      "clsx",
+      "lucide_react",
+      "motion",
+      "next",
+      "package_dependencies",
+      "package_dependencies_clsx",
+      "package_dependencies_lucide_react",
+      "package_dependencies_motion",
+      "package_dependencies_next",
+      "package_dependencies_postgres",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_server_only",
+      "package_dependencies_tailwind_merge",
+      "package_dependencies_zod",
+      "postgres",
+      "react",
+      "react_dom",
+      "server_only",
+      "tailwind_merge",
+      "zod"
+    ],
+    "2": [
+      "ref_dom",
+      "ref_dom_iterable",
+      "ref_esnext",
+      "ref_src",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_paths"
+    ],
+    "3": [
+      "eslint",
+      "eslint_config_next",
+      "package_devdependencies",
+      "package_devdependencies_eslint",
+      "package_devdependencies_eslint_config_next",
+      "package_devdependencies_sharp",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_postcss",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_typescript",
+      "sharp",
+      "tailwindcss",
+      "tailwindcss_postcss",
+      "types_node",
+      "types_react",
+      "types_react_dom",
+      "typescript"
+    ],
+    "4": [
+      "src_components_sections_site_nav",
+      "src_components_sections_site_nav_sitenav",
+      "src_components_ui_number_ticker",
+      "src_components_ui_number_ticker_numberticker",
+      "src_components_ui_shimmer_button",
+      "src_components_ui_shimmer_button_props",
+      "src_components_ui_shimmer_button_shimmerbutton",
+      "src_components_ui_tilt_card",
+      "src_components_ui_tilt_card_tiltcard",
+      "src_lib_site_nav_links",
+      "src_lib_utils",
+      "src_lib_utils_cn"
+    ],
+    "5": [
+      "ref_mts",
+      "ref_next_dev_types_ts",
+      "ref_next_env_d_ts",
+      "ref_next_types_ts",
+      "ref_node_modules",
+      "ref_ts",
+      "ref_tsx",
+      "tsconfig",
+      "tsconfig_exclude",
+      "tsconfig_include"
+    ],
+    "6": [
+      "package",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_lint",
+      "package_scripts_start",
+      "package_version"
+    ],
+    "7": [
+      "src_app_api_inscripciones_route",
+      "src_app_api_inscripciones_route_leadschema",
+      "src_app_api_inscripciones_route_post",
+      "src_lib_db",
+      "src_lib_db_ensureschema",
+      "src_lib_db_getclient",
+      "src_lib_db_lead",
+      "src_lib_db_savelead",
+      "src_lib_db_saveresult"
+    ],
+    "8": [
+      "src_components_sections_hero",
+      "src_components_sections_hero_hero",
+      "src_components_ui_magnetic",
+      "src_components_ui_magnetic_magnetic",
+      "src_components_ui_split_text",
+      "src_components_ui_split_text_props",
+      "src_components_ui_split_text_splittext",
+      "src_components_ui_spotlight",
+      "src_components_ui_spotlight_spotlight"
+    ],
+    "9": [
+      "src_components_sections_programs",
+      "src_components_sections_programs_programcard",
+      "src_components_sections_programs_programs",
+      "src_components_sections_programs_selectprogram",
+      "src_lib_site_program",
+      "src_lib_site_programs"
+    ],
+    "10": [
+      "src_app_layout",
+      "src_app_layout_archivo",
+      "src_app_layout_hanken",
+      "src_app_layout_metadata",
+      "src_app_layout_rootlayout"
+    ],
+    "11": [
+      "scripts_optimize_images",
+      "scripts_optimize_images_images_dir",
+      "scripts_optimize_images_optimize"
+    ],
+    "12": [
+      "eslint_config",
+      "eslint_config_eslintconfig"
+    ],
+    "13": [
+      "next_config",
+      "next_config_nextconfig"
+    ],
+    "14": [
+      "postcss_config",
+      "postcss_config_config"
+    ],
+    "15": [
+      "src_components_ui_aurora",
+      "src_components_ui_aurora_aurora"
+    ]
+  },
+  "cohesion": {
+    "0": 0.09634146341463415,
+    "1": 0.09523809523809523,
+    "2": 0.09523809523809523,
+    "3": 0.10526315789473684,
+    "4": 0.2878787878787879,
+    "5": 0.2,
+    "6": 0.2222222222222222,
+    "7": 0.3611111111111111,
+    "8": 0.3055555555555556,
+    "9": 0.4,
+    "10": 0.4,
+    "11": 0.6666666666666666,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0
+  },
+  "gods": [
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "src_lib_utils_cn",
+      "label": "cn()",
+      "degree": 9
+    },
+    {
+      "id": "src_components_ui_reveal_reveal",
+      "label": "Reveal()",
+      "degree": 8
+    },
+    {
+      "id": "tsconfig_include",
+      "label": "include",
+      "degree": 7
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 5
+    },
+    {
+      "id": "src_lib_db_savelead",
+      "label": "saveLead()",
+      "degree": 5
+    },
+    {
+      "id": "src_lib_site_contact",
+      "label": "CONTACT",
+      "degree": 4
+    },
+    {
+      "id": "tsconfig_compileroptions_lib",
+      "label": "lib",
+      "degree": 4
+    },
+    {
+      "id": "src_app_api_inscripciones_route_post",
+      "label": "POST()",
+      "degree": 3
+    },
+    {
+      "id": "src_components_sections_site_nav_sitenav",
+      "label": "SiteNav()",
+      "degree": 3
+    }
+  ],
+  "surprises": [
+    {
+      "source": "POST()",
+      "target": "saveLead()",
+      "source_files": [
+        "src/app/api/inscripciones/route.ts",
+        "src/lib/db.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "SiteNav()",
+      "target": "cn()",
+      "source_files": [
+        "src/components/sections/site-nav.tsx",
+        "src/lib/utils.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "NumberTicker()",
+      "target": "cn()",
+      "source_files": [
+        "src/components/ui/number-ticker.tsx",
+        "src/lib/utils.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "ShimmerButton()",
+      "target": "cn()",
+      "source_files": [
+        "src/components/ui/shimmer-button.tsx",
+        "src/lib/utils.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "TiltCard()",
+      "target": "cn()",
+      "source_files": [
+        "src/components/ui/tilt-card.tsx",
+        "src/lib/utils.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

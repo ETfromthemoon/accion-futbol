@@ -4,55 +4,65 @@ import Image from "next/image";
 import { ArrowRight, Clock, MapPin, Users } from "lucide-react";
 import { PROGRAMS, type Program } from "@/lib/site";
 import { Reveal } from "@/components/ui/reveal";
-import { TiltCard } from "@/components/ui/tilt-card";
+import { ParallaxImage } from "@/components/ui/parallax-image";
 
 function selectProgram(id: string) {
   window.dispatchEvent(new CustomEvent("select-program", { detail: id }));
 }
 
-function ProgramCard({ program, index }: { program: Program; index: number }) {
+function ProgramBanner({
+  program,
+  index,
+}: {
+  program: Program;
+  index: number;
+}) {
+  const reversed = index % 2 === 1;
+
   return (
-    <Reveal delay={(index % 3) * 0.1} className="h-full">
-      <TiltCard className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] glass">
-        <div className="relative aspect-[16/10] overflow-hidden">
-          <Image
+    <div className="border-b border-border py-14 first:pt-0 last:border-b-0 sm:py-20">
+      <div
+        className={`mx-auto grid max-w-6xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16 ${
+          reversed ? "lg:[&>*:first-child]:order-2" : ""
+        }`}
+      >
+        <Reveal>
+          <ParallaxImage
             src={program.image}
             alt={`Programa ${program.name}`}
-            fill
-            sizes="(max-width: 768px) 100vw, 33vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            className="aspect-[16/10] rounded-[1.5rem] border border-border"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent" />
-          <div className="absolute bottom-3 left-4">
-            <p className="text-xs font-semibold text-primary">
-              {program.tagline}
-            </p>
-            <h3 className="font-display text-2xl font-extrabold uppercase tracking-tight">
-              {program.name}
-            </h3>
-          </div>
-        </div>
+        </Reveal>
 
-        <div className="flex flex-1 flex-col p-6">
-          <dl className="flex flex-col gap-2.5 text-sm text-foreground/75">
-            <div className="flex items-center gap-2.5">
+        <Reveal delay={0.1}>
+          <p className="text-sm font-semibold text-primary">
+            {program.tagline}
+          </p>
+          <h3 className="mt-2 font-display text-3xl font-black uppercase tracking-tight sm:text-4xl">
+            {program.name}
+          </h3>
+
+          <dl className="mt-6 flex flex-col gap-3 text-foreground/75">
+            <div className="flex items-center gap-3">
               <Users className="size-4 shrink-0 text-primary" />
               <span>{program.ages}</span>
             </div>
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               <Clock className="size-4 shrink-0 text-primary" />
               <span>{program.schedule}</span>
             </div>
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               <MapPin className="size-4 shrink-0 text-primary" />
               <span>{program.court} · Club Oriente</span>
             </div>
           </dl>
 
-          <div className="mt-5 flex items-end justify-between border-t border-border pt-4">
+          <div className="glass mt-7 flex items-center justify-between rounded-2xl p-5">
             <div>
-              <p className="font-display text-lg font-bold">{program.monthly}</p>
-              <p className="text-xs text-muted">
+              <p className="font-display text-xl font-bold">
+                {program.monthly}
+              </p>
+              <p className="text-sm text-muted">
                 Inscripción {program.enrollment}
               </p>
             </div>
@@ -61,14 +71,14 @@ function ProgramCard({ program, index }: { program: Program; index: number }) {
           <a
             href="#inscripcion"
             onClick={() => selectProgram(program.id)}
-            className="mt-5 inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-5 py-3 font-display text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+            className="mt-6 inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-6 py-3.5 font-display text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
           >
             Probar gratis este programa
             <ArrowRight className="size-4" />
           </a>
-        </div>
-      </TiltCard>
-    </Reveal>
+        </Reveal>
+      </div>
+    </div>
   );
 }
 
@@ -86,12 +96,12 @@ export function Programs() {
             primero juegas, después decides.
           </p>
         </Reveal>
+      </div>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {PROGRAMS.map((program, i) => (
-            <ProgramCard key={program.id} program={program} index={i} />
-          ))}
-        </div>
+      <div className="mt-14">
+        {PROGRAMS.map((program, i) => (
+          <ProgramBanner key={program.id} program={program} index={i} />
+        ))}
       </div>
     </section>
   );
