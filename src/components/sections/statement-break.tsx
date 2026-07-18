@@ -22,8 +22,8 @@ export function StatementBreak() {
     >
       <motion.div style={{ y }} className="absolute inset-0 h-[124%] -top-[12%]">
         <Image
-          src="/images/boots.webp"
-          alt="Botines de fútbol sobre la cancha, listos para entrenar"
+          src="/images/group-team.webp"
+          alt="Equipo de Acción Fútbol reunido en la cancha"
           fill
           sizes="100vw"
           className="object-cover object-center"

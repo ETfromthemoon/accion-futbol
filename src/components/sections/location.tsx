@@ -39,8 +39,8 @@ export function Location() {
 
         <Reveal delay={0.1}>
           <ParallaxImage
-            src="/images/balls-trio.webp"
-            alt="Balones en la cancha de Club Oriente"
+            src="/images/group-adults.webp"
+            alt="Grupo de jugadores de Acción Fútbol en Club Oriente"
             className="aspect-[4/3] rounded-[1.5rem] border border-border"
           />
         </Reveal>

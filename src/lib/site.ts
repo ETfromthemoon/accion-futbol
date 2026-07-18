@@ -63,6 +63,8 @@ export type Program = {
   monthly: string;
   court: string;
   image: string;
+  video?: string;
+  poster?: string;
 };
 
 export const PROGRAMS: readonly Program[] = [
@@ -75,7 +77,9 @@ export const PROGRAMS: readonly Program[] = [
     enrollment: "$45.000 (incluye uniforme)",
     monthly: "$59.000 mensual",
     court: "Cancha 16",
-    image: "/images/dribble.webp",
+    image: "/images/poster-am.webp",
+    video: "/images/video-am.mp4",
+    poster: "/images/poster-am.webp",
   },
   {
     id: "pm-adultos",
@@ -86,7 +90,9 @@ export const PROGRAMS: readonly Program[] = [
     enrollment: "$45.000 (incluye uniforme)",
     monthly: "$69.500 mensual",
     court: "Cancha 17",
-    image: "/images/balls-rain.webp",
+    image: "/images/poster-pm.webp",
+    video: "/images/video-pm.mp4",
+    poster: "/images/poster-pm.webp",
   },
   {
     id: "kids",
@@ -97,7 +103,9 @@ export const PROGRAMS: readonly Program[] = [
     enrollment: "$45.000 (incluye uniforme)",
     monthly: "$47.500 mensual",
     court: "Cancha 7",
-    image: "/images/ball-sunset.webp",
+    image: "/images/poster-kids.webp",
+    video: "/images/video-kids.mp4",
+    poster: "/images/poster-kids.webp",
   },
   {
     id: "pro-jovenes",
@@ -108,7 +116,7 @@ export const PROGRAMS: readonly Program[] = [
     enrollment: "$45.000 (incluye uniforme)",
     monthly: "Consultar plan",
     court: "Cancha 16",
-    image: "/images/boots.webp",
+    image: "/images/youth-huddle.webp",
   },
   {
     id: "femenino",
@@ -119,7 +127,9 @@ export const PROGRAMS: readonly Program[] = [
     enrollment: "$45.000 (incluye uniforme)",
     monthly: "$50.000 mensual",
     court: "Cancha 17",
-    image: "/images/femenino.webp",
+    image: "/images/poster-femenino.webp",
+    video: "/images/video-femenino.mp4",
+    poster: "/images/poster-femenino.webp",
   },
 ];
 

@@ -70,7 +70,7 @@ export function EnrollForm() {
     <section id="inscripcion" className="relative overflow-hidden py-24 sm:py-32">
       {/* Fondo cinematográfico */}
       <Image
-        src="/images/balls-rain.webp"
+        src="/images/adults-duel.webp"
         alt=""
         aria-hidden
         fill

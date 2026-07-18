@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { SplitText } from "@/components/ui/split-text";
 import { Magnetic } from "@/components/ui/magnetic";
 import { Spotlight } from "@/components/ui/spotlight";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { VideoBackdrop } from "@/components/ui/video-backdrop";
 
 export function Hero() {
   return (
@@ -14,22 +14,13 @@ export function Hero() {
       id="top"
       className="vignette relative flex min-h-[100svh] items-center overflow-hidden"
     >
-      {/* Imagen de fondo con ken-burns: zoom lento de cine al cargar */}
-      <motion.div
-        initial={{ scale: 1.16 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 9, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute inset-0 will-change-transform"
-      >
-        <Image
-          src="/images/hero-night.webp"
-          alt="Partido de fútbol nocturno bajo los reflectores del estadio"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-      </motion.div>
+      {/* Video de fondo cinematográfico (autoplay silencioso, loop) */}
+      <VideoBackdrop
+        src="/images/video-hero.mp4"
+        poster="/images/poster-hero.webp"
+        alt="Entrenamiento de Acción Fútbol en la cancha"
+        priority
+      />
       {/* Capas de oscurecimiento para legibilidad cinematográfica */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/45 to-background" />
       <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/45 to-transparent" />

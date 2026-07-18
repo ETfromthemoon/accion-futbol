@@ -8,8 +8,8 @@ export function Method() {
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
         <Reveal>
           <ParallaxImage
-            src="/images/action-strike.webp"
-            alt="Jugador rematando el balón en pleno entrenamiento"
+            src="/images/keeper-save.webp"
+            alt="Arquero de Acción Fútbol volando para atajar el balón"
             className="aspect-[4/5] rounded-[1.5rem] border border-border"
           />
         </Reveal>
