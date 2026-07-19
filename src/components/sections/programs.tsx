@@ -1,6 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "motion/react";
 import { ArrowRight, Clock, MapPin, Users } from "lucide-react";
 import { PROGRAMS, type Program } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -14,14 +21,38 @@ function selectProgram(id: string) {
 function ProgramBanner({
   program,
   index,
+  isLast,
 }: {
   program: Program;
   index: number;
+  isLast: boolean;
 }) {
   const reversed = index % 2 === 1;
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+
+  // Mientras el siguiente banner sube y lo cubre, este se achica y oscurece
+  // un poco: sensación de tarjetas apilándose, no de secciones que solo pasan.
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+  const brightness = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
+  const filter = useTransform(brightness, (b) => `brightness(${b})`);
+
+  const stackStyle =
+    !isLast && !reduced ? { zIndex: index + 1, scale, filter } : { zIndex: index + 1 };
 
   return (
-    <section className="relative flex min-h-[62vh] items-center overflow-hidden border-t border-border">
+    <motion.section
+      ref={ref}
+      style={stackStyle}
+      className={cn(
+        "sticky top-0 flex min-h-[100svh] items-center overflow-hidden",
+        index === 0 && "border-t border-border",
+      )}
+    >
       {/* Fondo a sangre: video o foto real */}
       {program.video && program.poster ? (
         <VideoBackdrop
@@ -97,14 +128,14 @@ function ProgramBanner({
           </Reveal>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 export function Programs() {
   return (
     <section id="programas" className="relative">
-      <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+      <div className="relative z-0 mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
         <Reveal className="max-w-2xl">
           <p className="section-tag">Programas</p>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl text-balance">
@@ -118,7 +149,12 @@ export function Programs() {
       </div>
 
       {PROGRAMS.map((program, i) => (
-        <ProgramBanner key={program.id} program={program} index={i} />
+        <ProgramBanner
+          key={program.id}
+          program={program}
+          index={i}
+          isLast={i === PROGRAMS.length - 1}
+        />
       ))}
     </section>
   );
