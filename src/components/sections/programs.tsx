@@ -18,6 +18,12 @@ function selectProgram(id: string) {
   window.dispatchEvent(new CustomEvent("select-program", { detail: id }));
 }
 
+// Fracción del alto del contenedor que el banner se mantiene quieto y nítido
+// antes de que el siguiente empiece a cubrirlo. Sin esta "espera", el cubrir
+// ocurre en la misma pantalla que el banner recién apareció y se siente
+// igual que un scroll normal de secciones.
+const HOLD_FRACTION = 0.42;
+
 function ProgramBanner({
   program,
   index,
@@ -32,28 +38,45 @@ function ProgramBanner({
   // El progreso de scroll se mide en este contenedor NORMAL (no sticky): un
   // elemento sticky mantiene su propio rect.top clavado en 0 mientras está
   // pineado, así que medir contra sí mismo nunca avanza. Este wrapper, en
-  // cambio, sí se mueve con el documento y da el rango 0→1 correcto.
+  // cambio, sí se mueve con el documento y da el rango 0→1 correcto. Es más
+  // alto que la pantalla (180svh) para dar tiempo de "espera" antes de que
+  // el siguiente banner empiece a cubrirlo.
   const wrapperRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 
   // Mientras el siguiente banner sube y lo cubre, este se achica y oscurece
-  // un poco: sensación de tarjetas apilándose, no de secciones que solo pasan.
+  // marcadamente: sensación clara de tarjetas apilándose, no de secciones
+  // que solo pasan. El achicado/oscurecido solo arranca después de la
+  // "espera" (HOLD_FRACTION), coincidiendo con el momento real en que el
+  // siguiente banner empieza a taparlo.
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ["start start", "end start"],
   });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
-  const brightness = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
+  const scale = useTransform(
+    scrollYProgress,
+    [HOLD_FRACTION, 1],
+    [1, 0.86],
+  );
+  const brightness = useTransform(
+    scrollYProgress,
+    [HOLD_FRACTION, 1],
+    [1, 0.4],
+  );
   const filter = useTransform(brightness, (b) => `brightness(${b})`);
 
   const stackStyle = !isLast && !reduced ? { scale, filter } : {};
 
   return (
-    <div ref={wrapperRef} style={{ zIndex: index + 1 }} className="relative">
+    <div
+      ref={wrapperRef}
+      style={{ zIndex: index + 1 }}
+      className="relative h-[180svh]"
+    >
       <motion.section
         style={stackStyle}
         className={cn(
-          "sticky top-0 flex min-h-[100svh] items-center overflow-hidden",
+          "sticky top-0 flex h-svh items-center overflow-hidden shadow-[0_-50px_90px_-30px_rgba(0,0,0,0.7)]",
           index === 0 && "border-t border-border",
         )}
       >
