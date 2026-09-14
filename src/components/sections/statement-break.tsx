@@ -1,5 +1,7 @@
 "use client";
 
+import { useMotionPreference } from "@/components/ui/use-motion-preference";
+
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
@@ -9,6 +11,7 @@ import { ArrowRight } from "lucide-react";
 // secciones y da un respiro de pura imagen + una frase contundente.
 export function StatementBreak() {
   const ref = useRef<HTMLDivElement>(null);
+  const reduced = useMotionPreference();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -20,7 +23,7 @@ export function StatementBreak() {
       ref={ref}
       className="vignette relative flex min-h-[70vh] items-center overflow-hidden"
     >
-      <motion.div style={{ y }} className="absolute inset-0 h-[124%] -top-[12%]">
+      <motion.div style={{ y: reduced ? 0 : y }} className="absolute inset-0 h-[124%] -top-[12%]">
         <Image
           src="/images/group-team.webp"
           alt="Equipo de Acción Fútbol reunido en la cancha"

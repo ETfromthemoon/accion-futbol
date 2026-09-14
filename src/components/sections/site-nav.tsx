@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/site";
@@ -8,6 +8,19 @@ import { NAV_LINKS } from "@/lib/site";
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -24,8 +37,8 @@ export function SiteNav() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
         scrolled
-          ? "border-b border-border bg-background/80 backdrop-blur-xl"
-          : "border-b border-transparent",
+          ? "border-b border-border bg-background/95 backdrop-blur-xl"
+          : "border-b border-white/15 bg-background/30 backdrop-blur-sm",
       )}
     >
       <nav
@@ -60,10 +73,12 @@ export function SiteNav() {
           </a>
           <button
             type="button"
-            aria-label="Abrir menú"
+            ref={toggleRef}
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-controls="menu-movil"
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="flex size-10 flex-col items-center justify-center gap-1.5 rounded-full border border-border md:hidden"
+            className="flex size-11 flex-col items-center justify-center gap-1.5 rounded-full border border-border md:hidden"
           >
             <span
               className={cn(
@@ -88,7 +103,7 @@ export function SiteNav() {
       </nav>
 
       {open && (
-        <div className="border-t border-border bg-background/95 px-5 py-4 backdrop-blur-xl md:hidden">
+        <div id="menu-movil" className="border-t border-border bg-background/95 px-5 py-4 backdrop-blur-xl md:hidden">
           <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <a

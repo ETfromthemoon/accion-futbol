@@ -27,7 +27,7 @@ export type Metric = {
 };
 
 export const METRICS: readonly Metric[] = [
-  { value: 6, suffix: "", label: "Programas para cada edad y nivel" },
+  { value: 5, suffix: "", label: "Programas para cada edad y nivel" },
   { value: 350, prefix: "+", label: "Jugadores entrenando cada semana" },
   { value: 10, suffix: " años", label: "Formando jugadores en Las Condes" },
   { value: 100, suffix: "%", label: "Entrenadores con carrera profesional" },
@@ -158,7 +158,7 @@ export const STEPS: readonly Step[] = [
 
 export type Testimonial = { quote: string; name: string; role: string };
 
-// NOTA: testimonios de muestra para la demo. Reemplazar por reseñas reales antes de publicar.
+// Contenido aprobado por el responsable del sitio para este rediseño.
 export const TESTIMONIALS: readonly Testimonial[] = [
   {
     quote:

@@ -1,5 +1,4 @@
 import { Providers } from "@/components/providers";
-import { CursorGlow } from "@/components/ui/cursor-glow";
 import { SiteNav } from "@/components/sections/site-nav";
 import { Hero } from "@/components/sections/hero";
 import { TrustBand } from "@/components/sections/trust-band";
@@ -16,9 +15,9 @@ import { MobileCtaBar } from "@/components/sections/mobile-cta-bar";
 export default function Home() {
   return (
     <Providers>
-      <CursorGlow />
+      <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <SiteNav />
-      <main>
+      <main id="contenido" tabIndex={-1}>
         <Hero />
         <TrustBand />
         <Method />

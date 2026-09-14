@@ -4,7 +4,7 @@ import { Reveal } from "@/components/ui/reveal";
 
 export function Testimonials() {
   return (
-    <section className="relative py-24 sm:py-32">
+    <section className="community-section relative py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal className="max-w-2xl">
           <p className="section-tag">La comunidad</p>
@@ -13,10 +13,10 @@ export function Testimonials() {
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="community-quotes mt-14 grid gap-6 md:grid-cols-3">
           {TESTIMONIALS.map((t, i) => (
             <Reveal key={t.name} delay={i * 0.12}>
-              <figure className="glass flex h-full flex-col rounded-[1.5rem] p-7">
+              <figure className="flex h-full flex-col border-t border-border bg-surface/40 p-7">
                 <Quote className="size-7 text-primary" />
                 <blockquote className="mt-4 flex-1 text-lg leading-relaxed text-foreground/85">
                   “{t.quote}”
