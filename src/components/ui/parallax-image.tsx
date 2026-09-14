@@ -1,5 +1,7 @@
 "use client";
 
+import { useMotionPreference } from "@/components/ui/use-motion-preference";
+
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
@@ -18,6 +20,7 @@ export function ParallaxImage({
   sizes?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const reduced = useMotionPreference();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -31,7 +34,7 @@ export function ParallaxImage({
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
       <motion.div
-        style={{ y }}
+        style={{ y: reduced ? 0 : y }}
         className="relative h-[118%] -top-[9%] will-change-transform"
       >
         <motion.div

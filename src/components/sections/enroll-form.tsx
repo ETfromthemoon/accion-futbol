@@ -67,7 +67,7 @@ export function EnrollForm() {
   }
 
   return (
-    <section id="inscripcion" className="relative overflow-hidden py-24 sm:py-32">
+    <section id="inscripcion" className="booking-section relative overflow-hidden py-24 sm:py-32">
       {/* Fondo cinematográfico */}
       <Image
         src="/images/adults-duel.webp"
@@ -110,6 +110,7 @@ export function EnrollForm() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
+                role="status"
                 className="flex min-h-[420px] flex-col items-center justify-center text-center"
               >
                 <CheckCircle2 className="size-16 text-primary" />
@@ -131,7 +132,12 @@ export function EnrollForm() {
                 </a>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <div className="mb-3 border-b border-border pb-5">
+                  <p className="text-xs uppercase tracking-[0.18em] text-primary">Tu próximo entrenamiento</p>
+                  <h3 className="mt-2 text-2xl font-bold">Reserva tu clase de prueba.</h3>
+                  <p className="mt-2 text-sm text-muted">Completa tus datos y elige una categoría.</p>
+                </div>
                 {/* Honeypot anti-bots (oculto a usuarios) */}
                 <div aria-hidden className="absolute -left-[9999px]">
                   <label>
@@ -147,6 +153,8 @@ export function EnrollForm() {
                     </span>
                     <input
                       name="name"
+                      autoComplete="name"
+                      maxLength={80}
                       required
                       minLength={2}
                       placeholder="Tu nombre"
@@ -157,6 +165,9 @@ export function EnrollForm() {
                     <span className="text-sm text-foreground/80">Teléfono</span>
                     <input
                       name="phone"
+                      autoComplete="tel"
+                      minLength={8}
+                      maxLength={20}
                       type="tel"
                       required
                       placeholder="+56 9 ..."
@@ -169,6 +180,8 @@ export function EnrollForm() {
                   <span className="text-sm text-foreground/80">Correo</span>
                   <input
                     name="email"
+                    autoComplete="email"
+                    maxLength={120}
                     type="email"
                     required
                     placeholder="tucorreo@email.com"
@@ -200,6 +213,7 @@ export function EnrollForm() {
                     </span>
                     <input
                       name="participantAge"
+                      maxLength={40}
                       placeholder="Ej: 32 / 8 años"
                       className={FIELD}
                     />
@@ -212,6 +226,7 @@ export function EnrollForm() {
                   </span>
                   <textarea
                     name="message"
+                    maxLength={800}
                     rows={3}
                     placeholder="Cuéntanos tu experiencia o tus dudas"
                     className={`${FIELD} resize-none`}
@@ -219,7 +234,7 @@ export function EnrollForm() {
                 </label>
 
                 {status === "error" && (
-                  <p className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+                  <p role="alert" className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300">
                     {errorMsg}
                   </p>
                 )}
