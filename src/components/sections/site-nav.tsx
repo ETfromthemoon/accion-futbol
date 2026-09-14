@@ -35,15 +35,16 @@ export function SiteNav() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
-        scrolled
-          ? "border-b border-border bg-background/95 backdrop-blur-xl"
-          : "border-b border-white/15 bg-background/30 backdrop-blur-sm",
+        "fixed inset-x-0 top-0 z-50 px-3 pt-3 transition-all duration-500 sm:px-5",
+        scrolled ? "pt-2" : "pt-3",
       )}
     >
       <nav
         aria-label="Navegación principal"
-        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8"
+        className={cn(
+          "nav-glass mx-auto flex h-16 max-w-6xl items-center justify-between rounded-2xl px-4 transition-all duration-500 sm:px-6",
+          scrolled && "nav-glass-scrolled max-w-5xl",
+        )}
       >
         <a
           href="#top"
@@ -52,12 +53,12 @@ export function SiteNav() {
           ACCIÓN<span className="text-primary">FÚTBOL</span>
         </a>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="nav-links-glass hidden items-center gap-1 rounded-full p-1 md:flex">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted transition-colors hover:text-foreground"
+              className="nav-glass-link rounded-full px-4 py-2 text-sm text-foreground/70 transition-all hover:text-foreground"
             >
               {link.label}
             </a>
@@ -67,7 +68,7 @@ export function SiteNav() {
         <div className="flex items-center gap-3">
           <a
             href="#inscripcion"
-            className="hidden rounded-full bg-primary px-5 py-2.5 font-display text-sm font-semibold text-primary-foreground transition-transform hover:scale-105 sm:inline-flex"
+            className="nav-glass-cta hidden rounded-xl px-5 py-2.5 font-display text-sm font-semibold text-white transition-all hover:-translate-y-0.5 sm:inline-flex"
           >
             Clase de prueba gratis
           </a>
@@ -78,7 +79,7 @@ export function SiteNav() {
             aria-controls="menu-movil"
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="flex size-11 flex-col items-center justify-center gap-1.5 rounded-full border border-border md:hidden"
+            className="nav-glass-button flex size-11 flex-col items-center justify-center gap-1.5 rounded-xl md:hidden"
           >
             <span
               className={cn(
@@ -103,14 +104,14 @@ export function SiteNav() {
       </nav>
 
       {open && (
-        <div id="menu-movil" className="border-t border-border bg-background/95 px-5 py-4 backdrop-blur-xl md:hidden">
+        <div id="menu-movil" className="mobile-glass-menu mx-auto mt-2 max-w-6xl rounded-2xl p-3 md:hidden">
           <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-3 text-base text-muted hover:bg-surface hover:text-foreground"
+                className="rounded-xl px-4 py-3 text-base text-foreground/75 transition-colors hover:bg-white/10 hover:text-foreground"
               >
                 {link.label}
               </a>
@@ -118,7 +119,7 @@ export function SiteNav() {
             <a
               href="#inscripcion"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-full bg-primary px-5 py-3 text-center font-display font-semibold text-primary-foreground"
+              className="nav-glass-cta mt-2 rounded-xl px-5 py-3 text-center font-display font-semibold text-white"
             >
               Clase de prueba gratis
             </a>
