@@ -7,7 +7,7 @@ import { Programs } from "@/components/sections/programs";
 import { StatementBreak } from "@/components/sections/statement-break";
 import { HowItWorks } from "@/components/sections/how-it-works";
 import { Testimonials } from "@/components/sections/testimonials";
-import { Location } from "@/components/sections/location";
+import { SedesMap } from "@/components/sections/sedes/sedes-map";
 import { EnrollForm } from "@/components/sections/enroll-form";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { MobileCtaBar } from "@/components/sections/mobile-cta-bar";
@@ -25,7 +25,7 @@ export default function Home() {
         <StatementBreak />
         <HowItWorks />
         <Testimonials />
-        <Location />
+        <SedesMap />
         <EnrollForm />
       </main>
       <SiteFooter />

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
+import "./experiences.css";
 
 // Display: grotesca pesada estilo gráfica de transmisión deportiva.
 const archivo = Archivo({

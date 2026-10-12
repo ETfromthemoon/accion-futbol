@@ -133,6 +133,70 @@ export const PROGRAMS: readonly Program[] = [
   },
 ];
 
+// Sedes y canchas. Fuente: accionfutbol.cl (canchas y horarios) y
+// OpenStreetMap (ubicación y plano). Para sumar una sede, agregar un objeto
+// aquí: aparece como pin en el mapa de Santiago automáticamente.
+export type Cancha = {
+  id: string;
+  label: string;
+  programIds: readonly string[];
+  // ids OSM de las canchas del plano (src/lib/geo/club-oriente.ts).
+  pitchIds: readonly string[];
+  // true cuando OSM no rotula la cancha: se marca el sector, no la cancha exacta.
+  approximate?: boolean;
+};
+
+export type Sede = {
+  id: string;
+  name: string;
+  comuna: string;
+  address: string;
+  lat: number;
+  lon: number;
+  mapsUrl: string;
+  canchas: readonly Cancha[];
+};
+
+// Canchas sin número en OSM dentro de Club Oriente (sector de canchas 14 en adelante).
+const SECTOR_NUMERACION_ALTA = [
+  "1530497286",
+  "1530497287",
+  "1530497288",
+  "1530497289",
+  "1530497290",
+  "1530497291",
+  "113495922",
+] as const;
+
+export const SEDES: readonly Sede[] = [
+  {
+    id: "club-oriente",
+    name: "Club Oriente",
+    comuna: "Las Condes",
+    address: "Nueva Bilbao 9495, Las Condes",
+    lat: -33.4296321,
+    lon: -70.5337559,
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=-33.4296321,-70.5337559",
+    canchas: [
+      { id: "cancha-7", label: "Cancha 7", programIds: ["kids"], pitchIds: ["36878593"] },
+      {
+        id: "cancha-16",
+        label: "Cancha 16",
+        programIds: ["am-adultos", "pro-jovenes"],
+        pitchIds: SECTOR_NUMERACION_ALTA,
+        approximate: true,
+      },
+      {
+        id: "cancha-17",
+        label: "Cancha 17",
+        programIds: ["pm-adultos", "femenino"],
+        pitchIds: SECTOR_NUMERACION_ALTA,
+        approximate: true,
+      },
+    ],
+  },
+];
+
 export type Step = { number: string; title: string; description: string };
 
 export const STEPS: readonly Step[] = [
