@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Archivo, Hanken_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import "./experiences.css";
+import "./hero.css";
 
 // Display: grotesca pesada estilo gráfica de transmisión deportiva.
 const archivo = Archivo({
@@ -54,7 +57,10 @@ export default function RootLayout({
       lang="es-CL"
       className={`${archivo.variable} ${hanken.variable} h-full antialiased`}
     >
-      <body className="grain min-h-full">{children}</body>
+      <body className="grain min-h-full">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

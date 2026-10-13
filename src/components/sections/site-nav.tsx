@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
+import { ExternalLink, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { NAV_LINKS } from "@/lib/site";
+import { CONTACT, NAV_LINKS } from "@/lib/site";
 
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -67,6 +68,16 @@ export function SiteNav() {
 
         <div className="flex items-center gap-3">
           <a
+            href={CONTACT.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Escribir por WhatsApp"
+            title="WhatsApp"
+            className="nav-glass-button hidden size-11 items-center justify-center rounded-xl text-foreground/80 transition-colors hover:text-foreground sm:flex"
+          >
+            <MessageCircle aria-hidden="true" className="size-5" />
+          </a>
+          <a
             href="#inscripcion"
             className="nav-glass-cta hidden rounded-xl px-5 py-2.5 font-display text-sm font-semibold text-white transition-all hover:-translate-y-0.5 sm:inline-flex"
           >
@@ -123,6 +134,24 @@ export function SiteNav() {
             >
               Clase de prueba gratis
             </a>
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              <a
+                href={CONTACT.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-foreground/80"
+              >
+                <MessageCircle aria-hidden="true" className="size-4 text-primary" /> WhatsApp
+              </a>
+              <a
+                href={CONTACT.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-foreground/80"
+              >
+                <ExternalLink aria-hidden="true" className="size-4 text-primary" /> Instagram
+              </a>
+            </div>
           </div>
         </div>
       )}

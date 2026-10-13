@@ -38,14 +38,16 @@ export async function POST(request: Request) {
 
   // Si el honeypot trae contenido, es un bot: respondemos OK sin guardar.
   if (parsed.data.company) {
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, stored: true });
   }
 
   try {
     const { company: _company, ...lead } = parsed.data;
     void _company;
-    await saveLead({ ...lead, source: "landing" });
-    return NextResponse.json({ success: true });
+    const result = await saveLead({ ...lead, source: "landing" });
+    // stored=false: no hay base de datos conectada y el lead solo quedó en el log.
+    // El formulario le pide entonces a la persona confirmar por WhatsApp.
+    return NextResponse.json({ success: true, stored: result.stored === "db" });
   } catch (error: unknown) {
     console.error("[inscripcion] error al guardar lead:", error);
     return NextResponse.json(

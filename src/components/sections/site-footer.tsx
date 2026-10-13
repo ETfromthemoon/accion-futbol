@@ -1,4 +1,4 @@
-import { ArrowUpRight, ExternalLink, MapPin, Phone, Mail } from "lucide-react";
+import { ArrowUpRight, ExternalLink, MapPin, MessageCircle, Phone, Mail } from "lucide-react";
 import { CONTACT, NAV_LINKS } from "@/lib/site";
 
 export function SiteFooter() {
@@ -16,7 +16,7 @@ export function SiteFooter() {
               Despierta con pasión.
             </p>
           <a href="#inscripcion" className="footer-primary-cta mt-7 flex max-w-xs items-center justify-between rounded-2xl px-5 py-4 font-display font-bold text-white">
-            <span><small className="mb-1 block font-sans text-[10px] font-semibold uppercase tracking-[0.16em] text-white/60">Tu primer entrenamiento</small>Reserva tu clase gratis</span>
+            <span><small className="mb-1 block font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-white/60">Tu primer entrenamiento</small>Reserva tu clase gratis</span>
             <ArrowUpRight className="size-6" />
           </a>
         </div>
@@ -41,6 +41,15 @@ export function SiteFooter() {
             <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
             {CONTACT.address}
           </span>
+          <a
+            href={CONTACT.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-glass-link flex min-h-11 items-center gap-2.5 rounded-xl px-3 text-foreground/70 hover:text-foreground"
+          >
+            <MessageCircle className="size-4 shrink-0 text-primary" />
+            WhatsApp
+          </a>
           <a
             href={`tel:${CONTACT.phoneRaw}`}
             className="footer-glass-link flex min-h-11 items-center gap-2.5 rounded-xl px-3 text-foreground/70 hover:text-foreground"

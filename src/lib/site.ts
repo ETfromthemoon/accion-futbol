@@ -10,13 +10,22 @@ export const CONTACT = {
   instagram: "https://instagram.com/accionfutbol.cl",
 } as const;
 
+// Enlace a WhatsApp con un mensaje precargado.
+export function whatsappLink(text: string) {
+  return `https://wa.me/${CONTACT.phoneRaw}?text=${encodeURIComponent(text)}`;
+}
+
+// Condiciones comunes a todos los programas (fuente: accionfutbol.cl).
+export const ENROLLMENT_INCLUDES = "Pago único. Incluye camiseta, shorts y medias del equipo.";
+export const PRORATED_NOTE = "Tu primera mensualidad es proporcional a la fecha en que entras.";
+
 export type NavLink = { label: string; href: string };
 
 export const NAV_LINKS: readonly NavLink[] = [
   { label: "El método", href: "#metodo" },
-  { label: "Programas", href: "#programas" },
+  { label: "Categorías", href: "#programas" },
   { label: "Cómo funciona", href: "#como-funciona" },
-  { label: "Sede", href: "#sede" },
+  { label: "Dónde jugamos", href: "#sede" },
 ];
 
 export type Metric = {
@@ -59,6 +68,12 @@ export type Program = {
   tagline: string;
   ages: string;
   schedule: string;
+  // Horarios por tramo de edad, cuando el programa tiene más de uno.
+  scheduleSlots?: readonly string[];
+  // Las 3 cosas que propone cada programa (sitio actual).
+  promises: readonly [string, string, string];
+  // Condición especial del programa (p. ej. selección del Pro).
+  note?: string;
   enrollment: string;
   monthly: string;
   court: string;
@@ -74,7 +89,12 @@ export const PROGRAMS: readonly Program[] = [
     tagline: "Arranca el día jugando",
     ages: "25 años en adelante",
     schedule: "Lun/Mié o Mar/Jue · 6:30 a 7:45 AM",
-    enrollment: "$45.000 (incluye uniforme)",
+    promises: [
+      "Despierta con pasión",
+      "Entrena como un profesional, con metodología y motivación",
+      "Mejora tu rendimiento futbolístico y deportivo",
+    ],
+    enrollment: "$45.000 (camiseta, shorts y medias)",
     monthly: "$59.000 mensual",
     court: "Cancha 16",
     image: "/images/poster-am.webp",
@@ -87,7 +107,12 @@ export const PROGRAMS: readonly Program[] = [
     tagline: "Cierra el día en la cancha",
     ages: "25 años en adelante",
     schedule: "Lun/Jue · 8:30 a 9:30 PM",
-    enrollment: "$45.000 (incluye uniforme)",
+    promises: [
+      "Termina tu día de excelente forma",
+      "Entrena como un profesional, con metodología y motivación",
+      "Mejora tu rendimiento futbolístico y deportivo",
+    ],
+    enrollment: "$45.000 (camiseta, shorts y medias)",
     monthly: "$69.500 mensual",
     court: "Cancha 17",
     image: "/images/poster-pm.webp",
@@ -100,7 +125,13 @@ export const PROGRAMS: readonly Program[] = [
     tagline: "Donde empieza la pasión",
     ages: "4 a 8 y 9 a 14 años",
     schedule: "Sábados · 9:00 a 11:50 AM por edad",
-    enrollment: "$45.000 (incluye uniforme)",
+    scheduleSlots: ["Sábados · 4 a 8 años · 9:00 a 10:20 AM", "Sábados · 9 a 14 años · 10:30 a 11:50 AM"],
+    promises: [
+      "Aprende fútbol con pasión",
+      "Entrena con metodología",
+      "Una cultura deportiva llena de hábitos positivos",
+    ],
+    enrollment: "$45.000 (camiseta, shorts y medias)",
     monthly: "$47.500 mensual",
     court: "Cancha 7",
     image: "/images/poster-kids.webp",
@@ -113,7 +144,13 @@ export const PROGRAMS: readonly Program[] = [
     tagline: "Camino al alto rendimiento",
     ages: "13 a 18 años",
     schedule: "Lun a Vie · 6:15 a 7:45 PM",
-    enrollment: "$45.000 (incluye uniforme)",
+    promises: [
+      "Herramientas para el alto rendimiento",
+      "Mejora técnica, táctica, física y psicológica",
+      "Posibilidad real de probarte en equipos profesionales",
+    ],
+    note: "Ingreso con prueba de selección. Según decisión técnica: pruebas masivas, contacto con directores deportivos o pruebas específicas.",
+    enrollment: "$45.000 (camiseta, shorts y medias)",
     monthly: "Consultar plan",
     court: "Cancha 16",
     image: "/images/youth-huddle.webp",
@@ -124,12 +161,81 @@ export const PROGRAMS: readonly Program[] = [
     tagline: "La cancha también es nuestra",
     ages: "25 años en adelante",
     schedule: "Sábados · 9:00 a 10:20 AM",
-    enrollment: "$45.000 (incluye uniforme)",
+    promises: [
+      "Mejora tu rendimiento",
+      "Entrena como una profesional",
+      "Una comunidad deportiva que te espera cada sábado",
+    ],
+    enrollment: "$45.000 (camiseta, shorts y medias)",
     monthly: "$50.000 mensual",
     court: "Cancha 17",
     image: "/images/poster-femenino.webp",
     video: "/images/video-femenino.mp4",
     poster: "/images/poster-femenino.webp",
+  },
+];
+
+// Sedes y canchas. Fuente: accionfutbol.cl (canchas y horarios) y
+// OpenStreetMap (ubicación y plano). Para sumar una sede, agregar un objeto
+// aquí: aparece como pin en el mapa de Santiago automáticamente.
+export type Cancha = {
+  id: string;
+  label: string;
+  programIds: readonly string[];
+  // ids OSM de las canchas del plano (src/lib/geo/club-oriente.ts).
+  pitchIds: readonly string[];
+  // true cuando OSM no rotula la cancha: se marca el sector, no la cancha exacta.
+  approximate?: boolean;
+};
+
+export type Sede = {
+  id: string;
+  name: string;
+  comuna: string;
+  address: string;
+  lat: number;
+  lon: number;
+  mapsUrl: string;
+  canchas: readonly Cancha[];
+};
+
+// Canchas sin número en OSM dentro de Club Oriente (sector de canchas 14 en adelante).
+const SECTOR_NUMERACION_ALTA = [
+  "1530497286",
+  "1530497287",
+  "1530497288",
+  "1530497289",
+  "1530497290",
+  "1530497291",
+  "113495922",
+] as const;
+
+export const SEDES: readonly Sede[] = [
+  {
+    id: "club-oriente",
+    name: "Club Oriente",
+    comuna: "Las Condes",
+    address: "Nueva Bilbao 9495, Las Condes",
+    lat: -33.4296321,
+    lon: -70.5337559,
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=-33.4296321,-70.5337559",
+    canchas: [
+      { id: "cancha-7", label: "Cancha 7", programIds: ["kids"], pitchIds: ["36878593"] },
+      {
+        id: "cancha-16",
+        label: "Cancha 16",
+        programIds: ["am-adultos", "pro-jovenes"],
+        pitchIds: SECTOR_NUMERACION_ALTA,
+        approximate: true,
+      },
+      {
+        id: "cancha-17",
+        label: "Cancha 17",
+        programIds: ["pm-adultos", "femenino"],
+        pitchIds: SECTOR_NUMERACION_ALTA,
+        approximate: true,
+      },
+    ],
   },
 ];
 
@@ -140,19 +246,49 @@ export const STEPS: readonly Step[] = [
     number: "01",
     title: "Agenda tu clase de prueba",
     description:
-      "Déjanos tus datos y el programa que te interesa. Te coordinamos día y hora por WhatsApp en menos de 24 horas.",
+      "Completa el formulario o escríbenos por WhatsApp con la categoría que te interesa. Te coordinamos día y hora.",
   },
   {
     number: "02",
-    title: "Entrena gratis con nosotros",
+    title: "Entrena gratis con tu grupo",
     description:
-      "Vienes a Club Oriente, conoces a tu entrenador y al grupo, y vives una sesión completa sin pagar nada.",
+      "Te sumamos al grupo de WhatsApp de tu categoría, vienes a Club Oriente y vives una sesión completa sin pagar nada.",
   },
   {
     number: "03",
     title: "Inscríbete y sigue jugando",
     description:
-      "Si te enganchaste (y va a pasar), formalizas tu inscripción y quedas dentro de la comunidad Acción Fútbol.",
+      "Pagas la matrícula de $45.000 (incluye camiseta, shorts y medias) y tu primera mensualidad proporcional a la fecha en que entras.",
+  },
+];
+
+export type Faq = { question: string; answer: string };
+
+// Solo información publicada por la academia en accionfutbol.cl.
+export const FAQS: readonly Faq[] = [
+  {
+    question: "¿La clase de prueba tiene costo?",
+    answer:
+      "No. Tu primera clase es gratis y sin compromiso: vienes, entrenas con el grupo de tu categoría y después decides.",
+  },
+  {
+    question: "¿Cuánto cuesta la matrícula y qué incluye?",
+    answer:
+      "La matrícula es de $45.000, pago único, e incluye camiseta, shorts y medias del equipo. Además pagas la mensualidad de tu categoría.",
+  },
+  {
+    question: "¿Qué pasa si entro a mitad de mes?",
+    answer: "Pagas la mensualidad proporcional a la fecha en que te incorporas, no el mes completo.",
+  },
+  {
+    question: "¿Cómo se entra al programa Pro Jóvenes?",
+    answer:
+      "El Pro (13 a 18 años) tiene prueba de selección. Según decisión técnica, los jugadores acceden a pruebas masivas, contacto con directores deportivos o pruebas específicas en clubes profesionales.",
+  },
+  {
+    question: "¿Dónde entrenan?",
+    answer:
+      "En Club Oriente, Nueva Bilbao 9495, Las Condes. Kids entrena en la cancha 7, AM Adultos y Pro en la 16, y PM Adultos y Femenino en la 17.",
   },
 ];
 
