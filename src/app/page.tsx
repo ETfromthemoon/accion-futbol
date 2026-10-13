@@ -10,10 +10,12 @@ import { SedesMap } from "@/components/sections/sedes/sedes-map";
 import { EnrollForm } from "@/components/sections/enroll-form";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { MobileCtaBar } from "@/components/sections/mobile-cta-bar";
+import { StructuredData } from "@/components/structured-data";
 
 export default function Home() {
   return (
     <Providers>
+      <StructuredData />
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <SiteNav />
       <main id="contenido" tabIndex={-1}>

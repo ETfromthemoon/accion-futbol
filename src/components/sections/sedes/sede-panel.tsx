@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowLeft, ArrowRight, Clock, MapPin, Navigation, Users } from "lucide-react";
-import { PROGRAMS, type Cancha, type Sede } from "@/lib/site";
+import { ArrowLeft, ArrowRight, Check, Clock, MapPin, MessageCircle, Navigation, Users } from "lucide-react";
+import { PROGRAMS, PRORATED_NOTE, whatsappLink, type Cancha, type Sede } from "@/lib/site";
 import { VideoBackdrop } from "@/components/ui/video-backdrop";
 
 const SWAP = { duration: 0.45, ease: [0.22, 1, 0.36, 1] } as const;
@@ -107,11 +107,20 @@ export function SedePanel({
             <p className="sede-series-name">{program.name}</p>
             <ul>
               <li><Users aria-hidden="true" />{program.ages}</li>
-              <li><Clock aria-hidden="true" />{program.schedule}</li>
+              {(program.scheduleSlots ?? [program.schedule]).map((slot) => (
+                <li key={slot}><Clock aria-hidden="true" />{slot}</li>
+              ))}
             </ul>
+            <ul className="sede-series-promises" aria-label="Lo que te proponemos">
+              {program.promises.map((promise) => (
+                <li key={promise}><Check aria-hidden="true" />{promise}</li>
+              ))}
+            </ul>
+            {program.note && <p className="sede-series-note">{program.note}</p>}
             <p className="sede-series-price">
               <strong>{program.monthly}</strong>
               <span>Inscripción {program.enrollment}</span>
+              <span>{PRORATED_NOTE}</span>
             </p>
             <a
               href="#inscripcion"
@@ -119,6 +128,14 @@ export function SedePanel({
               onClick={() => window.dispatchEvent(new CustomEvent("select-program", { detail: program.id }))}
             >
               Probar gratis {program.name} <ArrowRight aria-hidden="true" className="size-4" />
+            </a>
+            <a
+              href={whatsappLink(`Hola, quiero agendar una clase de prueba en ${program.name} en Acción Fútbol.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="sede-series-whatsapp"
+            >
+              <MessageCircle aria-hidden="true" className="size-4" /> Prefiero coordinar por WhatsApp
             </a>
           </div>
         </motion.div>

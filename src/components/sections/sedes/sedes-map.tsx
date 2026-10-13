@@ -21,6 +21,8 @@ const PLAN_TILT = 34; // grados de inclinación del plano (vista 3/4)
 const CANCHA_ZOOM = 1.55;
 // Relación real de escala entre el encuadre de Santiago y el del club (~47×).
 const REAL_ZOOM = 47;
+// Bajo este ancho el panel va debajo del mapa (ver .sedes-grid en experiences.css).
+const STACKED_QUERY = "(max-width: 1023px)";
 
 const pct = (value: number, total: number) => (value / total) * 100;
 
@@ -88,6 +90,17 @@ export function SedesMap() {
     if (!next) return;
     setCanchaId(id);
     setProgramId(next.programIds[0]);
+    revealStageOnStackedLayout();
+  }
+
+  // En móvil el panel queda bajo el mapa: al elegir una cancha desde el panel,
+  // volvemos al mapa para que se vea el movimiento de la cámara.
+  function revealStageOnStackedLayout() {
+    const stage = stageRef.current;
+    if (!stage || !window.matchMedia(STACKED_QUERY).matches) return;
+    if (stage.getBoundingClientRect().top >= 0) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    stage.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   }
 
   return (

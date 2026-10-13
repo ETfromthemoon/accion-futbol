@@ -3,11 +3,19 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
-import { CONTACT, PROGRAM_OPTIONS } from "@/lib/site";
+import { ArrowRight, CheckCircle2, Loader2, MessageCircle } from "lucide-react";
+import { CONTACT, PROGRAM_OPTIONS, whatsappLink } from "@/lib/site";
 import { Reveal } from "@/components/ui/reveal";
 
 type Status = "idle" | "submitting" | "success" | "error";
+
+type LeadSummary = { name: string; program: string; participantAge: string };
+
+function confirmationMessage(lead: LeadSummary) {
+  const programName = PROGRAM_OPTIONS.find((p) => p.value === lead.program)?.label ?? lead.program;
+  const age = lead.participantAge ? ` Edad del participante: ${lead.participantAge}.` : "";
+  return `Hola, soy ${lead.name}. Quiero agendar una clase de prueba en ${programName}.${age}`;
+}
 
 const FIELD =
   "w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-foreground placeholder:text-muted/70 outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/30";
@@ -16,6 +24,9 @@ export function EnrollForm() {
   const [program, setProgram] = useState(PROGRAM_OPTIONS[0].value);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [lead, setLead] = useState<LeadSummary | null>(null);
+  // false cuando el servidor no pudo guardar el lead: la confirmación pasa a WhatsApp.
+  const [isStored, setIsStored] = useState(true);
 
   // Preselección desde las tarjetas de programa.
   useEffect(() => {
@@ -50,10 +61,10 @@ export function EnrollForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.error ?? "Error al enviar");
-      }
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error ?? "Error al enviar");
+      setLead({ name: payload.name, program: payload.program, participantAge: payload.participantAge });
+      setIsStored(body.stored !== false);
       setStatus("success");
       form.reset();
     } catch (err: unknown) {
@@ -115,19 +126,20 @@ export function EnrollForm() {
               >
                 <CheckCircle2 className="size-16 text-primary" />
                 <h3 className="mt-5 font-display text-2xl font-extrabold">
-                  ¡Listo! Recibimos tu solicitud.
+                  {isStored ? "¡Listo! Recibimos tu solicitud." : "Último paso: confírmala por WhatsApp."}
                 </h3>
                 <p className="mt-3 max-w-sm text-foreground/75">
-                  Te vamos a contactar muy pronto para coordinar tu clase de
-                  prueba. Si quieres adelantar, escríbenos directo por WhatsApp.
+                  {isStored
+                    ? "Te vamos a contactar muy pronto para coordinar tu clase de prueba. Si quieres adelantar, escríbenos directo por WhatsApp."
+                    : "Tu mensaje ya está escrito con tus datos. Envíalo y te coordinamos día y hora de tu clase de prueba."}
                 </p>
                 <a
-                  href={CONTACT.whatsappUrl}
+                  href={lead ? whatsappLink(confirmationMessage(lead)) : CONTACT.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-display font-semibold text-primary-foreground transition-transform hover:scale-105"
                 >
-                  Escribir por WhatsApp
+                  {isStored ? "Escribir por WhatsApp" : "Enviar por WhatsApp"}
                   <ArrowRight className="size-4" />
                 </a>
               </motion.div>
@@ -256,6 +268,16 @@ export function EnrollForm() {
                     </>
                   )}
                 </button>
+
+                <a
+                  href={CONTACT.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 text-sm font-semibold text-foreground/80 transition-colors hover:text-primary"
+                >
+                  <MessageCircle aria-hidden="true" className="size-4 text-primary" />
+                  ¿Prefieres WhatsApp? Escríbenos directo
+                </a>
 
                 <p className="text-center text-xs text-muted">
                   Tus datos solo se usan para coordinar tu clase. Nada de spam.

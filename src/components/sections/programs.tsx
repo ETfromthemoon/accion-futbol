@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, Clock, MapPin, Users } from "lucide-react";
-import { PROGRAMS, type Program } from "@/lib/site";
+import { ArrowRight, Check, Clock, MapPin, MessageCircle, Users, X } from "lucide-react";
+import { PROGRAMS, whatsappLink, type Program } from "@/lib/site";
 
 // Escena: cancha de fondo + 5 personajes en fila, ordenados por edad.
 // Imágenes generadas con scripts/generate-category-art.mjs.
@@ -44,11 +44,15 @@ export function Programs() {
       <div className="experience-heading">
         <p className="section-tag">02 / Encuentra tu equipo</p>
         <h2>Tu fútbol.<br /><span>Tu momento.</span></h2>
-        <p>Cinco categorías, una cancha. Pasa el mouse sobre cada jugador y entra a su mundo.</p>
+        <p>Cinco categorías, una cancha. Elige un jugador y entra a su mundo.</p>
       </div>
 
       <div
         className={`squad-stage ${active ? "is-focused" : ""}`}
+        // En pantallas táctiles, tocar fuera de un jugador o de su ficha la cierra.
+        onClick={(e) => {
+          if (!(e.target as Element).closest(".squad-player, .squad-info")) setActiveId(null);
+        }}
         onKeyDown={(e) => {
           if (e.key !== "Escape" || !activeId) return;
           const id = activeId;
@@ -132,13 +136,33 @@ export function Programs() {
               onPointerLeave={(e) => e.pointerType === "mouse" && scheduleHide()}
               aria-live="polite"
             >
+              <button
+                type="button"
+                className="squad-info-close"
+                aria-label={`Cerrar ficha de ${active.name}`}
+                onClick={() => {
+                  const id = active.id;
+                  setActiveId(null);
+                  buttons.current.get(id)?.focus({ preventScroll: true });
+                }}
+              >
+                <X aria-hidden="true" />
+              </button>
               <p className="squad-info-tag">0{activeIndex + 1} · {active.tagline}</p>
               <h3>{active.name}</h3>
               <ul>
                 <li><Users aria-hidden="true" />{active.ages}</li>
-                <li><Clock aria-hidden="true" />{active.schedule}</li>
+                {(active.scheduleSlots ?? [active.schedule]).map((slot) => (
+                  <li key={slot}><Clock aria-hidden="true" />{slot}</li>
+                ))}
                 <li><MapPin aria-hidden="true" />{active.court} · Club Oriente</li>
               </ul>
+              <ul className="squad-info-promises" aria-label="Lo que te proponemos">
+                {active.promises.map((promise) => (
+                  <li key={promise}><Check aria-hidden="true" />{promise}</li>
+                ))}
+              </ul>
+              {active.note && <p className="squad-info-note">{active.note}</p>}
               <p className="squad-info-price">
                 <strong>{active.monthly}</strong>
                 <span>Inscripción {active.enrollment}</span>
@@ -154,6 +178,14 @@ export function Programs() {
                 onClick={() => window.dispatchEvent(new CustomEvent("select-program", { detail: active.id }))}
               >
                 Reservar mi clase gratis <ArrowRight aria-hidden="true" />
+              </a>
+              <a
+                className="squad-info-whatsapp"
+                href={whatsappLink(`Hola, quiero agendar una clase de prueba en ${active.name} en Acción Fútbol.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle aria-hidden="true" /> Prefiero WhatsApp
               </a>
             </motion.aside>
           )}
