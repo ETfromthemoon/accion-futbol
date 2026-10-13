@@ -2,59 +2,41 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, animate, motion, useMotionValue, useTransform } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, Clock, MapPin, Users } from "lucide-react";
 import { PROGRAMS, type Program } from "@/lib/site";
-import { VideoBackdrop } from "@/components/ui/video-backdrop";
 
-// El riel recorre la vida futbolera: de los 4 años a los adultos.
-const RAIL_ORDER = ["kids", "pro-jovenes", "femenino", "am-adultos", "pm-adultos"] as const;
-const RAIL: readonly Program[] = RAIL_ORDER.map((id) => PROGRAMS.find((p) => p.id === id)).filter(
+// Escena: cancha de fondo + 5 personajes en fila, ordenados por edad.
+// Imágenes generadas con scripts/generate-category-art.mjs.
+const ORDER = ["kids", "pro-jovenes", "femenino", "am-adultos", "pm-adultos"] as const;
+const SQUAD: readonly Program[] = ORDER.map((id) => PROGRAMS.find((p) => p.id === id)).filter(
   (p): p is Program => Boolean(p),
 );
-const SNAP = { type: "spring", stiffness: 420, damping: 38 } as const;
-const SCENE_EASE = [0.22, 1, 0.36, 1] as const;
+const ART = "/images/categorias";
+// Estatura relativa: una niña de 8 años no mide lo mismo que un adulto.
+const HEIGHT: Record<string, number> = { kids: 0.72, "pro-jovenes": 0.95 };
+const HIDE_DELAY_MS = 140; // margen para mover el mouse del personaje a su ficha
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function Programs() {
-  const [active, setActive] = useState(0);
-  const [direction, setDirection] = useState(1);
-  const railRef = useRef<HTMLDivElement>(null);
-  const [railWidth, setRailWidth] = useState(0);
-  const knobX = useMotionValue(0);
-  const fill = useTransform(knobX, (x) => (railWidth ? x / railWidth : 0));
-  const isDragging = useRef(false);
-  const program = RAIL[active];
-  const step = railWidth / (RAIL.length - 1);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const hideTimer = useRef<number | undefined>(undefined);
+  const buttons = useRef(new Map<string, HTMLButtonElement>());
+  // Con teclado (Enter/Espacio) el foco salta a la ficha, para llegar a su CTA.
+  const focusInfoOnMount = useRef(false);
+  const active = SQUAD.find((p) => p.id === activeId) ?? null;
+  const activeIndex = active ? SQUAD.indexOf(active) : -1;
 
-  useEffect(() => {
-    const el = railRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([entry]) => setRailWidth(entry.contentRect.width));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
+  useEffect(() => () => window.clearTimeout(hideTimer.current), []);
 
-  // El tirador viaja al punto activo (salvo mientras se arrastra).
-  useEffect(() => {
-    if (isDragging.current || !railWidth) return;
-    const controls = animate(knobX, active * step, SNAP);
-    return () => controls.stop();
-  }, [active, step, railWidth, knobX]);
-
-  function show(index: number) {
-    const next = Math.max(0, Math.min(RAIL.length - 1, index));
-    if (next === active) return;
-    setDirection(next > active ? 1 : -1);
-    setActive(next);
+  function show(id: string) {
+    window.clearTimeout(hideTimer.current);
+    setActiveId(id);
   }
 
-  function handleKey(e: React.KeyboardEvent) {
-    const keys: Record<string, number> = { ArrowRight: active + 1, ArrowLeft: active - 1, Home: 0, End: RAIL.length - 1 };
-    if (!(e.key in keys)) return;
-    e.preventDefault();
-    const next = Math.max(0, Math.min(RAIL.length - 1, keys[e.key]));
-    show(next);
-    document.getElementById(`rail-point-${RAIL[next].id}`)?.focus();
+  function scheduleHide() {
+    window.clearTimeout(hideTimer.current);
+    hideTimer.current = window.setTimeout(() => setActiveId(null), HIDE_DELAY_MS);
   }
 
   return (
@@ -62,123 +44,121 @@ export function Programs() {
       <div className="experience-heading">
         <p className="section-tag">02 / Encuentra tu equipo</p>
         <h2>Tu fútbol.<br /><span>Tu momento.</span></h2>
-        <p>Recorre el riel: hay una categoría para cada etapa de tu vida. Pasa sobre un punto y descúbrela.</p>
+        <p>Cinco categorías, una cancha. Pasa el mouse sobre cada jugador y entra a su mundo.</p>
       </div>
 
-      <div className="category-stage" id="program-detail" aria-live="polite">
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+      <div
+        className={`squad-stage ${active ? "is-focused" : ""}`}
+        onKeyDown={(e) => {
+          if (e.key !== "Escape" || !activeId) return;
+          const id = activeId;
+          setActiveId(null);
+          buttons.current.get(id)?.focus();
+        }}
+      >
+        <div className="squad-bg">
+          <Image src={`${ART}/bg-base.webp`} alt="" fill sizes="100vw" className="object-cover" />
+        </div>
+        {SQUAD.map((p) => (
           <motion.div
-            key={program.id}
-            className="category-media"
-            custom={direction}
-            variants={{
-              enter: (d: number) => ({ clipPath: d > 0 ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)", scale: 1.08 }),
-              center: { clipPath: "inset(0 0 0 0%)", scale: 1 },
-              exit: { opacity: 0.4, scale: 1.02 },
-            }}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.9, ease: SCENE_EASE }}
+            key={p.id}
+            className="squad-bg"
+            initial={false}
+            animate={{ opacity: p.id === activeId ? 1 : 0, scale: p.id === activeId ? 1 : 1.08 }}
+            transition={{ duration: 0.8, ease: EASE }}
+            aria-hidden="true"
           >
-            {program.video && program.poster ? (
-              <VideoBackdrop src={program.video} poster={program.poster} alt={`Categoría ${program.name}`} />
-            ) : (
-              <Image src={program.image} alt={`Categoría ${program.name}`} fill sizes="100vw" className="object-cover" />
-            )}
+            <Image src={`${ART}/bg-${p.id}.webp`} alt="" fill sizes="100vw" className="object-cover" />
           </motion.div>
-        </AnimatePresence>
-        <div className="category-shade" />
+        ))}
+        <div className="squad-shade" aria-hidden="true" />
 
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={program.id}
-            className="category-copy"
-            initial="hidden"
-            animate="shown"
-            exit="hidden"
-            variants={{ shown: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } } }}
-          >
-            <motion.span
-              className="category-number"
-              aria-hidden="true"
-              variants={{ hidden: { opacity: 0, y: 40 }, shown: { opacity: 1, y: 0 } }}
-              transition={{ duration: 0.7, ease: SCENE_EASE }}
+        <ul className="squad-row" aria-label="Categorías">
+          {SQUAD.map((p, i) => {
+            const state = !active ? "idle" : p.id === activeId ? "focus" : "away";
+            return (
+              <li key={p.id} className="squad-slot">
+                <motion.button
+                  ref={(el: HTMLButtonElement | null) => {
+                    if (el) buttons.current.set(p.id, el);
+                    else buttons.current.delete(p.id);
+                  }}
+                  type="button"
+                  className={`squad-player is-${state}`}
+                  aria-pressed={p.id === activeId}
+                  aria-controls={p.id === activeId ? "squad-info" : undefined}
+                  aria-label={`${p.name}, ${p.ages}`}
+                  onPointerEnter={(e) => e.pointerType === "mouse" && show(p.id)}
+                  onPointerLeave={(e) => e.pointerType === "mouse" && scheduleHide()}
+                  onClick={(e) => {
+                    focusInfoOnMount.current = e.detail === 0; // detail 0 = activado por teclado
+                    show(p.id);
+                  }}
+                  initial={false}
+                  animate={state}
+                  variants={{
+                    idle: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
+                    focus: { opacity: 1, y: -10, scale: 1.08, filter: "blur(0px)" },
+                    away: { opacity: 0, y: 24, scale: 0.94, filter: "blur(10px)" },
+                  }}
+                  transition={{ duration: 0.55, ease: EASE, delay: state === "idle" ? i * 0.04 : 0 }}
+                >
+                  <span className="squad-floor" aria-hidden="true" />
+                  <span className="squad-figure-box" style={{ "--h": HEIGHT[p.id] ?? 1 } as React.CSSProperties}>
+                    <Image src={`${ART}/char-${p.id}.webp`} alt="" fill sizes="(min-width: 1024px) 28vw, 40vw" />
+                  </span>
+                  <span className="squad-name">
+                    {p.name}
+                    <small>{p.ages}</small>
+                  </span>
+                </motion.button>
+              </li>
+            );
+          })}
+        </ul>
+
+        <AnimatePresence mode="wait">
+          {active && (
+            <motion.aside
+              key={active.id}
+              id="squad-info"
+              className={`squad-info ${activeIndex <= 2 ? "is-right" : "is-left"}`}
+              style={{ "--slot": activeIndex } as React.CSSProperties}
+              initial={{ opacity: 0, x: activeIndex <= 2 ? -24 : 24, filter: "blur(10px)" }}
+              animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, filter: "blur(8px)", pointerEvents: "none", transition: { duration: 0.2 } }}
+              transition={{ duration: 0.5, ease: EASE }}
+              onPointerEnter={(e) => e.pointerType === "mouse" && show(active.id)}
+              onPointerLeave={(e) => e.pointerType === "mouse" && scheduleHide()}
+              aria-live="polite"
             >
-              0{active + 1}
-            </motion.span>
-            <motion.p variants={fadeUp} transition={{ duration: 0.5 }} className="category-tagline">{program.tagline}</motion.p>
-            <motion.h3
-              variants={{ hidden: { opacity: 0, filter: "blur(14px)", y: 24 }, shown: { opacity: 1, filter: "blur(0px)", y: 0 } }}
-              transition={{ duration: 0.7, ease: SCENE_EASE }}
-            >
-              {program.name}
-            </motion.h3>
-            <motion.ul variants={fadeUp} transition={{ duration: 0.5 }} className="category-specs">
-              <li><Users aria-hidden="true" />{program.ages}</li>
-              <li><Clock aria-hidden="true" />{program.schedule}</li>
-              <li><MapPin aria-hidden="true" />{program.court} · Club Oriente</li>
-            </motion.ul>
-            <motion.div variants={fadeUp} transition={{ duration: 0.5 }} className="category-buy">
-              <p><strong>{program.monthly}</strong><span>Inscripción {program.enrollment}</span></p>
+              <p className="squad-info-tag">0{activeIndex + 1} · {active.tagline}</p>
+              <h3>{active.name}</h3>
+              <ul>
+                <li><Users aria-hidden="true" />{active.ages}</li>
+                <li><Clock aria-hidden="true" />{active.schedule}</li>
+                <li><MapPin aria-hidden="true" />{active.court} · Club Oriente</li>
+              </ul>
+              <p className="squad-info-price">
+                <strong>{active.monthly}</strong>
+                <span>Inscripción {active.enrollment}</span>
+              </p>
               <a
+                ref={(el) => {
+                  if (el && focusInfoOnMount.current) {
+                    focusInfoOnMount.current = false;
+                    el.focus({ preventScroll: true });
+                  }
+                }}
                 href="#inscripcion"
-                aria-label={`Probar gratis ${program.name}`}
-                onClick={() => window.dispatchEvent(new CustomEvent("select-program", { detail: program.id }))}
+                onClick={() => window.dispatchEvent(new CustomEvent("select-program", { detail: active.id }))}
               >
                 Reservar mi clase gratis <ArrowRight aria-hidden="true" />
               </a>
-            </motion.div>
-          </motion.div>
+            </motion.aside>
+          )}
         </AnimatePresence>
-
-        {/* Riel de categorías: hover, foco, clic o arrastre del tirador. */}
-        <div className="category-rail glass" onKeyDown={handleKey}>
-          <div ref={railRef} className="category-track" role="tablist" aria-label="Categorías">
-            <span className="category-line" aria-hidden="true" />
-            <motion.span className="category-line is-fill" style={{ scaleX: fill }} aria-hidden="true" />
-            <motion.span
-              className="category-knob"
-              aria-hidden="true"
-              style={{ x: knobX }}
-              drag="x"
-              dragConstraints={{ left: 0, right: railWidth }}
-              dragElastic={0}
-              dragMomentum={false}
-              onDragStart={() => { isDragging.current = true; }}
-              onDrag={() => step && show(Math.round(knobX.get() / step))}
-              onDragEnd={() => {
-                isDragging.current = false;
-                animate(knobX, active * step, SNAP);
-              }}
-            />
-            {RAIL.map((p, i) => (
-              <button
-                key={p.id}
-                id={`rail-point-${p.id}`}
-                type="button"
-                role="tab"
-                aria-selected={i === active}
-                aria-controls="program-detail"
-                tabIndex={i === active ? 0 : -1}
-                className={`category-point ${i === active ? "is-active" : ""} ${i < active ? "is-past" : ""}`}
-                style={{ left: `${(i / (RAIL.length - 1)) * 100}%` }}
-                onPointerEnter={(e) => e.pointerType === "mouse" && show(i)}
-                onFocus={() => show(i)}
-                onClick={() => show(i)}
-              >
-                <span className="category-dot" aria-hidden="true" />
-                <span className="category-label">
-                  {p.name}
-                  <small>{p.ages}</small>
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
 }
-
-const fadeUp = { hidden: { opacity: 0, y: 16 }, shown: { opacity: 1, y: 0 } };

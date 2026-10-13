@@ -1,7 +1,6 @@
 import { Providers } from "@/components/providers";
 import { SiteNav } from "@/components/sections/site-nav";
 import { Hero } from "@/components/sections/hero";
-import { TrustBand } from "@/components/sections/trust-band";
 import { Method } from "@/components/sections/method";
 import { Programs } from "@/components/sections/programs";
 import { StatementBreak } from "@/components/sections/statement-break";
@@ -19,7 +18,6 @@ export default function Home() {
       <SiteNav />
       <main id="contenido" tabIndex={-1}>
         <Hero />
-        <TrustBand />
         <Method />
         <Programs />
         <StatementBreak />
