@@ -62,6 +62,15 @@ export const PILLARS: readonly Pillar[] = [
   },
 ];
 
+// Sesión semanal de un programa. days: 0 = domingo … 6 = sábado.
+// ages: tramo de edad cuando el programa divide grupos (Kids).
+export type Session = {
+  days: readonly number[];
+  start: string; // "HH:MM", hora de Santiago
+  end: string;
+  ages?: readonly [number, number];
+};
+
 export type Program = {
   id: string;
   name: string;
@@ -72,6 +81,9 @@ export type Program = {
   scheduleSlots?: readonly string[];
   // Las 3 cosas que propone cada programa (sitio actual).
   promises: readonly [string, string, string];
+  // Edad mínima y máxima (inclusive) y sesiones, para el flujo de reserva.
+  ageRange: readonly [number, number];
+  sessions: readonly Session[];
   // Condición especial del programa (p. ej. selección del Pro).
   note?: string;
   enrollment: string;
@@ -89,6 +101,8 @@ export const PROGRAMS: readonly Program[] = [
     tagline: "Arranca el día jugando",
     ages: "25 años en adelante",
     schedule: "Lun/Mié o Mar/Jue · 6:30 a 7:45 AM",
+    ageRange: [25, 99],
+    sessions: [{ days: [1, 2, 3, 4], start: "06:30", end: "07:45" }],
     promises: [
       "Despierta con pasión",
       "Entrena como un profesional, con metodología y motivación",
@@ -107,6 +121,8 @@ export const PROGRAMS: readonly Program[] = [
     tagline: "Cierra el día en la cancha",
     ages: "25 años en adelante",
     schedule: "Lun/Jue · 8:30 a 9:30 PM",
+    ageRange: [25, 99],
+    sessions: [{ days: [1, 4], start: "20:30", end: "21:30" }],
     promises: [
       "Termina tu día de excelente forma",
       "Entrena como un profesional, con metodología y motivación",
@@ -125,6 +141,11 @@ export const PROGRAMS: readonly Program[] = [
     tagline: "Donde empieza la pasión",
     ages: "4 a 8 y 9 a 14 años",
     schedule: "Sábados · 9:00 a 11:50 AM por edad",
+    ageRange: [4, 14],
+    sessions: [
+      { days: [6], start: "09:00", end: "10:20", ages: [4, 8] },
+      { days: [6], start: "10:30", end: "11:50", ages: [9, 14] },
+    ],
     scheduleSlots: ["Sábados · 4 a 8 años · 9:00 a 10:20 AM", "Sábados · 9 a 14 años · 10:30 a 11:50 AM"],
     promises: [
       "Aprende fútbol con pasión",
@@ -144,6 +165,8 @@ export const PROGRAMS: readonly Program[] = [
     tagline: "Camino al alto rendimiento",
     ages: "13 a 18 años",
     schedule: "Lun a Vie · 6:15 a 7:45 PM",
+    ageRange: [13, 18],
+    sessions: [{ days: [1, 2, 3, 4, 5], start: "18:15", end: "19:45" }],
     promises: [
       "Herramientas para el alto rendimiento",
       "Mejora técnica, táctica, física y psicológica",
@@ -161,6 +184,8 @@ export const PROGRAMS: readonly Program[] = [
     tagline: "La cancha también es nuestra",
     ages: "25 años en adelante",
     schedule: "Sábados · 9:00 a 10:20 AM",
+    ageRange: [25, 99],
+    sessions: [{ days: [6], start: "09:00", end: "10:20" }],
     promises: [
       "Mejora tu rendimiento",
       "Entrena como una profesional",

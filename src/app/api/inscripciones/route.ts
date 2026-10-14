@@ -4,11 +4,17 @@ import { saveLead } from "@/lib/db";
 
 const LeadSchema = z.object({
   name: z.string().trim().min(2, "Nombre demasiado corto").max(80),
-  email: z.string().trim().email("Correo inválido").max(120),
+  email: z.string().trim().email("Correo inválido").max(120).optional().or(z.literal("")),
   phone: z.string().trim().min(8, "Teléfono inválido").max(20),
   program: z.string().trim().min(1).max(40),
   participantAge: z.string().trim().max(40).optional().or(z.literal("")),
   message: z.string().trim().max(800).optional().or(z.literal("")),
+  forWhom: z.enum(["self", "child"]).optional(),
+  // Clase de prueba elegida, p. ej. "2026-10-17 09:00-10:20".
+  trialSlot: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}-\d{2}:\d{2}$/, "Fecha inválida")
+    .optional(),
   // Honeypot anti-bots: debe llegar vacío.
   company: z.string().max(0).optional().or(z.literal("")),
 });
