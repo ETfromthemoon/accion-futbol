@@ -12,11 +12,13 @@ import postgres from "postgres";
 
 export type Lead = {
   name: string;
-  email: string;
+  email?: string;
   phone: string;
   program: string;
   participantAge?: string;
   message?: string;
+  forWhom?: "self" | "child";
+  trialSlot?: string;
   source?: string;
 };
 
@@ -45,7 +47,7 @@ async function ensureSchema(client: ReturnType<typeof postgres>) {
       id            BIGSERIAL PRIMARY KEY,
       created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
       name          TEXT NOT NULL,
-      email         TEXT NOT NULL,
+      email         TEXT,
       phone         TEXT NOT NULL,
       program       TEXT NOT NULL,
       participant_age TEXT,
@@ -53,6 +55,10 @@ async function ensureSchema(client: ReturnType<typeof postgres>) {
       source        TEXT
     )
   `;
+  // Columnas del flujo de reserva (tablas creadas antes de este cambio).
+  await client`ALTER TABLE inscripciones ADD COLUMN IF NOT EXISTS for_whom TEXT`;
+  await client`ALTER TABLE inscripciones ADD COLUMN IF NOT EXISTS trial_slot TEXT`;
+  await client`ALTER TABLE inscripciones ALTER COLUMN email DROP NOT NULL`;
   schemaReady = true;
 }
 
@@ -73,10 +79,11 @@ export async function saveLead(lead: Lead): Promise<SaveResult> {
   await ensureSchema(client);
   await client`
     INSERT INTO inscripciones
-      (name, email, phone, program, participant_age, message, source)
+      (name, email, phone, program, participant_age, message, for_whom, trial_slot, source)
     VALUES
-      (${lead.name}, ${lead.email}, ${lead.phone}, ${lead.program},
-       ${lead.participantAge ?? null}, ${lead.message ?? null}, ${lead.source ?? null})
+      (${lead.name}, ${lead.email || null}, ${lead.phone}, ${lead.program},
+       ${lead.participantAge ?? null}, ${lead.message ?? null}, ${lead.forWhom ?? null},
+       ${lead.trialSlot ?? null}, ${lead.source ?? null})
   `;
   return { stored: "db" };
 }

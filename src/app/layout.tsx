@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import "./experiences.css";
 import "./hero.css";
+import "./booking.css";
 
 // Display: grotesca pesada estilo gráfica de transmisión deportiva.
 const archivo = Archivo({
