@@ -41,8 +41,8 @@ export function CityMap({ isDrawn }: Props) {
     >
       <defs>
         <radialGradient id="city-glow" cx="70%" cy="40%" r="60%">
-          <stop offset="0%" stopColor="rgb(242 107 33 / .14)" />
-          <stop offset="100%" stopColor="rgb(242 107 33 / 0)" />
+          <stop offset="0%" stopColor="rgb(var(--brand-rgb) / .14)" />
+          <stop offset="100%" stopColor="rgb(var(--brand-rgb) / 0)" />
         </radialGradient>
         <linearGradient id="andes" x1="0" x2="1" y1="0" y2="0">
           <stop offset="0%" stopColor="rgb(255 255 255 / 0)" />

@@ -6,7 +6,7 @@ import { BookingFlow } from "@/components/sections/booking/booking-flow";
 
 const BENEFITS = [
   "Una clase completa, gratis y sin compromiso",
-  "Eliges el día: te mostramos las próximas fechas reales",
+  "Eliges una fecha propuesta, sujeta a confirmación",
   "Te ubicamos en el grupo según tu edad y nivel",
   "La agregas a tu calendario con un toque",
 ] as const;
@@ -32,8 +32,8 @@ export function EnrollForm() {
             Elige tu día y nos vemos en la cancha.
           </h2>
           <p className="mt-5 text-lg text-foreground/75">
-            Cinco preguntas rápidas y sales con tu clase agendada. Sin costo y
-            sin compromiso: vienes, entrenas y luego decides.
+            Completa tus datos y solicita una clase gratis. Te confirmaremos el cupo
+            antes de que vengas a entrenar.
           </p>
 
           <ul className="mt-8 flex flex-col gap-3 text-foreground/80">

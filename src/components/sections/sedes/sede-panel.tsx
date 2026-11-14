@@ -117,11 +117,11 @@ export function SedePanel({
               ))}
             </ul>
             {program.note && <p className="sede-series-note">{program.note}</p>}
-            <p className="sede-series-price">
-              <strong>{program.monthly}</strong>
-              <span>Inscripción {program.enrollment}</span>
+            {(program.monthly || program.enrollment) && <p className="sede-series-price">
+              {program.monthly && <strong>{program.monthly}</strong>}
+              {program.enrollment && <span>Inscripción {program.enrollment}</span>}
               <span>{PRORATED_NOTE}</span>
-            </p>
+            </p>}
             <a
               href="#inscripcion"
               className="sede-series-cta"

@@ -89,7 +89,7 @@ export function StepDetails({ program, slot, forWhom, isSubmitting, error, onSub
           </>
         ) : (
           <>
-            Reservar mi clase gratis <ArrowRight aria-hidden="true" />
+            Solicitar mi clase gratis <ArrowRight aria-hidden="true" />
           </>
         )}
       </button>

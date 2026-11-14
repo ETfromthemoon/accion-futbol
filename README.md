@@ -5,6 +5,8 @@ Rediseño orientado a captar datos de clientes y agendar clases de prueba.
 
 Stack: **Next.js 16** (App Router) · **Tailwind v4** · **motion** · **TypeScript** · **Postgres**.
 
+Documentación del proyecto: [plan de implementación](specs/001-academia-web-operacion-y-captacion/plan.md) · [feedback del cliente y transcripción revisada](docs/feedback-cliente-2026-11-12.md) · [transcripción automática original](docs/feedback-cliente-2026-11-12-whisper.txt).
+
 ---
 
 ## Correr en tu computador
@@ -41,8 +43,8 @@ en tu propia base de datos Postgres.
 3. La tabla `inscripciones` se crea sola la primera vez que llega una inscripción.
 
 > Si **no** hay `DATABASE_URL` configurada, el sitio sigue funcionando en modo demo:
-> el formulario responde con éxito y registra la inscripción en el log del servidor,
-> sin perder ningún dato de prueba. Conecta la base cuando quieras empezar a guardarlas.
+> el formulario responde en modo demo y registra la inscripción en el log del servidor;
+> **no se guarda en una base persistente**. Configura la base antes de captar datos reales.
 
 ### Ver las inscripciones guardadas
 
@@ -65,6 +67,12 @@ git push
 ```
 
 ---
+
+## Integraciones en preparación
+
+Meta Pixel requiere `NEXT_PUBLIC_META_PIXEL_ID`. Para Conversion API también se necesitan `META_CAPI_ACCESS_TOKEN` y `META_GRAPH_API_VERSION` (por ejemplo, una versión compatible de Graph API). La medición se activa únicamente con el consentimiento del visitante; el evento de solicitud se envía tras guardar la inscripción en la base de datos. Las credenciales se configuran en el entorno del servidor, nunca en el repositorio. Comprobar la configuración y los eventos en la cuenta del cliente antes de producción.
+
+El newsletter está desactivado por defecto. Su contrato de integración y requisitos pendientes están descritos en `src/lib/newsletter/README.md`. Los formularios cuentan con rutas públicas y un panel protegido, cerrado mientras falte la configuración de acceso. La migración todavía no se ha ejecutado; consulta `src/lib/forms/README.md` antes de habilitarlos.
 
 ## Editar contenido rápido
 

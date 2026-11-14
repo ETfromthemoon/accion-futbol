@@ -163,10 +163,12 @@ export function Programs() {
                 ))}
               </ul>
               {active.note && <p className="squad-info-note">{active.note}</p>}
-              <p className="squad-info-price">
-                <strong>{active.monthly}</strong>
-                <span>Inscripción {active.enrollment}</span>
-              </p>
+              {(active.monthly || active.enrollment) && (
+                <p className="squad-info-price">
+                  {active.monthly && <strong>{active.monthly}</strong>}
+                  {active.enrollment && <span>Inscripción {active.enrollment}</span>}
+                </p>
+              )}
               <a
                 ref={(el) => {
                   if (el && focusInfoOnMount.current) {

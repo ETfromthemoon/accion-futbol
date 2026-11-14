@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { saveLead } from "@/lib/db";
+import { sendMetaLead } from "@/lib/meta/server";
 
 const LeadSchema = z.object({
   name: z.string().trim().min(2, "Nombre demasiado corto").max(80),
@@ -10,6 +11,7 @@ const LeadSchema = z.object({
   participantAge: z.string().trim().max(40).optional().or(z.literal("")),
   message: z.string().trim().max(800).optional().or(z.literal("")),
   forWhom: z.enum(["self", "child"]).optional(),
+  metaEventId: z.string().uuid().optional(),
   // Clase de prueba elegida, p. ej. "2026-10-17 09:00-10:20".
   trialSlot: z
     .string()
@@ -48,9 +50,10 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { company: _company, ...lead } = parsed.data;
+    const { company: _company, metaEventId, ...lead } = parsed.data;
     void _company;
     const result = await saveLead({ ...lead, source: "landing" });
+    if (result.stored === "db") await sendMetaLead(request, metaEventId);
     // stored=false: no hay base de datos conectada y el lead solo quedó en el log.
     // El formulario le pide entonces a la persona confirmar por WhatsApp.
     return NextResponse.json({ success: true, stored: result.stored === "db" });

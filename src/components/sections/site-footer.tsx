@@ -1,5 +1,6 @@
 import { ArrowUpRight, ExternalLink, MapPin, MessageCircle, Phone, Mail } from "lucide-react";
-import { CONTACT, NAV_LINKS } from "@/lib/site";
+import { CONTACT, NAV_LINKS, PLAYER_PORTAL_URL } from "@/lib/site";
+import { NewsletterForm } from "@/components/newsletter/newsletter-form";
 
 export function SiteFooter() {
   return (
@@ -33,6 +34,17 @@ export function SiteFooter() {
               <ArrowUpRight className="size-3.5 opacity-40 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" />
             </a>
           ))}
+          {PLAYER_PORTAL_URL && (
+            <a
+              href={PLAYER_PORTAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-glass-link group flex min-h-11 items-center justify-between rounded-xl px-3 text-foreground/70 transition-all hover:text-foreground"
+            >
+              Portal del jugador
+              <ArrowUpRight className="size-3.5 opacity-40 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" />
+            </a>
+          )}
         </nav>
 
         <div className="footer-glass-panel flex flex-col gap-2 rounded-2xl p-4 text-sm sm:p-5">
@@ -75,6 +87,15 @@ export function SiteFooter() {
           </a>
         </div>
         </div>
+        {process.env.NEWSLETTER_ENABLED === "true" && process.env.NEWSLETTER_ENDPOINT && process.env.NEWSLETTER_TOKEN && (
+          <section aria-labelledby="newsletter-title" className="footer-glass-panel mt-5 grid gap-6 rounded-2xl p-6 md:grid-cols-2 sm:p-8">
+            <div>
+              <h2 id="newsletter-title" className="font-display text-xl font-bold">Noticias desde la cancha</h2>
+              <p className="mt-2 text-sm text-muted">Recibe las novedades de Acción Fútbol en tu correo.</p>
+            </div>
+            <NewsletterForm />
+          </section>
+        )}
       </div>
 
       <div className="relative border-t border-white/10 px-5 py-6 text-xs text-muted sm:px-8">

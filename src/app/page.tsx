@@ -11,6 +11,7 @@ import { EnrollForm } from "@/components/sections/enroll-form";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { MobileCtaBar } from "@/components/sections/mobile-cta-bar";
 import { StructuredData } from "@/components/structured-data";
+import { CampaignPopup } from "@/components/campaign/campaign-popup";
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
       </main>
       <SiteFooter />
       <MobileCtaBar />
+      <CampaignPopup />
     </Providers>
   );
 }

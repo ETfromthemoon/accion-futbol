@@ -10,6 +10,19 @@ export const CONTACT = {
   instagram: "https://instagram.com/accionfutbol.cl",
 } as const;
 
+function validatedHttpsUrl(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" ? url.toString() : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+// Optional player portal URL. Invalid or non-HTTPS values stay hidden.
+export const PLAYER_PORTAL_URL = validatedHttpsUrl(process.env.NEXT_PUBLIC_PLAYER_PORTAL_URL);
+
 // Enlace a WhatsApp con un mensaje precargado.
 export function whatsappLink(text: string) {
   return `https://wa.me/${CONTACT.phoneRaw}?text=${encodeURIComponent(text)}`;
@@ -163,7 +176,7 @@ export const PROGRAMS: readonly Program[] = [
     id: "pro-jovenes",
     name: "Pro Jóvenes",
     tagline: "Camino al alto rendimiento",
-    ages: "13 a 18 años",
+    ages: "Edad por confirmar",
     schedule: "Lun a Vie · 6:15 a 7:45 PM",
     ageRange: [13, 18],
     sessions: [{ days: [1, 2, 3, 4, 5], start: "18:15", end: "19:45" }],
@@ -173,8 +186,9 @@ export const PROGRAMS: readonly Program[] = [
       "Posibilidad real de probarte en equipos profesionales",
     ],
     note: "Ingreso con prueba de selección. Según decisión técnica: pruebas masivas, contacto con directores deportivos o pruebas específicas.",
-    enrollment: "$45.000 (camiseta, shorts y medias)",
-    monthly: "Consultar plan",
+    // Valores pendientes de confirmación para esta categoría.
+    enrollment: "",
+    monthly: "",
     court: "Cancha 16",
     image: "/images/youth-huddle.webp",
   },
@@ -283,7 +297,7 @@ export const STEPS: readonly Step[] = [
     number: "03",
     title: "Inscríbete y sigue jugando",
     description:
-      "Pagas la matrícula de $45.000 (incluye camiseta, shorts y medias) y tu primera mensualidad proporcional a la fecha en que entras.",
+      "Te contamos los valores de inscripción y mensualidad de la categoría que elegiste. La primera mensualidad puede ser proporcional a la fecha de ingreso.",
   },
 ];
 
@@ -297,18 +311,18 @@ export const FAQS: readonly Faq[] = [
       "No. Tu primera clase es gratis y sin compromiso: vienes, entrenas con el grupo de tu categoría y después decides.",
   },
   {
-    question: "¿Cuánto cuesta la matrícula y qué incluye?",
+    question: "¿Cuáles son los valores de inscripción y mensualidad?",
     answer:
-      "La matrícula es de $45.000, pago único, e incluye camiseta, shorts y medias del equipo. Además pagas la mensualidad de tu categoría.",
+      "Los valores dependen de la categoría. Escríbenos y te compartimos la información vigente para el programa que te interesa.",
   },
   {
     question: "¿Qué pasa si entro a mitad de mes?",
     answer: "Pagas la mensualidad proporcional a la fecha en que te incorporas, no el mes completo.",
   },
   {
-    question: "¿Cómo se entra al programa Pro Jóvenes?",
+    question: "¿Cómo se entra al programa Pro?",
     answer:
-      "El Pro (13 a 18 años) tiene prueba de selección. Según decisión técnica, los jugadores acceden a pruebas masivas, contacto con directores deportivos o pruebas específicas en clubes profesionales.",
+      "El programa Pro contempla una prueba de selección. Para conocer los requisitos de edad y los detalles vigentes, consúltanos directamente.",
   },
   {
     question: "¿Dónde entrenan?",

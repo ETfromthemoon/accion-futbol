@@ -7,6 +7,11 @@ import { whatsappLink, type Program } from "@/lib/site";
 import { displayTime, formatSlotShort, matchPrograms, nextSessions, type TrialSlot } from "@/lib/booking";
 
 export type ForWhom = "self" | "child";
+export const CHILD_PROGRAMS = new Set(["kids", "pro-jovenes"]);
+
+export function programsForWhom(age: number, forWhom: ForWhom) {
+  return matchPrograms(age).filter((program) => forWhom === "self" || CHILD_PROGRAMS.has(program.id));
+}
 
 type HeadingProps = { kicker: string; title: string; headingRef: React.Ref<HTMLHeadingElement> };
 
@@ -22,8 +27,8 @@ export function StepHeading({ kicker, title, headingRef }: HeadingProps) {
 // Paso 1 · ¿Para quién es la clase?
 export function StepWho({ onPick }: { onPick: (who: ForWhom) => void }) {
   const options = [
-    { id: "self" as const, icon: User, title: "Para mí", hint: "Adultos AM, PM y Femenino" },
-    { id: "child" as const, icon: Baby, title: "Para mi hijo o hija", hint: "Kids (4 a 14) y Pro (13 a 18)" },
+    { id: "self" as const, icon: User, title: "Para mí", hint: "Encuentra tu categoría según tu edad" },
+    { id: "child" as const, icon: Baby, title: "Para mi hijo o hija", hint: "Kids (4 a 14) y Pro (edad por confirmar)" },
   ];
   return (
     <div className="bk-choices">
@@ -46,7 +51,7 @@ const MAX_AGE = 80;
 export function StepAge({ forWhom, initialAge, onConfirm }: { forWhom: ForWhom; initialAge: number; onConfirm: (age: number) => void }) {
   const [age, setAge] = useState(initialAge);
   const clamp = (n: number) => Math.min(MAX_AGE, Math.max(MIN_AGE, Math.round(n)));
-  const matches = matchPrograms(age);
+  const matches = programsForWhom(age, forWhom);
   const label = forWhom === "child" ? "Edad de tu hijo o hija" : "Tu edad";
 
   return (
@@ -75,7 +80,7 @@ export function StepAge({ forWhom, initialAge, onConfirm }: { forWhom: ForWhom; 
       <p className="bk-age-hint" aria-live="polite">
         {matches.length > 0
           ? `${matches.length === 1 ? "Tenemos 1 categoría" : `Tenemos ${matches.length} categorías`} para ${age} años: ${matches.map((p) => p.name).join(", ")}.`
-          : `Hoy no tenemos un grupo publicado para ${age} años. Escríbenos y te orientamos.`}
+          : `No encontramos una categoría para esta selección y ${age} años. Escríbenos y te orientamos.`}
       </p>
 
       {matches.length > 0 ? (
@@ -97,8 +102,8 @@ export function StepAge({ forWhom, initialAge, onConfirm }: { forWhom: ForWhom; 
 }
 
 // Paso 3 · Categoría recomendada (o a elegir, si hay más de una para esa edad).
-export function StepProgram({ age, onPick }: { age: number; onPick: (program: Program) => void }) {
-  const matches = matchPrograms(age);
+export function StepProgram({ age, forWhom, onPick }: { age: number; forWhom: ForWhom; onPick: (program: Program) => void }) {
+  const matches = programsForWhom(age, forWhom);
   return (
     <ul className="bk-programs">
       {matches.map((p) => {
@@ -113,7 +118,7 @@ export function StepProgram({ age, onPick }: { age: number; onPick: (program: Pr
               <span className="bk-program-body">
                 <span className="bk-program-name">{p.name}</span>
                 <span className="bk-program-meta"><Clock aria-hidden="true" />{p.schedule.split(" · ")[0]} · {time}</span>
-                <span className="bk-program-meta"><MapPin aria-hidden="true" />{p.court} · {p.monthly}</span>
+                <span className="bk-program-meta"><MapPin aria-hidden="true" />{p.court}{p.monthly && ` · ${p.monthly}`}</span>
               </span>
               <ArrowRight aria-hidden="true" className="bk-choice-arrow" />
             </button>
@@ -142,7 +147,8 @@ export function StepDay({
   const isSelected = (s: TrialSlot) => selected?.date === s.date && selected.start === s.start;
 
   return (
-    <div className="bk-days" role="group" aria-label={`Próximas clases de ${program.name}`}>
+    <div className="bk-days" role="group" aria-label={`Fechas propuestas para ${program.name}, sujetas a confirmación`}>
+      <p className="col-span-full text-sm text-muted">Fechas según el horario habitual; el cupo está sujeto a confirmación.</p>
       {slots.map((s) => {
         const f = formatSlotShort(s);
         return (

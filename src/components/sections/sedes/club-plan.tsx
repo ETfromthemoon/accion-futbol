@@ -87,7 +87,7 @@ export function ClubPlan({ canchas, activeId, onHover, onSelect, isShown }: Prop
       viewBox={`0 0 ${CLUB_VIEWBOX.width} ${CLUB_VIEWBOX.height}`}
       className="absolute inset-0 h-full w-full"
       role="img"
-      aria-label="Plano de Club Oriente con sus canchas; las canchas de Acción Fútbol están destacadas en naranjo"
+      aria-label="Plano de Club Oriente con sus canchas; las canchas de Acción Fútbol están destacadas en rosado"
     >
       <defs>
         <pattern id="grass" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(-3)">
@@ -96,12 +96,12 @@ export function ClubPlan({ canchas, activeId, onHover, onSelect, isShown }: Prop
         </pattern>
         <radialGradient id="flood-light">
           <stop offset="0%" stopColor="rgb(255 190 120 / .55)" />
-          <stop offset="55%" stopColor="rgb(242 107 33 / .16)" />
-          <stop offset="100%" stopColor="rgb(242 107 33 / 0)" />
+          <stop offset="55%" stopColor="rgb(var(--brand-rgb) / .16)" />
+          <stop offset="100%" stopColor="rgb(var(--brand-rgb) / 0)" />
         </radialGradient>
         <linearGradient id="scan" x1="0" x2="1">
-          <stop offset="0%" stopColor="rgb(242 107 33 / 0)" />
-          <stop offset="85%" stopColor="rgb(242 107 33 / .22)" />
+          <stop offset="0%" stopColor="rgb(var(--brand-rgb) / 0)" />
+          <stop offset="85%" stopColor="rgb(var(--brand-rgb) / .22)" />
           <stop offset="100%" stopColor="rgb(255 210 170 / .7)" />
         </linearGradient>
       </defs>

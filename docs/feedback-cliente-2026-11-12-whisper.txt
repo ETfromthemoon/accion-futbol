@@ -1,0 +1,38 @@
+Y a qué resultado principal quieres lograr con la web? Me gustaría que fuese quizás
+el día mañana como la herramienta más bonita, estética respecto a formularios, generar,
+no sé si la inscripción pagá, yo creo que ese mecanismo lo hacemos por el otro lado,
+pero sí me gustaría que sea una plataforma de formularios más bonitas que el Google
+Forms, conectado a un Google Sheets, eso me gustaría. O que logremos decir que de acá
+y lo tiramos al Google Fonts, pero que desde ahí se armé quizás el formular y todo.
+¿Aquí quién queremos atraer y qué debemos comunicar para el que elija acción fútbol?
+Bueno, los públicos son normalmente apoderados, ya, sobre todo en la categoría Kids,
+que son jugadores de 4 a 14 años. Tenemos también la categoría Proyección,
+que es una Kids con un proyecto más ambicioso en términos de competencia y en cantidad de
+entrenamientos. Tenemos la Pro, que son jóvenes que cada vez van a ir alargándose entre 10
+a 19 años. Tenemos los adultos, que son los senior, ya. Entonces tenemos diferentes públicos,
+pero normalmente la selección la hace el adulto. En nuestro público pueden ver algunos Pro,
+quizás hacer ahí un concepto más de jóvenes que vean videos de jóvenes, los jugadores,
+cachay como jugadores Pro, podría decir algo así. Una cosa así se me ocurre. ¿Qué debe poner?
+¿Qué debe poder hacer una persona dentro de la página? Desde quién hasta quién se inscribe?
+Perfecto. Ojalá ver la información, ver el interés. En todas normalmente tenemos los valores
+que es la Kids, la senior, la femenino, que es algo que podemos tener los videos, los valores,
+pero en la Pro no ponemos los valores porque normalmente es como ven a la Pro a jugadores
+para seleccionarte. Una cosa así, cachay. ¿Cómo de gestionar tu equipo las consultas y reservas
+que lleguen? No, que ojalá lleguen todo un Google Sheets, que ya tengo súper claro cuál es,
+y desde ahí nosotros atacarlo. Los datos te los mando que un formulario tipo que hacemos,
+que son, esos sí son distintos, te los voy a mandar todo al tiro nomás y le eché una mirada,
+pero son lo simple en función de un entrenamiento de prueba, ya, esos son así. Y el de prueba
+de jugadores es más cototo. Hoy día puro Google Fonts y Google Sheets.
+¿Con qué materiales responsable y límites contamos para lanzar y mantener la web? Tenemos
+logo, tenemos muchos fotos, muchos videos, los programas tendríamos que ver cómo lo elaboramos
+de mejor manera. Y eso, no sé, ah, ¿y quién aprobará el contenido y actualizará la página?
+Tendríamos que juntarnos en una reunión, Sergio, cuando ya tengáis como todo lo técnico más
+armado, y yo ahí juntarme contigo con Rodrigo, con Carlos y Camilo para que te dé los soportes
+de la otra aplicación, es que finalmente debería ser como portal del jugador,
+que es una aplicación fútbol y ingresa ahí, ingresa a la otra página nomás, para no cabecearnos
+tanto. Y lo otro, Sergio, que los colores son normalmente rosado y negro para que lo manejes,
+ya porque me acuerdo que estaba todo muy naranjo. Eso, querido Sergio, pero yo creo que lo más fácil
+es juntarnos y que lo elaboremos. Y lo otro que yo pensaba, que ojalá exista la chance de tener
+como pop-ups que yo decía, si van o no van. Un ejemplo, ahora vamos a tener el verano y quizás
+lo primero que quería aparecer en la página en lo del verano, que hache un formulario del verano,
+un ejemplo, estoy pensando en boalta.

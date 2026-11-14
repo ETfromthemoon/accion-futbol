@@ -38,7 +38,7 @@ export function BookingDone({ summary, isStored, onRestart, headingRef }: Props)
       className="bk-done"
     >
       <CheckCircle2 aria-hidden="true" className="bk-done-icon" />
-      <h3 ref={headingRef} tabIndex={-1}>{isStored ? "¡Tu clase está solicitada!" : "Último paso: confírmala por WhatsApp."}</h3>
+      <h3 ref={headingRef} tabIndex={-1}>{isStored ? "¡Tu clase está solicitada!" : "Último paso: solicita tu clase por WhatsApp."}</h3>
 
       <div className="bk-done-ticket">
         <p className="bk-kicker">Clase de prueba gratis</p>
@@ -54,11 +54,11 @@ export function BookingDone({ summary, isStored, onRestart, headingRef }: Props)
       </p>
 
       <a href={whatsappLink(bookingMessage(summary))} target="_blank" rel="noopener noreferrer" className="bk-primary">
-        {isStored ? "Escribir por WhatsApp" : "Confirmar por WhatsApp"} <ArrowRight aria-hidden="true" />
+        {isStored ? "Escribir por WhatsApp" : "Solicitar por WhatsApp"} <ArrowRight aria-hidden="true" />
       </a>
 
       <div className="bk-calendar" role="group" aria-labelledby="bk-calendar-label">
-        <p id="bk-calendar-label">Agregar a tu calendario</p>
+        <p id="bk-calendar-label">Agregar fecha propuesta al calendario (sujeta a confirmación)</p>
         <a href={googleCalendarUrl(slot, program)} target="_blank" rel="noopener noreferrer">
           <CalendarPlus aria-hidden="true" /> Google
         </a>

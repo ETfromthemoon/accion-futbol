@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { ExternalLink, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { CONTACT, NAV_LINKS } from "@/lib/site";
+import { CONTACT, NAV_LINKS, PLAYER_PORTAL_URL } from "@/lib/site";
 
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -64,6 +64,16 @@ export function SiteNav() {
               {link.label}
             </a>
           ))}
+          {PLAYER_PORTAL_URL && (
+            <a
+              href={PLAYER_PORTAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-glass-link rounded-full px-4 py-2 text-sm text-foreground/70 transition-all hover:text-foreground"
+            >
+              Portal del jugador
+            </a>
+          )}
         </div>
 
         <div className="flex items-center gap-3">
@@ -115,7 +125,7 @@ export function SiteNav() {
       </nav>
 
       {open && (
-        <div id="menu-movil" className="mobile-glass-menu mx-auto mt-2 max-w-6xl rounded-2xl p-3 md:hidden">
+        <div id="menu-movil" className="mobile-glass-menu mx-auto mt-2 max-h-[calc(100dvh-6rem)] max-w-6xl overflow-y-auto rounded-2xl p-3 md:hidden">
           <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <a
@@ -127,6 +137,17 @@ export function SiteNav() {
                 {link.label}
               </a>
             ))}
+            {PLAYER_PORTAL_URL && (
+              <a
+                href={PLAYER_PORTAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="rounded-xl px-4 py-3 text-base text-foreground/75 transition-colors hover:bg-white/10 hover:text-foreground"
+              >
+                Portal del jugador
+              </a>
+            )}
             <a
               href="#inscripcion"
               onClick={() => setOpen(false)}

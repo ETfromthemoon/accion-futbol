@@ -4,16 +4,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowLeft } from "lucide-react";
 import { PROGRAMS, type Program } from "@/lib/site";
-import { matchPrograms, type BookingSummary, type TrialSlot } from "@/lib/booking";
-import { StepAge, StepDay, StepHeading, StepProgram, StepWho, type ForWhom } from "./booking-steps";
+import { type BookingSummary, type TrialSlot } from "@/lib/booking";
+import { CHILD_PROGRAMS, programsForWhom, StepAge, StepDay, StepHeading, StepProgram, StepWho, type ForWhom } from "./booking-steps";
 import { StepDetails, type ContactData } from "./booking-details";
 import { BookingDone } from "./booking-done";
+import { hasMetaConsent, trackLead } from "@/lib/meta/client";
 
 type Step = "who" | "age" | "program" | "day" | "details" | "done";
 const STEP_NUMBER: Record<Exclude<Step, "done">, number> = { who: 1, age: 2, program: 3, day: 4, details: 5 };
 const TOTAL_STEPS = 5;
 const DEFAULT_AGE: Record<ForWhom, number> = { self: 30, child: 8 };
-const CHILD_PROGRAMS = new Set(["kids", "pro-jovenes"]);
 
 // Reserva de clase de prueba en 5 pasos: para quién → edad → categoría → día → datos.
 // Termina con la fecha real, confirmación por WhatsApp y botones de calendario.
@@ -71,6 +71,7 @@ export function BookingFlow() {
     setIsSubmitting(true);
     setError("");
     try {
+      const metaEventId = hasMetaConsent() && typeof crypto.randomUUID === "function" ? crypto.randomUUID() : undefined;
       const res = await fetch("/api/inscripciones", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -79,11 +80,13 @@ export function BookingFlow() {
           program: program.id,
           participantAge: age === undefined ? "" : String(age),
           forWhom,
+          metaEventId,
           trialSlot: `${slot.date} ${slot.start}-${slot.end}`,
         }),
       });
       const body = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(body.error ?? "No pudimos registrar tu solicitud. Intenta de nuevo.");
+      if (body.stored === true && metaEventId) trackLead(metaEventId);
       setResult({ summary: { name: contact.name, forWhom, age, program, slot }, isStored: body.stored !== false });
       go("done");
     } catch (err: unknown) {
@@ -103,12 +106,12 @@ export function BookingFlow() {
     setHistory(["who"]);
   }
 
-  const matchCount = age === undefined ? 0 : matchPrograms(age).length;
+  const matchCount = age === undefined ? 0 : programsForWhom(age, forWhom).length;
   const titles: Record<Exclude<Step, "done">, string> = {
     who: "¿Para quién es la clase?",
     age: forWhom === "child" ? "¿Qué edad tiene?" : "¿Qué edad tienes?",
     program: matchCount === 1 ? "Esta es tu categoría." : "Elige tu categoría.",
-    day: program ? `¿Qué día vienes a ${program.name}?` : "¿Qué día vienes?",
+    day: program ? `¿Qué día prefieres para ${program.name}?` : "¿Qué día prefieres?",
     details: "¿A quién le confirmamos?",
   };
 
@@ -139,6 +142,7 @@ export function BookingFlow() {
         return age === undefined ? null : (
           <StepProgram
             age={age}
+            forWhom={forWhom}
             onPick={(p) => {
               setProgram(p);
               setSlot(null);
