@@ -130,7 +130,15 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 0;
+  scroll-snap-type: y mandatory;
+}
+
+/* Cada bloque aterriza bajo la navegación; los bloques altos conservan su scroll interno. */
+main > section,
+.premium-footer {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 body {

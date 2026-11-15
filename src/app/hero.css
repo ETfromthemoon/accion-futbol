@@ -4,6 +4,20 @@
 */
 
 .hero { position: relative; background: #0c0b0a; }
+.hero::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  height: clamp(5rem, 12svh, 10rem);
+  background: linear-gradient(to bottom, transparent, var(--background));
+  content: "";
+  pointer-events: none;
+}
+.hero + #metodo {
+  background: linear-gradient(to bottom, var(--background), rgb(var(--brand-rgb) / .035) 12rem, var(--background) 30rem);
+}
 .hero-stage { position: relative; height: 100svh; min-height: 680px; overflow: hidden; isolation: isolate; }
 
 .hero-wall { display: none; }
