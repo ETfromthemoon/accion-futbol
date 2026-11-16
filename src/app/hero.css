@@ -1,6 +1,5 @@
 /*
-  Hero: muro de videos verticales + scrub del video con el scroll (escritorio).
-  En móvil / táctil / movimiento reducido: video vertical a sangre y ficha condensada.
+  Portada a pantalla completa con video y ficha condensada.
 */
 
 .hero { position: relative; background: #0c0b0a; }
@@ -9,18 +8,14 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 4;
+  z-index: 2;
   height: clamp(5rem, 12svh, 10rem);
   background: linear-gradient(to bottom, transparent, var(--background));
   content: "";
   pointer-events: none;
 }
-.hero + #metodo {
-  background: linear-gradient(to bottom, var(--background), rgb(var(--brand-rgb) / .035) 12rem, var(--background) 30rem);
-}
 .hero-stage { position: relative; height: 100svh; min-height: 680px; overflow: hidden; isolation: isolate; }
 
-.hero-wall { display: none; }
 .hero-film { position: absolute; inset: 0; z-index: 1; overflow: hidden; background: #000; }
 .hero-film .video-toggle { top: 5.5rem; bottom: auto; right: 1rem; }
 .hero-shade {
@@ -44,8 +39,7 @@
   text-shadow: 0 6px 40px rgb(0 0 0 / .45);
 }
 .hero-title h1 > span { display: block; }
-.hero-outline { color: transparent; -webkit-text-stroke: 1.5px var(--foreground); }
-.hero-hint { display: none; }
+.hero-outline { color: var(--foreground); -webkit-text-stroke: 0; }
 
 .hero-panel {
   position: absolute;
@@ -125,82 +119,7 @@
   .hero-secondary:hover { background: rgb(255 255 255 / .1); }
 }
 
-/* Escritorio con scrub: sección alta + escenario fijo. Misma query que SCRUB_QUERY en hero.tsx. */
-@media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .hero { height: 280vh; }
-  .hero-stage { position: sticky; top: 0; height: 100vh; min-height: 0; }
-
-  .hero-wall {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.4vw;
-    padding-top: 4rem;
-  }
-  .hero-card {
-    position: relative;
-    flex: none;
-    width: min(15vw, 33vh);
-    aspect-ratio: 9 / 16;
-    margin: 0;
-    overflow: hidden;
-    border-radius: 16px;
-    box-shadow: 0 30px 80px rgb(0 0 0 / .55);
-  }
-  .hero-card.is-center { visibility: hidden; }
-  .hero-card figcaption {
-    position: absolute;
-    left: .8rem;
-    bottom: .7rem;
-    font-size: .65rem;
-    font-weight: 700;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-  }
-  .hero-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(0 0 0 / .55), transparent 45%); }
-
-  /* La tarjeta central es el video: mismo tamaño que las demás, luego escala a sangre. */
-  .hero-film {
-    inset: auto;
-    left: 50%;
-    top: calc(50% + 2rem);
-    width: min(15vw, 33vh);
-    aspect-ratio: 9 / 16;
-    translate: -50% -50%;
-    border-radius: 16px;
-    box-shadow: 0 30px 80px rgb(0 0 0 / .55);
-    will-change: transform;
-  }
-  .hero-film .video-toggle { display: none; }
-
-  .hero-title { top: 50%; bottom: auto; translate: 0 -50%; text-align: center; }
-  .hero-title h1 { font-size: clamp(6rem, 11.5vw, 12rem); }
-  .hero-title h1 > span { display: inline; }
-
-  .hero-hint {
-    position: absolute;
-    z-index: 3;
-    bottom: 1.6rem;
-    left: 50%;
-    translate: -50% 0;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    font-size: .7rem;
-    font-weight: 700;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: rgb(255 255 255 / .7);
-  }
-  .hero-hint svg { color: var(--primary); animation: hero-bob 1.6s ease-in-out infinite; }
-  .hero-shade { opacity: 0; }
-  .hero-panel { opacity: 0; }
-}
-
-@keyframes hero-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(5px); }
+@media (min-width: 1024px) {
+  .hero-title { bottom: 42%; }
+  .hero-title h1 { font-size: clamp(5rem, 8vw, 8rem); }
 }

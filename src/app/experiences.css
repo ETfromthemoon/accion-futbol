@@ -4,11 +4,14 @@
 */
 
 /* ── Escena de categorías: cancha + 5 personajes ───────────────────────── */
+.squad-tabs { display: flex; gap: .5rem; overflow-x: auto; margin-top: 2rem; padding-bottom: .4rem; scrollbar-width: thin; }
+.squad-tabs button { flex: none; min-height: 44px; padding: .65rem .9rem; border: 1px solid rgb(255 255 255 / .28); border-radius: 999px; color: var(--foreground); font-size: .82rem; font-weight: 700; transition: background .2s, border-color .2s; }
+.squad-tabs button:hover, .squad-tabs button[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
 .squad-stage {
   position: relative;
   isolation: isolate;
   height: 560px;
-  margin-top: 3rem;
+  margin-top: 1.25rem;
   overflow: hidden;
   border: 1px solid var(--border);
   background: #0c0b0a;
@@ -72,7 +75,7 @@
   text-transform: uppercase;
   transition: color .3s;
 }
-.squad-name small { display: none; }
+.squad-name small { display: block; margin-top: .2rem; font-family: var(--font-sans); font-size: .65rem; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--foreground); }
 .squad-player.is-focus .squad-name { color: var(--primary); }
 
 .squad-info {
@@ -156,6 +159,12 @@
   .squad-info.is-right { left: calc((var(--slot) + 1) * 20% + 1%); }
   .squad-info.is-left { right: calc((5 - var(--slot)) * 20% + 1%); }
   .squad-info ul.squad-info-promises { display: grid; padding-top: .8rem; border-top: 1px solid rgb(255 255 255 / .1); }
+}
+
+@media (max-width: 1023px) {
+  .squad-stage { display: flex; flex-direction: column; height: auto; min-height: 560px; overflow: hidden; }
+  .squad-row { position: relative; inset: auto; flex: none; height: 470px; margin-top: auto; overflow-x: auto; overflow-y: hidden; grid-template-columns: repeat(5, minmax(112px, 1fr)); scrollbar-width: thin; }
+  .squad-info { position: relative; inset: auto; flex: none; margin: .75rem; background: rgb(14 12 10 / .97); }
 }
 
 /* ── Mapa de sedes ──────────────────────────────────────────────────────── */

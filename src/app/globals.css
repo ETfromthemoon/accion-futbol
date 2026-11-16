@@ -131,14 +131,19 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 0;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
 }
 
-/* Cada bloque aterriza bajo la navegación; los bloques altos conservan su scroll interno. */
+/* El espacio separa las escenas sin ocultar el inicio de cada una. */
 main > section,
 .premium-footer {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+main > section:not(:first-child) { margin-block-start: clamp(1rem, 2.5vw, 2rem); }
+.premium-footer { margin-block-start: clamp(1rem, 2.5vw, 2rem); }
+@media (pointer: fine) {
+  html { scroll-snap-type: none; }
 }
 
 body {
@@ -282,8 +287,10 @@ p {
 .skip-link:focus { transform: translateY(0); }
 footer a { display: inline-flex; align-items: center; min-height: 44px; }
 #metodo { background: var(--foreground); color: var(--background); }
+#metodo h2, #metodo h3 { color: var(--background); }
 #metodo .section-tag { color: var(--background); }
-#metodo p.text-foreground\/70, #metodo .method-description { color: rgb(20 18 16 / .7); }
+#metodo p.text-foreground\/70, #metodo .method-description { color: rgb(20 18 16 / .84); }
+#metodo .text-primary { color: oklch(0.39 0.16 350); }
 #metodo .border-border { border-color: rgb(20 18 16 / .2); }
 #metodo h2 { text-transform: uppercase; font-size: clamp(2rem, 5vw, 5rem); line-height: .96; letter-spacing: -.055em; }
 #metodo .method-intro + div > div { border-radius: 0; }
@@ -293,8 +300,10 @@ footer a { display: inline-flex; align-items: center; min-height: 44px; }
 .experience-heading h2 span { color: var(--primary); white-space: nowrap; }
 .experience-heading > p:last-child { max-width: 23rem; color: var(--muted); margin-top: 1.5rem; }
 #como-funciona { background: var(--foreground); color: var(--background); }
+#como-funciona h2, #como-funciona h3, #como-funciona summary { color: var(--background); }
 #como-funciona .section-tag { color: var(--background); }
-#como-funciona p.text-foreground\/70 { color: rgb(20 18 16 / .7); }
+#como-funciona p.text-foreground\/70 { color: rgb(20 18 16 / .84); }
+#como-funciona .text-primary { color: oklch(0.39 0.16 350); }
 #como-funciona h2 { font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: -.05em; line-height: 1; }
 #como-funciona .text-5xl { font-size: 5rem; letter-spacing: -.07em; }
 .community-section h2 { max-width: 12ch; font-size: clamp(3rem, 6vw, 5.5rem); text-transform: uppercase; line-height: .95; letter-spacing: -.055em; }
