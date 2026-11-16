@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, Check, Clock, MapPin, MessageCircle, Users, X } from "lucide-react";
 import { PROGRAMS, whatsappLink, type Program } from "@/lib/site";
@@ -15,10 +15,13 @@ const SQUAD: readonly Program[] = ORDER.map((id) => PROGRAMS.find((p) => p.id ==
 const ART = "/images/categorias";
 // Estatura relativa: una niña de 8 años no mide lo mismo que un adulto.
 const HEIGHT: Record<string, number> = { kids: 0.72, "pro-jovenes": 0.95 };
+// El hover revela el mundo de cada jugador y es parte esencial de esta experiencia: conservarlo.
+const HIDE_DELAY_MS = 140; // permite mover el cursor del jugador a su ficha
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function Programs() {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const hideTimer = useRef<number | undefined>(undefined);
   const buttons = useRef(new Map<string, HTMLButtonElement>());
   const rowRef = useRef<HTMLUListElement>(null);
   // Con teclado (Enter/Espacio) el foco salta a la ficha, para llegar a su CTA.
@@ -26,11 +29,19 @@ export function Programs() {
   const active = SQUAD.find((p) => p.id === activeId) ?? null;
   const activeIndex = active ? SQUAD.indexOf(active) : -1;
 
+  useEffect(() => () => window.clearTimeout(hideTimer.current), []);
+
   function show(id: string) {
+    window.clearTimeout(hideTimer.current);
     setActiveId(id);
     const row = rowRef.current;
     const slot = buttons.current.get(id)?.parentElement;
     if (row && slot) row.scrollTo({ left: slot.offsetLeft - (row.clientWidth - slot.clientWidth) / 2, behavior: "smooth" });
+  }
+
+  function scheduleHide() {
+    window.clearTimeout(hideTimer.current);
+    hideTimer.current = window.setTimeout(() => setActiveId(null), HIDE_DELAY_MS);
   }
 
   return (
@@ -99,6 +110,8 @@ export function Programs() {
                   aria-pressed={p.id === activeId}
                   aria-controls={p.id === activeId ? "squad-info" : undefined}
                   aria-label={`${p.name}, ${p.ages}`}
+                  onPointerEnter={(e) => e.pointerType === "mouse" && show(p.id)}
+                  onPointerLeave={(e) => e.pointerType === "mouse" && scheduleHide()}
                   onClick={(e) => {
                     focusInfoOnMount.current = e.detail === 0; // detail 0 = activado por teclado
                     show(p.id);
@@ -137,6 +150,8 @@ export function Programs() {
               animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, filter: "blur(8px)", pointerEvents: "none", transition: { duration: 0.2 } }}
               transition={{ duration: 0.5, ease: EASE }}
+              onPointerEnter={(e) => e.pointerType === "mouse" && show(active.id)}
+              onPointerLeave={(e) => e.pointerType === "mouse" && scheduleHide()}
               aria-live="polite"
             >
               <button
