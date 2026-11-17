@@ -33,14 +33,14 @@ export function FormBuilder({ initialDraft, onDraftChange }: {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-2">
-      <section aria-labelledby="builder-title" className="space-y-5">
+    <div className="admin-builder">
+      <section aria-labelledby="builder-title" className="admin-subpanel space-y-5">
         <div><h2 id="builder-title" className="text-2xl font-bold">Constructor de formularios</h2><p className="text-sm text-muted">Borrador local: los cambios se perderán al salir de esta página.</p></div>
         <label className="block space-y-1"><span>Título</span><input className={inputClass} maxLength={120} value={draft.title} onChange={(event) => change({ ...draft, title: event.target.value })} /></label>
         <label className="block space-y-1"><span>Identificador de enlace</span><input className={inputClass} maxLength={80} value={draft.slug} onChange={(event) => change({ ...draft, slug: event.target.value })} aria-describedby="slug-help" /><small id="slug-help" className="text-muted">Usa minúsculas, números y guiones.</small></label>
-        <p role="status" className="text-sm">Estado: borrador · {valid ? "Datos válidos" : "Completa los campos y el identificador"}</p>
+        <p role="status" className="admin-status text-sm">Estado: borrador · {valid ? "Datos válidos" : "Completa los campos y el identificador"}</p>
         {draft.fields.map((field, index) => (
-          <fieldset key={field.id} className="space-y-3 rounded-xl border border-border p-4">
+          <fieldset key={field.id} className="space-y-3 rounded-xl border border-border bg-surface p-4">
             <legend className="px-1 font-semibold">Campo {index + 1}</legend>
             <label className="block space-y-1"><span>Pregunta</span><input className={inputClass} maxLength={120} value={field.label} onChange={(event) => changeField(field.id, (f) => ({ ...f, label: event.target.value }))} /></label>
             <label className="block space-y-1"><span>Tipo</span><select className={inputClass} value={field.type} onChange={(event) => changeField(field.id, (f) => {
@@ -50,13 +50,13 @@ export function FormBuilder({ initialDraft, onDraftChange }: {
               return type === "select" ? { ...rest, type, options: [{ value: "opcion-1", label: "Opción 1" }] } : { ...rest, type };
             })}>{types.map((type) => <option key={type.value} value={type.value}>{type.label}</option>)}</select></label>
             <label className="flex items-center gap-2"><input type="checkbox" checked={field.required} onChange={(event) => changeField(field.id, (f) => ({ ...f, required: event.target.checked }))} /> Obligatorio</label>
-            {field.type === "select" && <div className="space-y-2"><p>Opciones</p>{field.options?.map((option, optionIndex) => <div key={option.value} className="flex gap-2"><label className="flex-1"><span className="sr-only">Opción {optionIndex + 1}</span><input className={inputClass} maxLength={100} value={option.label} onChange={(event) => changeField(field.id, (f) => ({ ...f, options: f.options?.map((o) => o.value === option.value ? { ...o, label: event.target.value } : o) }))} /></label><button type="button" aria-label={`Eliminar opción ${optionIndex + 1}`} onClick={() => changeField(field.id, (f) => ({ ...f, options: f.options?.filter((o) => o.value !== option.value) }))}>Eliminar</button></div>)}<button type="button" disabled={(field.options?.length ?? 0) >= 30} onClick={() => changeField(field.id, (f) => ({ ...f, options: [...(f.options ?? []), { value: `opcion-${crypto.randomUUID().slice(0, 8)}`, label: "Nueva opción" }] }))}>Añadir opción</button></div>}
-            <button type="button" onClick={() => change({ ...draft, fields: draft.fields.filter((f) => f.id !== field.id) })}>Eliminar campo</button>
+            {field.type === "select" && <div className="space-y-2"><p>Opciones</p>{field.options?.map((option, optionIndex) => <div key={option.value} className="flex flex-wrap gap-2"><label className="min-w-40 flex-1"><span className="sr-only">Opción {optionIndex + 1}</span><input className={inputClass} maxLength={100} value={option.label} onChange={(event) => changeField(field.id, (f) => ({ ...f, options: f.options?.map((o) => o.value === option.value ? { ...o, label: event.target.value } : o) }))} /></label><button type="button" className="admin-button admin-button-danger" aria-label={`Eliminar opción ${optionIndex + 1}`} onClick={() => changeField(field.id, (f) => ({ ...f, options: f.options?.filter((o) => o.value !== option.value) }))}>Eliminar</button></div>)}<button type="button" className="admin-button" disabled={(field.options?.length ?? 0) >= 30} onClick={() => changeField(field.id, (f) => ({ ...f, options: [...(f.options ?? []), { value: `opcion-${crypto.randomUUID().slice(0, 8)}`, label: "Nueva opción" }] }))}>Añadir opción</button></div>}
+            <button type="button" className="admin-button admin-button-danger" onClick={() => change({ ...draft, fields: draft.fields.filter((f) => f.id !== field.id) })}>Eliminar campo</button>
           </fieldset>
         ))}
-        <button type="button" disabled={draft.fields.length >= 30} onClick={() => change({ ...draft, fields: [...draft.fields, newField()] })}>Añadir campo</button>
+        <button type="button" className="admin-button w-full" disabled={draft.fields.length >= 30} onClick={() => change({ ...draft, fields: [...draft.fields, newField()] })}>+ Añadir campo</button>
       </section>
-      <section aria-labelledby="preview-title" className="space-y-4 rounded-xl border border-border p-5">
+      <section aria-labelledby="preview-title" className="admin-subpanel h-fit space-y-4">
         <h2 id="preview-title" className="text-xl font-bold">Vista previa</h2>
         <p className="text-sm text-muted">Vista de muestra; no envía respuestas.</p>
         <h3 className="text-lg font-semibold">{draft.title || "Formulario sin título"}</h3>
