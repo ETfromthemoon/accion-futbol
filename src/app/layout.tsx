@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo, Hanken_Grotesk } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { MetaConsent } from "@/components/meta/meta-consent";
+import { CampaignPopup } from "@/components/campaign/campaign-popup";
 import "./globals.css";
 import "./experiences.css";
 import "./hero.css";
@@ -62,6 +63,7 @@ export default function RootLayout({
       <body className="grain min-h-full">
         {children}
         <MetaConsent pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID ?? ""} />
+        <CampaignPopup />
         <Analytics />
       </body>
     </html>

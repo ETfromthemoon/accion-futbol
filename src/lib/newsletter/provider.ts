@@ -1,9 +1,14 @@
 import "server-only";
 import type { NewsletterSubscription } from "./schema";
+import { saveNewsletterSignup } from "./repository";
 
-// Adaptador para un servicio propio de suscripciones. El destino debe aceptar
-// JSON y responder 2xx solo después de recibir la solicitud correctamente.
+// El modo database guarda solicitudes pendientes. El adaptador HTTPS queda
+// disponible cuando el cliente elija un servicio de correo con confirmación.
 export async function subscribe(subscription: NewsletterSubscription): Promise<"accepted" | "unavailable"> {
+  if (process.env.NEWSLETTER_MODE === "database") {
+    try { await saveNewsletterSignup(subscription); return "accepted"; }
+    catch { return "unavailable"; }
+  }
   const endpoint = process.env.NEWSLETTER_ENDPOINT;
   const token = process.env.NEWSLETTER_TOKEN;
   if (!endpoint || !token) return "unavailable";

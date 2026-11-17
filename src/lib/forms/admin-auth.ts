@@ -8,7 +8,14 @@ const attempts = new Map<string, number[]>();
 function configured() {
   const passwordHash = process.env.FORMS_ADMIN_PASSWORD_HASH;
   const sessionSecret = process.env.FORMS_ADMIN_SESSION_SECRET;
-  return Boolean(passwordHash && sessionSecret && sessionSecret.length >= 32 && process.env.FORMS_ADMIN_ORIGIN);
+  return Boolean(passwordHash && sessionSecret && sessionSecret.length >= 32 && expectedOrigin());
+}
+
+function expectedOrigin() {
+  if (process.env.FORMS_ADMIN_ORIGIN) return process.env.FORMS_ADMIN_ORIGIN;
+  // Cada vista previa de Vercel tiene un host distinto; se usa solo el host que Vercel asigna al despliegue.
+  if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return null;
 }
 
 function safeEqual(a: string, b: string) {
@@ -54,7 +61,7 @@ export function requestHasAdminSession(request: Request) {
 }
 
 export function requestHasExpectedOrigin(request: Request) {
-  const configuredOrigin = process.env.FORMS_ADMIN_ORIGIN;
+  const configuredOrigin = expectedOrigin();
   if (!configuredOrigin) return false;
   try {
     return request.headers.get("origin") === new URL(configuredOrigin).origin && new URL(configuredOrigin).origin === new URL(request.url).origin;

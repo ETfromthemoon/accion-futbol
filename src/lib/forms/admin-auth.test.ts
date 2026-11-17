@@ -44,6 +44,16 @@ describe("forms admin auth", () => {
     expect(requestHasExpectedOrigin(new Request("https://example.test/api/forms/admin", { headers: { origin: "https://evil.test" } }))).toBe(false);
   });
 
+  it("uses only the deployment host for preview admin requests", () => {
+    configure();
+    vi.stubEnv("FORMS_ADMIN_ORIGIN", "");
+    vi.stubEnv("VERCEL_ENV", "preview");
+    vi.stubEnv("VERCEL_URL", "accion-futbol-preview.vercel.app");
+    expect(verifyAdminPassword(password)).toBe(true);
+    expect(requestHasExpectedOrigin(new Request("https://accion-futbol-preview.vercel.app/api/forms/admin", { headers: { origin: "https://accion-futbol-preview.vercel.app" } }))).toBe(true);
+    expect(requestHasExpectedOrigin(new Request("https://otra.vercel.app/api/forms/admin", { headers: { origin: "https://otra.vercel.app" } }))).toBe(false);
+  });
+
   it("limits login attempts per source IP", () => {
     const request = () => new Request("https://example.test/login", { headers: { "x-real-ip": `test-${ipNumber}` } });
     const unique = request();

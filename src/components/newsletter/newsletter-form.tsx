@@ -34,7 +34,7 @@ export function NewsletterForm() {
       <button type="submit" disabled={state === "loading"} className="rounded-xl bg-primary px-4 py-3 font-semibold text-white disabled:opacity-60">
         {state === "loading" ? "Enviando…" : "Recibir novedades"}
       </button>
-      {state === "done" && <p role="status" className="text-sm">Recibimos tu solicitud de suscripción.</p>}
+      {state === "done" && <p role="status" className="text-sm">Recibimos tu solicitud. Queda pendiente de confirmación antes de enviarte correos.</p>}
       {state === "error" && <p role="alert" className="text-sm">No pudimos recibir tu solicitud. Inténtalo más tarde.</p>}
     </form>
   );

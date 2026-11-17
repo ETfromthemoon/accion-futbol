@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { FormBuilder } from "./form-builder";
 import type { FormDefinition } from "@/lib/forms/schema";
+import { PopupsAdmin } from "@/components/campaign/popups-admin";
+import { NewsletterAdmin } from "@/components/newsletter/newsletter-admin";
 
 type Submission = { id: string; version: number; answers: Record<string, string | boolean>; createdAt: string; sheetsStatus: string; sheetsAttempts: number };
 type ManagedForm = FormDefinition & { publishedVersion: number | null };
@@ -24,6 +26,7 @@ export function FormsAdmin({ authenticated }: { authenticated: boolean }) {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+  const [tab, setTab] = useState<"forms" | "newsletter" | "popups">("forms");
 
   const loadForms = useCallback(async () => {
     const response = await fetch("/api/forms/admin", { cache: "no-store" });
@@ -113,7 +116,9 @@ export function FormsAdmin({ authenticated }: { authenticated: boolean }) {
   </section>;
 
   return <div className="space-y-10">
-    <div className="flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-2xl font-bold">Administración de formularios</h2><p className="text-sm text-muted">Crea borradores, publica enlaces y revisa respuestas.</p></div><button className={control} onClick={logout}>Cerrar sesión</button></div>
+    <div className="flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-2xl font-bold">Panel de contenido</h2><p className="text-sm text-muted">Gestiona formularios, solicitudes de newsletter y avisos emergentes.</p></div><button className={control} onClick={logout}>Cerrar sesión</button></div>
+    <nav aria-label="Herramientas del panel" className="flex flex-wrap gap-2 border-b border-border pb-4">{([['forms', 'Formularios'], ['newsletter', 'Newsletter'], ['popups', 'Pop-ups']] as const).map(([id, title]) => <button key={id} type="button" aria-current={tab === id ? "page" : undefined} className={tab === id ? "rounded-full bg-primary px-5 py-2 font-semibold text-white" : "rounded-full border border-border px-5 py-2"} onClick={() => setTab(id)}>{title}</button>)}</nav>
+    {tab === "forms" && <div className="space-y-10">
     <section className="space-y-5"><h3 className="text-xl font-semibold">{editing ? "Preparar formulario" : "Crear formulario"}</h3>
       <div className="space-y-2"><p className="text-sm text-muted">Bases orientativas: solo incluyen nombre y enlace sugeridos. Completa sus campos después de revisar los formularios actuales del cliente.</p><div className="flex flex-wrap gap-2">{templateDrafts.map((template) => <button key={template.slug} type="button" className={control} onClick={() => { setEditing(template); setDraft(template); }}>Usar base: {template.title}</button>)}</div></div>
       <FormBuilder key={`${editing ? `${editing.slug}-${editing.version}` : "new"}-${editorRevision}`} initialDraft={editing ?? emptyDraft} onDraftChange={setDraft} />
@@ -130,5 +135,8 @@ export function FormsAdmin({ authenticated }: { authenticated: boolean }) {
       {submissions.length === 0 ? <p className="text-sm text-muted">No hay respuestas guardadas.</p> : <div className="space-y-3">{submissions.map((submission) => <article key={submission.id} className="space-y-2 rounded-xl border border-border p-4"><p className="text-sm text-muted">{new Date(submission.createdAt).toLocaleString("es-CL")} · versión {submission.version} · Sheets: {submission.sheetsStatus} ({submission.sheetsAttempts} intentos)</p><dl className="grid gap-2 sm:grid-cols-2">{Object.entries(submission.answers).map(([key, value]) => <div key={key}><dt className="text-xs text-muted">{key}</dt><dd className="break-words">{String(value)}</dd></div>)}</dl></article>)}</div>}
     </section>}
     <p role="status" aria-live="polite" className="text-sm">{message}</p>
+    </div>}
+    {tab === "newsletter" && <NewsletterAdmin />}
+    {tab === "popups" && <PopupsAdmin />}
   </div>;
 }
