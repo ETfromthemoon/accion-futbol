@@ -6,7 +6,7 @@ import type { FormDefinition } from "@/lib/forms/schema";
 import { PopupsAdmin } from "@/components/campaign/popups-admin";
 import { NewsletterAdmin } from "@/components/newsletter/newsletter-admin";
 
-type Submission = { id: string; version: number; answers: Record<string, string | boolean>; createdAt: string; sheetsStatus: string; sheetsAttempts: number };
+type Submission = { id: string; version: number; answers: Record<string, string | boolean>; fieldLabels: Record<string, string>; createdAt: string; sheetsStatus: string; sheetsAttempts: number };
 type ManagedForm = FormDefinition & { publishedVersion: number | null };
 const emptyDraft: FormDefinition = { slug: "nuevo-formulario", title: "Nuevo formulario", version: 1, status: "draft", fields: [] };
 const control = "rounded-lg border border-border px-4 py-2";
@@ -132,7 +132,7 @@ export function FormsAdmin({ authenticated }: { authenticated: boolean }) {
       </article>)}</div>}
     </section>
     {activeSlug && <section className="space-y-4"><div className="flex flex-wrap items-center justify-between gap-3"><h3 className="text-xl font-semibold">Respuestas: {activeSlug}</h3><button className={control} onClick={() => action(activeSlug, "retry-sheets")}>Reintentar pendientes de Sheets</button></div>
-      {submissions.length === 0 ? <p className="text-sm text-muted">No hay respuestas guardadas.</p> : <div className="space-y-3">{submissions.map((submission) => <article key={submission.id} className="space-y-2 rounded-xl border border-border p-4"><p className="text-sm text-muted">{new Date(submission.createdAt).toLocaleString("es-CL")} · versión {submission.version} · Sheets: {submission.sheetsStatus} ({submission.sheetsAttempts} intentos)</p><dl className="grid gap-2 sm:grid-cols-2">{Object.entries(submission.answers).map(([key, value]) => <div key={key}><dt className="text-xs text-muted">{key}</dt><dd className="break-words">{String(value)}</dd></div>)}</dl></article>)}</div>}
+      {submissions.length === 0 ? <p className="text-sm text-muted">No hay respuestas guardadas.</p> : <div className="space-y-3">{submissions.map((submission) => <article key={submission.id} className="space-y-2 rounded-xl border border-border p-4"><p className="text-sm text-muted">{new Date(submission.createdAt).toLocaleString("es-CL")} · versión {submission.version} · Sheets: {submission.sheetsStatus} ({submission.sheetsAttempts} intentos)</p><dl className="grid gap-2 sm:grid-cols-2">{Object.entries(submission.answers).map(([key, value]) => <div key={key}><dt className="text-xs text-muted">{submission.fieldLabels[key] ?? key}</dt><dd className="break-words">{String(value)}</dd></div>)}</dl></article>)}</div>}
     </section>}
     <p role="status" aria-live="polite" className="text-sm">{message}</p>
     </div>}

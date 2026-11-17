@@ -100,14 +100,21 @@ export async function archiveForm(slug: string) {
 
 export async function getFormSubmissions(slug: string) {
   const rows = await database()`SELECT s.id, s.form_version, s.answers, s.created_at,
-      q.status AS sheets_status, q.last_result AS sheets_last_result, q.attempts AS sheets_attempts
-    FROM form_submissions s LEFT JOIN form_sheet_sync q ON q.submission_id = s.id
+      q.status AS sheets_status, q.last_result AS sheets_last_result, q.attempts AS sheets_attempts,
+      d.definition AS form_definition
+    FROM form_submissions s
+    JOIN form_definitions d ON d.slug = s.form_slug AND d.version = s.form_version
+    LEFT JOIN form_sheet_sync q ON q.submission_id = s.id
     WHERE s.form_slug = ${slug} ORDER BY s.created_at DESC LIMIT 500`;
-  return rows.map((row) => ({
-    id: String(row.id), version: row.form_version, answers: row.answers,
-    createdAt: row.created_at, sheetsStatus: row.sheets_last_result ?? row.sheets_status ?? "pending",
-    sheetsAttempts: row.sheets_attempts ?? 0,
-  }));
+  return rows.map((row) => {
+    const definition = formDefinitionSchema.parse(row.form_definition);
+    return {
+      id: String(row.id), version: row.form_version, answers: row.answers,
+      fieldLabels: Object.fromEntries(definition.fields.map((field) => [field.id, field.label])),
+      createdAt: row.created_at, sheetsStatus: row.sheets_last_result ?? row.sheets_status ?? "pending",
+      sheetsAttempts: row.sheets_attempts ?? 0,
+    };
+  });
 }
 
 export async function retryPendingSheetSyncs(slug: string) {

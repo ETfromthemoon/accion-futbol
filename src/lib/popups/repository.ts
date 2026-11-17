@@ -15,7 +15,9 @@ export async function listPopups(): Promise<PopupDefinition[]> {
 }
 
 export async function listVisiblePopups(path: string): Promise<PopupDefinition[]> {
-  const rows = await database()`SELECT definition FROM popup_campaigns WHERE status = 'published' ORDER BY updated_at DESC LIMIT 50`;
+  const rows = await database()`SELECT definition FROM popup_campaigns
+    WHERE status = 'published' AND (definition->>'path' = 'all' OR definition->>'path' = ${path})
+    ORDER BY updated_at DESC LIMIT 50`;
   return rows.map((row) => popupSchema.parse(row.definition)).filter((popup) => popupIsVisible(popup, path));
 }
 

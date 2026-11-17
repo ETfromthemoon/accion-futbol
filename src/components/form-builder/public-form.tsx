@@ -36,9 +36,7 @@ export function PublicForm({ form }: { form: FormDefinition }) {
         return;
       }
       formElement.reset();
-      setStatus(result.sheets === "synced"
-        ? "Respuesta recibida. Gracias por completar el formulario."
-        : "Tu respuesta quedó registrada, pero no se confirmó su sincronización con el equipo.");
+      setStatus("Respuesta recibida. Gracias por completar el formulario.");
     } catch {
       setStatus("No se pudo enviar el formulario. Revisa tu conexión e inténtalo otra vez.");
     } finally {
