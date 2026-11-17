@@ -10,6 +10,6 @@ export default async function FormsAdminPage() {
   const authenticated = isValidAdminSession(cookieStore.get(FORMS_ADMIN_COOKIE)?.value);
   return <main className="mx-auto max-w-6xl px-6 py-20">
     <h1 className="mb-8 text-3xl font-bold">Panel de administración</h1>
-    {!configured ? <p className="rounded-xl border border-border p-4">El panel permanece cerrado. Configura las variables de autenticación descritas en <code>src/lib/forms/README.md</code>.</p> : <FormsAdmin authenticated={authenticated} />}
+    {!configured ? <p className="rounded-xl border border-border p-4">El panel permanece cerrado. Configura las variables de autenticación descritas en <code>src/lib/forms/README.md</code>.</p> : <FormsAdmin authenticated={authenticated} sheetsConfigured={Boolean(process.env.GOOGLE_SHEETS_WEBHOOK_URL && process.env.GOOGLE_SHEETS_WEBHOOK_TOKEN)} />}
   </main>;
 }

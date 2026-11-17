@@ -15,7 +15,7 @@ const templateDrafts: FormDefinition[] = [
   { ...emptyDraft, slug: "seleccion-pro", title: "Selección Pro" },
 ];
 
-export function FormsAdmin({ authenticated }: { authenticated: boolean }) {
+export function FormsAdmin({ authenticated, sheetsConfigured }: { authenticated: boolean; sheetsConfigured: boolean }) {
   const [loggedIn, setLoggedIn] = useState(authenticated);
   const [password, setPassword] = useState("");
   const [forms, setForms] = useState<ManagedForm[]>([]);
@@ -119,6 +119,7 @@ export function FormsAdmin({ authenticated }: { authenticated: boolean }) {
     <div className="flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-2xl font-bold">Panel de contenido</h2><p className="text-sm text-muted">Gestiona formularios, solicitudes de newsletter y avisos emergentes.</p></div><button className={control} onClick={logout}>Cerrar sesión</button></div>
     <nav aria-label="Herramientas del panel" className="flex flex-wrap gap-2 border-b border-border pb-4">{([['forms', 'Formularios'], ['newsletter', 'Newsletter'], ['popups', 'Pop-ups']] as const).map(([id, title]) => <button key={id} type="button" aria-current={tab === id ? "page" : undefined} className={tab === id ? "rounded-full bg-primary px-5 py-2 font-semibold text-white" : "rounded-full border border-border px-5 py-2"} onClick={() => setTab(id)}>{title}</button>)}</nav>
     {tab === "forms" && <div className="space-y-10">
+    {!sheetsConfigured && <p className="rounded-xl border border-border p-4 text-sm text-muted">Las respuestas se guardan en este panel. La copia a Google Sheets se habilitará cuando esté lista la hoja del cliente.</p>}
     <section className="space-y-5"><h3 className="text-xl font-semibold">{editing ? "Preparar formulario" : "Crear formulario"}</h3>
       <div className="space-y-2"><p className="text-sm text-muted">Bases orientativas: solo incluyen nombre y enlace sugeridos. Completa sus campos después de revisar los formularios actuales del cliente.</p><div className="flex flex-wrap gap-2">{templateDrafts.map((template) => <button key={template.slug} type="button" className={control} onClick={() => { setEditing(template); setDraft(template); }}>Usar base: {template.title}</button>)}</div></div>
       <FormBuilder key={`${editing ? `${editing.slug}-${editing.version}` : "new"}-${editorRevision}`} initialDraft={editing ?? emptyDraft} onDraftChange={setDraft} />
@@ -131,8 +132,8 @@ export function FormsAdmin({ authenticated }: { authenticated: boolean }) {
         <div className="flex flex-wrap gap-2"><button className={control} onClick={() => { const { publishedVersion: _publishedVersion, ...definition } = form; void _publishedVersion; setEditing(definition); setDraft({ ...definition, status: "draft" }); }}>Crear versión</button><button className={control} onClick={() => showSubmissions(form.slug)}>Ver respuestas</button>{form.publishedVersion && <button className={control} onClick={() => action(form.slug, "archive")}>Archivar publicación</button>}</div>
       </article>)}</div>}
     </section>
-    {activeSlug && <section className="space-y-4"><div className="flex flex-wrap items-center justify-between gap-3"><h3 className="text-xl font-semibold">Respuestas: {activeSlug}</h3><button className={control} onClick={() => action(activeSlug, "retry-sheets")}>Reintentar pendientes de Sheets</button></div>
-      {submissions.length === 0 ? <p className="text-sm text-muted">No hay respuestas guardadas.</p> : <div className="space-y-3">{submissions.map((submission) => <article key={submission.id} className="space-y-2 rounded-xl border border-border p-4"><p className="text-sm text-muted">{new Date(submission.createdAt).toLocaleString("es-CL")} · versión {submission.version} · Sheets: {submission.sheetsStatus} ({submission.sheetsAttempts} intentos)</p><dl className="grid gap-2 sm:grid-cols-2">{Object.entries(submission.answers).map(([key, value]) => <div key={key}><dt className="text-xs text-muted">{submission.fieldLabels[key] ?? key}</dt><dd className="break-words">{String(value)}</dd></div>)}</dl></article>)}</div>}
+    {activeSlug && <section className="space-y-4"><div className="flex flex-wrap items-center justify-between gap-3"><h3 className="text-xl font-semibold">Respuestas: {activeSlug}</h3>{sheetsConfigured && <button className={control} onClick={() => action(activeSlug, "retry-sheets")}>Reintentar pendientes de Sheets</button>}</div>
+      {submissions.length === 0 ? <p className="text-sm text-muted">No hay respuestas guardadas.</p> : <div className="space-y-3">{submissions.map((submission) => <article key={submission.id} className="space-y-2 rounded-xl border border-border p-4"><p className="text-sm text-muted">{new Date(submission.createdAt).toLocaleString("es-CL")} · versión {submission.version}{sheetsConfigured && <> · Sheets: {submission.sheetsStatus} ({submission.sheetsAttempts} intentos)</>}</p><dl className="grid gap-2 sm:grid-cols-2">{Object.entries(submission.answers).map(([key, value]) => <div key={key}><dt className="text-xs text-muted">{submission.fieldLabels[key] ?? key}</dt><dd className="break-words">{String(value)}</dd></div>)}</dl></article>)}</div>}
     </section>}
     <p role="status" aria-live="polite" className="text-sm">{message}</p>
     </div>}
