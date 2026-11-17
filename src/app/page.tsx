@@ -12,8 +12,15 @@ import { SiteFooter } from "@/components/sections/site-footer";
 import { MobileCtaBar } from "@/components/sections/mobile-cta-bar";
 import { StructuredData } from "@/components/structured-data";
 import { SectionScroll } from "@/components/sections/section-scroll";
+import { NewsSection } from "@/components/news/news-section";
+import { listPublishedNews } from "@/lib/news/repository";
+import type { NewsPost } from "@/lib/news/schema";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  let news: NewsPost[] = [];
+  try { news = await listPublishedNews(3); } catch { /* La portada sigue disponible si falla la base de noticias. */ }
   return (
     <Providers>
       <StructuredData />
@@ -26,6 +33,7 @@ export default function Home() {
         <Programs />
         <StatementBreak />
         <HowItWorks />
+        <NewsSection posts={news} />
         <Testimonials />
         <SedesMap />
         <EnrollForm />

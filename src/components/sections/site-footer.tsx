@@ -90,8 +90,8 @@ export function SiteFooter() {
         {process.env.NEWSLETTER_ENABLED === "true" && ((process.env.NEWSLETTER_MODE === "database" && process.env.DATABASE_URL) || (process.env.NEWSLETTER_ENDPOINT && process.env.NEWSLETTER_TOKEN)) && (
           <section aria-labelledby="newsletter-title" className="footer-glass-panel mt-5 grid gap-6 rounded-2xl p-6 md:grid-cols-2 sm:p-8">
             <div>
-              <h2 id="newsletter-title" className="font-display text-xl font-bold">Noticias desde la cancha</h2>
-              <p className="mt-2 text-sm text-muted">Déjanos tu correo para recibir novedades. La suscripción quedará pendiente de confirmación.</p>
+              <h2 id="newsletter-title" className="font-display text-xl font-bold">Novedades por correo</h2>
+              <p className="mt-2 text-sm text-muted">Solicita recibir futuras novedades por email. Todavía no se envían boletines; tu solicitud quedará pendiente de confirmación.</p>
             </div>
             <NewsletterForm />
           </section>

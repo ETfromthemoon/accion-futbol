@@ -5,7 +5,8 @@ import { FormBuilder } from "./form-builder";
 import type { FormDefinition } from "@/lib/forms/schema";
 import { PopupsAdmin } from "@/components/campaign/popups-admin";
 import { NewsletterAdmin } from "@/components/newsletter/newsletter-admin";
-import { FileText, Mail, PanelsTopLeft } from "lucide-react";
+import { NewsAdmin } from "@/components/news/news-admin";
+import { FileText, Mail, Newspaper, PanelsTopLeft } from "lucide-react";
 
 type Submission = { id: string; version: number; answers: Record<string, string | boolean>; fieldLabels: Record<string, string>; createdAt: string; sheetsStatus: string; sheetsAttempts: number };
 type ManagedForm = FormDefinition & { publishedVersion: number | null };
@@ -27,7 +28,7 @@ export function FormsAdmin({ authenticated, sheetsConfigured }: { authenticated:
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
-  const [tab, setTab] = useState<"forms" | "newsletter" | "popups">("forms");
+  const [tab, setTab] = useState<"forms" | "news" | "newsletter" | "popups">("forms");
 
   const loadForms = useCallback(async () => {
     const response = await fetch("/api/forms/admin", { cache: "no-store" });
@@ -117,8 +118,8 @@ export function FormsAdmin({ authenticated, sheetsConfigured }: { authenticated:
   </section>;
 
   return <div className="admin-workspace">
-    <div className="admin-toolbar"><div><h2>Panel de contenido</h2><p>Gestiona formularios, solicitudes de newsletter y avisos emergentes.</p></div><button className="admin-button admin-button-quiet" onClick={logout}>Cerrar sesión</button></div>
-    <nav aria-label="Herramientas del panel" className="admin-tabs">{([['forms', 'Formularios', FileText], ['newsletter', 'Newsletter', Mail], ['popups', 'Pop-ups', PanelsTopLeft]] as const).map(([id, title, Icon]) => <button key={id} type="button" aria-current={tab === id ? "page" : undefined} className="admin-tab" onClick={() => setTab(id)}><Icon aria-hidden="true" />{title}</button>)}</nav>
+    <div className="admin-toolbar"><div><h2>Panel de contenido</h2><p>Gestiona formularios, noticias, solicitudes de newsletter y avisos emergentes.</p></div><button className="admin-button admin-button-quiet" onClick={logout}>Cerrar sesión</button></div>
+    <nav aria-label="Herramientas del panel" className="admin-tabs">{([['forms', 'Formularios', FileText], ['news', 'Noticias', Newspaper], ['newsletter', 'Newsletter', Mail], ['popups', 'Pop-ups', PanelsTopLeft]] as const).map(([id, title, Icon]) => <button key={id} type="button" aria-current={tab === id ? "page" : undefined} className="admin-tab" onClick={() => setTab(id)}><Icon aria-hidden="true" />{title}</button>)}</nav>
     {tab === "forms" && <div className="admin-content">
     {!sheetsConfigured && <p className="admin-notice text-sm">Las respuestas se guardan en este panel. La copia a Google Sheets se habilitará cuando esté lista la hoja del cliente.</p>}
     <section className="admin-panel space-y-5"><div className="admin-panel-intro"><h3 className="text-xl">{editing ? "Preparar formulario" : "Crear formulario"}</h3><p>Define las preguntas y revisa el resultado antes de publicarlo.</p></div>
@@ -138,6 +139,7 @@ export function FormsAdmin({ authenticated, sheetsConfigured }: { authenticated:
     </section>}
     <p role="status" aria-live="polite" className="admin-status text-sm">{message}</p>
     </div>}
+    {tab === "news" && <NewsAdmin />}
     {tab === "newsletter" && <NewsletterAdmin />}
     {tab === "popups" && <PopupsAdmin />}
   </div>;

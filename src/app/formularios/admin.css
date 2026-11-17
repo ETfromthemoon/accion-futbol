@@ -102,7 +102,7 @@
 
 .admin-tabs {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .35rem;
   padding: .35rem;
   border: 1px solid var(--admin-line);
@@ -169,6 +169,7 @@
 
 @media (min-width: 640px) {
   .admin-masthead { flex-direction: row; align-items: flex-end; }
+  .admin-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .admin-shell .admin-tab { flex-direction: row; gap: .55rem; font-size: 1rem; }
 }
 @media (min-width: 900px) {

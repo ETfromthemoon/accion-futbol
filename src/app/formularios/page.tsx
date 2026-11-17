@@ -15,7 +15,7 @@ export default async function FormsAdminPage() {
       <div>
         <p className="admin-eyebrow">ACCIÓN FÚTBOL / GESTIÓN</p>
         <h1>Panel de administración</h1>
-        <p>Organiza tus formularios, newsletter y pop-ups desde un solo lugar.</p>
+        <p>Organiza tus formularios, noticias, newsletter y pop-ups desde un solo lugar.</p>
       </div>
       <Link className="admin-site-link" href="/">Ver sitio <span aria-hidden="true">↗</span></Link>
     </header>
