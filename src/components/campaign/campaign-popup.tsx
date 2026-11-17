@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
+import { usePathname } from "next/navigation";
 import type { PopupDefinition } from "@/lib/popups/schema";
 
 function shouldShow(popup: PopupDefinition) {
@@ -12,12 +13,13 @@ function shouldShow(popup: PopupDefinition) {
 }
 
 export function CampaignPopup() {
+  const pathname = usePathname();
   const [popup, setPopup] = useState<PopupDefinition | null>(null);
   const dialogRef = useRef<HTMLElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const path = window.location.pathname.replace(/\/$/, "") || "/";
+    const path = pathname.replace(/\/$/, "") || "/";
     if (path === "/formularios") return;
     let cancelled = false;
     let cleanupTrigger = () => {};
@@ -54,7 +56,7 @@ export function CampaignPopup() {
         }
       }).catch(() => {});
     return () => { cancelled = true; cleanupTrigger(); };
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     if (!popup) return;
