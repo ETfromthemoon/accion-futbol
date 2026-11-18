@@ -54,7 +54,7 @@ export function SiteNav() {
           ACCIÓN<span className="text-primary">FÚTBOL</span>
         </a>
 
-        <div className="nav-links-glass hidden items-center gap-1 rounded-full p-1 md:flex">
+        <div className="nav-links-glass hidden items-center gap-1 rounded-full p-1 lg:flex">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
@@ -100,7 +100,7 @@ export function SiteNav() {
             aria-controls="menu-movil"
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="nav-glass-button flex size-11 flex-col items-center justify-center gap-1.5 rounded-xl md:hidden"
+            className="nav-glass-button flex size-11 flex-col items-center justify-center gap-1.5 rounded-xl lg:hidden"
           >
             <span
               className={cn(
@@ -125,7 +125,7 @@ export function SiteNav() {
       </nav>
 
       {open && (
-        <div id="menu-movil" className="mobile-glass-menu mx-auto mt-2 max-h-[calc(100dvh-6rem)] max-w-6xl overflow-y-auto rounded-2xl p-3 md:hidden">
+        <div id="menu-movil" className="mobile-glass-menu mx-auto mt-2 max-h-[calc(100dvh-6rem)] max-w-6xl overflow-y-auto rounded-2xl p-3 lg:hidden">
           <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <a
