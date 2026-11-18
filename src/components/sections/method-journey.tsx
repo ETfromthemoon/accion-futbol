@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play } from "lucide-react";
 import { METHOD_STEPS } from "@/lib/site";
 
@@ -69,25 +69,20 @@ export function MethodJourney() {
         <div className="method-carousel-viewport">
           <article className="method-slide" aria-roledescription="diapositiva" aria-label={`${active + 1} de ${METHOD_STEPS.length}`}>
             <div className="method-slide-image">
-              <AnimatePresence initial={false}>
-                <motion.div key={step.image} className="method-slide-photo" initial={reduceMotion ? false : { opacity: 0, x: direction * 30 }}
-                  animate={{ opacity: 1, x: 0 }} exit={reduceMotion ? undefined : { opacity: 0, x: direction * -30 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}>
-                  <Image src={step.image} alt={step.imageAlt} fill sizes="(max-width: 767px) 100vw, 55vw" className="object-cover" priority={active === 0} />
-                </motion.div>
-              </AnimatePresence>
+              {METHOD_STEPS.map((item, index) => (
+                <div key={item.image} className={`method-slide-photo ${active === index ? "is-active" : ""}`} aria-hidden={active !== index}>
+                  <Image src={item.image} alt={active === index ? item.imageAlt : ""} fill sizes="(max-width: 767px) 100vw, 55vw" className="object-cover" loading="eager" />
+                </div>
+              ))}
             </div>
             <div className="method-slide-copy">
               <span className="method-slide-count">{String(active + 1).padStart(2, "0")} <span>/ {String(METHOD_STEPS.length).padStart(2, "0")}</span></span>
               <div className="method-slide-text">
-                <AnimatePresence initial={false} mode="wait">
-                  <motion.div key={step.title} initial={reduceMotion ? false : { opacity: 0, x: direction * 20 }}
-                    animate={{ opacity: 1, x: 0 }} exit={reduceMotion ? undefined : { opacity: 0, x: direction * -20 }}
-                    transition={{ duration: reduceMotion ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}>
-                    <h3 className="font-display font-black uppercase">{step.title}</h3>
-                    <p>{step.description}</p>
-                  </motion.div>
-                </AnimatePresence>
+                <motion.div key={step.title} initial={reduceMotion ? false : { opacity: 0.75, x: direction * 12 }}
+                  animate={{ opacity: 1, x: 0 }} transition={{ duration: reduceMotion ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}>
+                  <h3 className="font-display font-black uppercase">{step.title}</h3>
+                  <p>{step.description}</p>
+                </motion.div>
               </div>
               <div className="method-slide-controls">
                 <div className="method-slide-progress" role="group" aria-label="Ir a una etapa">
