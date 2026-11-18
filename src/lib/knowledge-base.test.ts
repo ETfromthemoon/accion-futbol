@@ -6,6 +6,7 @@ describe("mini base de conocimiento", () => {
     expect(searchKnowledge("¿Cuánto cuesta?")[0]?.id).toBe("precios");
     expect(searchKnowledge("ubicación cancha")[0]?.id).toBe("sede");
     expect(searchKnowledge("horarios niños")[0]?.id).toBe("kids");
+    expect(searchKnowledge("horarios").map((entry) => entry.id)).toEqual(expect.arrayContaining(["kids", "adultos-am", "adultos-pm", "femenino"]));
   });
 
   it("filtra por tema y no inventa respuesta para preguntas fuera de la base", () => {

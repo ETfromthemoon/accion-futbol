@@ -35,7 +35,7 @@
 .method-cta svg { width: 1rem; height: 1rem; }
 .method-cta:hover { color: #5d1538; }
 
-.knowledge-shell { margin-top: clamp(5rem, 9vw, 9rem); border-top: 1px solid #ddd6d3; padding-top: clamp(4rem, 7vw, 7rem); }
+.knowledge-shell { margin-top: clamp(3.5rem, 6vw, 5.5rem); border-top: 1px solid #ddd6d3; padding-top: clamp(3.5rem, 5vw, 5rem); }
 .knowledge-inner { max-width: 48rem; margin-inline: auto; }
 .knowledge-inner h3 { font-size: clamp(2.4rem, 5vw, 4.7rem); line-height: 1; letter-spacing: -.06em; }
 .knowledge-intro { margin-top: 1rem; color: #62585c; font-size: 1rem; }
@@ -71,7 +71,7 @@
   .method-slide-copy h3 { font-size: clamp(2.2rem, 9vw, 3.2rem); }
   .method-slide-copy p { margin-top: .85rem; }
   .method-slide-text { min-height: 11rem; }
-  .knowledge-shell { margin-top: 5rem; }
+  .knowledge-shell { margin-top: 3.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

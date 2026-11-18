@@ -37,6 +37,7 @@ export const KNOWLEDGE_TOPICS: readonly KnowledgeTopic[] = ["Primer paso", "Prog
 
 const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("es").replace(/[^a-z0-9]+/g, " ").trim();
 const STOP_WORDS = new Set(["que", "como", "para", "con", "los", "las", "una", "uno", "del", "por", "hay", "tiene", "tienen", "donde", "quiero", "pasa", "cuando", "cuanto"]);
+const matchesTerm = (text: string, term: string) => text.includes(term) || (term.length > 4 && term.endsWith("s") && text.includes(term.slice(0, -1)));
 
 export function searchKnowledge(query: string, topic: KnowledgeTopic | "Todas" = "Todas"): KnowledgeEntry[] {
   const available = topic === "Todas" ? KNOWLEDGE_BASE : KNOWLEDGE_BASE.filter((entry) => entry.topic === topic);
@@ -49,7 +50,7 @@ export function searchKnowledge(query: string, topic: KnowledgeTopic | "Todas" =
       const question = normalize(entry.question);
       const keywords = normalize(entry.keywords);
       const answer = normalize(entry.answer);
-      const score = terms.reduce((total, term) => total + (question.includes(term) ? 3 : 0) + (keywords.includes(term) ? 2 : 0) + (answer.includes(term) ? 1 : 0), 0);
+      const score = terms.reduce((total, term) => total + (matchesTerm(question, term) ? 3 : 0) + (matchesTerm(keywords, term) ? 2 : 0) + (matchesTerm(answer, term) ? 1 : 0), 0);
       return { entry, score };
     })
     .filter(({ score }) => score > 0)
