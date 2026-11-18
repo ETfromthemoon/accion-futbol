@@ -53,7 +53,7 @@ export function PopupsAdmin() {
   }
 
   return <section id="panel-popups" className="admin-content scroll-mt-24">
-    <div className="admin-panel admin-panel-intro"><h2 className="text-2xl font-bold">Generador de pop-ups</h2><p className="text-sm">Crea avisos por página con tres plantillas y activación por tiempo, desplazamiento o salida.</p></div>
+    <div className="admin-panel admin-panel-intro"><h2 className="text-2xl font-bold">Generador de pop-ups</h2><p className="text-sm">Crea avisos por página con tres plantillas y activación por tiempo, desplazamiento o salida.</p><a className="admin-button admin-button-primary w-fit" href="/muestras/popup" target="_blank" rel="noopener noreferrer">Ver post de prueba ↗</a></div>
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,.8fr)]">
       <div className="admin-panel space-y-5">
         <div className="admin-form-group"><h3>01 / Dónde y cuándo aparece</h3><div className="grid gap-4 sm:grid-cols-2">

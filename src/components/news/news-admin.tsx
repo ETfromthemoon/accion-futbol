@@ -54,6 +54,7 @@ export function NewsAdmin() {
     <div className="admin-panel admin-panel-intro">
       <h2 className="text-2xl font-bold">Noticias del sitio</h2>
       <p>Crea publicaciones para la portada y el archivo de noticias. El newsletter continúa separado.</p>
+      <a className="admin-button admin-button-primary w-fit" href="/muestras/noticia" target="_blank" rel="noopener noreferrer">Ver post de prueba ↗</a>
     </div>
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,.8fr)]">
       <div className="admin-panel space-y-5">

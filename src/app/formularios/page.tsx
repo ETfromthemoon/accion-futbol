@@ -17,7 +17,7 @@ export default async function FormsAdminPage() {
         <h1>Panel de administración</h1>
         <p>Organiza tus formularios, noticias, newsletter y pop-ups desde un solo lugar.</p>
       </div>
-      <Link className="admin-site-link" href="/">Ver sitio <span aria-hidden="true">↗</span></Link>
+      <div className="flex flex-wrap gap-2"><Link className="admin-site-link" href="/muestras" target="_blank" rel="noopener noreferrer">Ver todas las muestras <span aria-hidden="true">↗</span></Link><Link className="admin-site-link" href="/">Ver sitio <span aria-hidden="true">↗</span></Link></div>
     </header>
     {!configured ? <p className="admin-panel">El panel permanece cerrado. Configura las variables de autenticación descritas en <code>src/lib/forms/README.md</code>.</p> : <FormsAdmin authenticated={authenticated} sheetsConfigured={Boolean(process.env.GOOGLE_SHEETS_WEBHOOK_URL && process.env.GOOGLE_SHEETS_WEBHOOK_TOKEN)} />}
   </main>;

@@ -20,7 +20,7 @@ export function CampaignPopup() {
 
   useEffect(() => {
     const path = pathname.replace(/\/$/, "") || "/";
-    if (path === "/formularios") return;
+    if (path === "/formularios" || path === "/muestras" || path.startsWith("/muestras/")) return;
     let cancelled = false;
     let cleanupTrigger = () => {};
     fetch(`/api/popups?path=${encodeURIComponent(path)}`, { cache: "no-store" })
