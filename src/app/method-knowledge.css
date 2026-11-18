@@ -1,83 +1,79 @@
 .method-knowledge-section {
-  background: #f3f0ea;
-  color: #201b1d;
-  border-top: 1px solid #ded7d4;
+  background: #f4f1ed;
+  color: #231e20;
+  border-top: 1px solid #e7e1dd;
 }
-.method-kicker, .knowledge-kicker { color: #9b1f5d; font-weight: 800; }
-.method-playbook-heading h2 { font-size: clamp(2.65rem, 6vw, 6.2rem); line-height: .93; letter-spacing: -.065em; }
-.method-playbook-heading h2 span { color: #a42c65; }
-.method-lede, .knowledge-intro { color: #51474b; }
-.method-board { background: #181619; box-shadow: 0 30px 70px rgb(33 18 25 / .2); }
-.method-board-nav { color: #f9f2f3; background: radial-gradient(circle at 10% 0, #3b1b2c, #1d191d 65%); }
-.method-board-top { color: #f4afcc; font-size: .65rem; font-weight: 800; letter-spacing: .16em; }
-.method-track { position: relative; }
-.method-track::before { content: ""; position: absolute; top: 1.75rem; bottom: 1.75rem; left: 2.42rem; width: 1px; background: rgb(255 255 255 / .16); }
-.method-step { position: relative; border: 1px solid transparent; color: #eadde3; transition: background .3s, border-color .3s, transform .3s; }
-.method-step:hover { background: rgb(255 255 255 / .055); transform: translateX(4px); }
-.method-step.is-active { border-color: rgb(255 156 194 / .46); background: rgb(231 79 144 / .13); color: white; }
-.method-step-icon { position: relative; z-index: 1; border: 1px solid rgb(255 255 255 / .26); background: #281e25; color: #ffb8d5; transition: background .3s, color .3s; }
-.method-step.is-active .method-step-icon { background: #f27bae; color: #28131d; border-color: #f27bae; }
-.method-step-phase { color: #db9ebb; }
-.method-step-title { color: white; }
-.method-step-arrow { opacity: .35; transition: opacity .2s, transform .2s; }
-.method-step.is-active .method-step-arrow, .method-step:hover .method-step-arrow { opacity: 1; transform: translate(2px, -2px); }
-.method-board-hint { color: #bcaab2; }
-.method-hint-line { width: 1.6rem; height: 1px; background: #ed7ba9; }
-.method-scene { background: #2d2428; color: white; }
-.method-scene-shade { background: linear-gradient(180deg, rgb(0 0 0 / .48), rgb(0 0 0 / .11) 30%, rgb(16 9 13 / .8) 70%, #160d13); pointer-events: none; }
-.method-scene-grid { opacity: .16; background-image: linear-gradient(rgb(255 255 255 / .18) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / .18) 1px, transparent 1px); background-size: 55px 55px; mask-image: linear-gradient(180deg, #000, transparent 67%); pointer-events: none; }
-.method-route { opacity: .72; pointer-events: none; filter: drop-shadow(0 0 7px rgb(250 97 166 / .8)); }
-.method-scene-chip { border: 1px solid rgb(255 255 255 / .6); background: rgb(14 10 13 / .4); padding: .55rem .75rem; font-size: .62rem; font-weight: 800; letter-spacing: .13em; backdrop-filter: blur(8px); }
-.method-scene-counter { font-size: 1.7rem; font-weight: 900; line-height: 1; }
-.method-scene-counter small { font-size: .7rem; font-weight: 500; }
-.method-scene-cue { color: #ffb4d1; font-size: .7rem; font-weight: 800; letter-spacing: .15em; }
-.method-scene-content p { color: #fff1f4; }
-.method-scene-detail { border-color: #f57caf; color: #eacdd9 !important; }
-.method-scene-footer { border-color: rgb(255 255 255 / .24); color: #ffc5dc; }
-.method-nav-arrow { border: 1px solid rgb(255 255 255 / .55); color: white; transition: background .2s, color .2s; }
-.method-nav-arrow:hover { background: #f27bae; color: #23131a; }
-.method-playbook-bottom { color: #51474b; }
-.method-playbook-bottom a { color: #8d1b53; transition: gap .2s; }
-.method-playbook-bottom a:hover { gap: .75rem; }
 
-.knowledge-shell { border-top: 1px solid #d9ced0; padding-top: 4rem; }
-.knowledge-heading h3 { color: #201b1d; }
-.knowledge-search-area label { color: #74224c; }
-.knowledge-search-box { border: 1px solid #a78998; background: #fffdfb; color: #201b1d; box-shadow: 0 9px 25px rgb(69 35 49 / .07); transition: border-color .2s, box-shadow .2s; }
-.knowledge-search-box:focus-within { border-color: #9d235d; box-shadow: 0 0 0 3px rgb(162 42 101 / .15); }
-.knowledge-search-box input { color: #201b1d; }
-.knowledge-search-box input::placeholder { color: #665b60; }
-.knowledge-search-box input:focus { outline: none; }
-.knowledge-clear { color: #6b3c51; }
-.knowledge-clear:hover { background: #f1e3e9; }
-.knowledge-suggestions { color: #62575b; }
-.knowledge-suggestions button { border: 1px solid #cfb8c2; border-radius: 999px; padding: .35rem .65rem; color: #78304f; transition: background .2s, border-color .2s; }
-.knowledge-suggestions button:hover { border-color: #ae5480; background: #f9e4ec; }
-.knowledge-content { border-color: #d9ced0; }
-.knowledge-topics { color: #322b2e; }
-.knowledge-topic { border: 1px solid #d6c9cb; background: #fbf8f6; transition: background .2s, border-color .2s; }
-.knowledge-topic:hover { border-color: #b7658b; }
-.knowledge-topic.is-active { border-color: #9c285e; background: #f6d9e6; color: #65153d; font-weight: 800; }
-.knowledge-results-header { color: #704057; }
-.knowledge-item { border-top: 1px solid #cbbfc0; }
-.knowledge-item:last-child { border-bottom: 1px solid #cbbfc0; }
-.knowledge-item summary { color: #201b1d; }
+.method-playbook-heading { max-width: 58rem; }
+.method-playbook-heading h2 { font-size: clamp(2.7rem, 6vw, 6rem); line-height: .96; letter-spacing: -.065em; }
+.method-playbook-heading h2 span { color: #a32d65; }
+.method-playbook-heading p { margin-top: 1.1rem; color: #5e5358; font-size: clamp(.95rem, 1.4vw, 1.1rem); }
+
+.method-carousel { border-radius: 1.4rem; background: #fffdfb; box-shadow: 0 20px 65px rgb(46 31 37 / .1); overflow: hidden; }
+.method-carousel-viewport { min-height: 480px; }
+.method-slide { display: grid; grid-template-columns: 56% 44%; min-height: 480px; }
+.method-slide-image { position: relative; min-height: 480px; background: #33232b; overflow: hidden; }
+.method-slide-photo { position: absolute; inset: 0; }
+.method-slide-image::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(130deg, transparent 58%, rgb(38 17 27 / .18)), radial-gradient(circle at 15% 85%, rgb(245 91 157 / .17), transparent 50%); }
+.method-slide-copy { display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; padding: clamp(1.7rem, 4vw, 4rem); background: radial-gradient(circle at 100% 0%, #fff5f9, transparent 46%), #fffdfb; }
+.method-slide-count { color: #9d2860; font-size: .83rem; font-weight: 800; letter-spacing: .05em; }
+.method-slide-count span { color: #9b9095; font-weight: 500; }
+.method-slide-copy h3 { max-width: 10ch; font-size: clamp(2.3rem, 3.7vw, 4.3rem); line-height: .98; letter-spacing: -.055em; }
+.method-slide-copy p { max-width: 32ch; margin-top: 1.2rem; color: #5a5054; font-size: clamp(.97rem, 1.25vw, 1.1rem); line-height: 1.5; }
+.method-slide-text { min-height: 15rem; }
+.method-slide-controls { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+.method-slide-progress { display: flex; align-items: center; gap: .4rem; flex: 1; max-width: 12rem; }
+.method-slide-progress button { flex: 1; height: 2.75rem; position: relative; }
+.method-slide-progress button::after { content: ""; position: absolute; left: 0; right: 0; top: calc(50% - 2px); height: 4px; border-radius: 99px; background: #e8dce1; transition: background .2s; }
+.method-slide-progress button.is-active::after { background: #aa326c; }
+.method-slide-progress button:hover::after { background: #c76793; }
+.method-slide-arrows { display: flex; gap: .55rem; }
+.method-slide-arrows button { display: grid; place-items: center; width: 2.8rem; height: 2.8rem; border: 1px solid #d8cbd0; border-radius: 50%; color: #53243a; transition: background .2s, border-color .2s; }
+.method-slide-arrows button:hover { background: #f8e2eb; border-color: #b96a91; }
+.method-slide-arrows svg { width: 1.1rem; height: 1.1rem; }
+.method-cta { display: inline-flex; align-items: center; gap: .45rem; margin-top: 1.4rem; min-height: 2.75rem; color: #8d2054; font-size: .92rem; font-weight: 800; }
+.method-cta svg { width: 1rem; height: 1rem; }
+.method-cta:hover { color: #5d1538; }
+
+.knowledge-shell { margin-top: clamp(5rem, 9vw, 9rem); border-top: 1px solid #ddd6d3; padding-top: clamp(4rem, 7vw, 7rem); }
+.knowledge-inner { max-width: 48rem; margin-inline: auto; }
+.knowledge-inner h3 { font-size: clamp(2.4rem, 5vw, 4.7rem); line-height: 1; letter-spacing: -.06em; }
+.knowledge-intro { margin-top: 1rem; color: #62585c; font-size: 1rem; }
+.knowledge-search-box { display: flex; align-items: center; gap: .75rem; height: 3.8rem; margin-top: 2rem; padding: 0 1.15rem; border: 1px solid #d7cbd0; border-radius: 1rem; background: #fffdfb; box-shadow: 0 7px 25px rgb(48 31 40 / .04); transition: border-color .2s, box-shadow .2s; }
+.knowledge-search-box:focus-within { border-color: #9d235d; box-shadow: 0 0 0 3px rgb(162 42 101 / .14); }
+.knowledge-search-box > svg { width: 1.2rem; height: 1.2rem; flex-shrink: 0; color: #8a6b79; }
+.knowledge-search-box input { min-width: 0; flex: 1; outline: 0; background: transparent; color: #231e20; font-size: .98rem; }
+.knowledge-search-box input::placeholder { color: #75696f; }
+.knowledge-search-box button { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; color: #623249; }
+.knowledge-search-box button:hover { background: #f8e8ee; }
+.knowledge-search-box button svg { width: 1rem; height: 1rem; }
+.knowledge-results { margin-top: 1.5rem; }
+.knowledge-item { border-bottom: 1px solid #ddd5d4; }
+.knowledge-item summary { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 4.9rem; padding: 1.2rem .15rem; cursor: pointer; list-style: none; color: #282125; font-size: clamp(1rem, 1.4vw, 1.12rem); font-weight: 700; line-height: 1.35; }
 .knowledge-item summary::-webkit-details-marker { display: none; }
-.knowledge-item summary:focus-visible { outline: 2px solid #9d235d; outline-offset: 3px; }
-.knowledge-item-topic { color: #9d235d; }
-.knowledge-plus { border: 1px solid #cdb7c1; color: #79224f; transition: background .2s; }
-.knowledge-item[open] .knowledge-plus, .knowledge-item summary:hover .knowledge-plus { background: #f5d5e3; }
-.knowledge-answer, .knowledge-note { color: #53484d; }
-.knowledge-more, .knowledge-empty a { color: #8c2053; }
-.knowledge-more:hover, .knowledge-empty a:hover { color: #5d1034; }
-.knowledge-empty { border: 1px solid #d3b7c4; background: #fff8fa; color: #3b2931; }
+.knowledge-item summary:hover { color: #8d2054; }
+.knowledge-item summary:focus-visible, .method-slide-progress button:focus-visible, .method-slide-arrows button:focus-visible, .method-cta:focus-visible, .knowledge-more:focus-visible, .knowledge-search-box button:focus-visible { outline: 2px solid #9d235d; outline-offset: 3px; }
+.knowledge-plus { display: grid; place-items: center; width: 2rem; height: 2rem; flex-shrink: 0; color: #93315e; }
+.knowledge-plus svg { width: 1.05rem; height: 1.05rem; transition: transform .2s; }
+.knowledge-item[open] .knowledge-plus svg { transform: rotate(45deg); }
+.knowledge-item p { max-width: 40rem; padding: 0 3rem 1.5rem .15rem; color: #5a5054; font-size: .98rem; line-height: 1.55; }
+.knowledge-more, .knowledge-empty a { display: inline-flex; align-items: center; gap: .45rem; min-height: 2.75rem; margin-top: 1rem; color: #8d2054; font-size: .9rem; font-weight: 800; }
+.knowledge-more svg, .knowledge-empty a svg { width: 1rem; height: 1rem; }
+.knowledge-more:hover, .knowledge-empty a:hover { color: #5d1538; }
+.knowledge-empty { padding: 1.5rem .15rem; color: #55494e; }
+.knowledge-empty a { margin-top: .3rem; }
 
-@media (max-width: 640px) {
-  .method-playbook-heading h2 { max-width: 10ch; }
-  .method-track::before { left: 2.15rem; }
-  .method-scene { min-height: 570px; }
-  .knowledge-shell { padding-top: 3rem; }
+@media (max-width: 767px) {
+  .method-carousel-viewport, .method-slide { min-height: 0; }
+  .method-slide { grid-template-columns: 1fr; }
+  .method-slide-image { min-height: 0; aspect-ratio: 1.34; }
+  .method-slide-copy { min-height: 330px; padding: 1.6rem; }
+  .method-slide-copy h3 { font-size: clamp(2.2rem, 9vw, 3.2rem); }
+  .method-slide-copy p { margin-top: .85rem; }
+  .method-slide-text { min-height: 11rem; }
+  .knowledge-shell { margin-top: 5rem; }
 }
+
 @media (prefers-reduced-motion: reduce) {
-  .method-step:hover, .method-step-arrow, .method-playbook-bottom a { transform: none; transition: none; }
+  .method-slide-progress button::after, .method-slide-arrows button, .knowledge-plus svg { transition: none; }
 }
