@@ -299,13 +299,6 @@ footer a { display: inline-flex; align-items: center; min-height: 44px; }
 .experience-heading h2 { font-size: clamp(2.4rem, 6.5vw, 6rem); line-height: .92; letter-spacing: -.06em; font-weight: 900; text-transform: uppercase; margin-top: 1.8rem; }
 .experience-heading h2 span { color: var(--primary); white-space: nowrap; }
 .experience-heading > p:last-child { max-width: 23rem; color: var(--muted); margin-top: 1.5rem; }
-#como-funciona { background: var(--foreground); color: var(--background); }
-#como-funciona h2, #como-funciona h3, #como-funciona summary { color: var(--background); }
-#como-funciona .section-tag { color: var(--background); }
-#como-funciona p.text-foreground\/70 { color: rgb(20 18 16 / .84); }
-#como-funciona .text-primary { color: oklch(0.39 0.16 350); }
-#como-funciona h2 { font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: -.05em; line-height: 1; }
-#como-funciona .text-5xl { font-size: 5rem; letter-spacing: -.07em; }
 .community-section { background: radial-gradient(ellipse at 72% 23%, #361a2b 0, #191218 43%, #110f12 78%); color: #fff8f5; }
 .community-orbit { position: absolute; width: 42rem; height: 42rem; border: 1px solid rgb(255 255 255 / .065); border-radius: 50%; pointer-events: none; }
 .community-orbit-one { right: -9rem; top: -15rem; }
@@ -362,7 +355,3 @@ footer a { display: inline-flex; align-items: center; min-height: 44px; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .community-selector:hover, .community-arrow:hover { transform: none; }
 }
-
-/* Preguntas frecuentes: sin el triángulo nativo de <details> en Safari. */
-.faq-item summary::-webkit-details-marker { display: none; }
-.faq-item summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }

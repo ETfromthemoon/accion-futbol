@@ -278,56 +278,53 @@ export const SEDES: readonly Sede[] = [
   },
 ];
 
-export type Step = { number: string; title: string; description: string };
+export type MethodStep = {
+  phase: string;
+  title: string;
+  description: string;
+  detail: string;
+  image: string;
+  imageAlt: string;
+  cue: string;
+};
 
-export const STEPS: readonly Step[] = [
+// Relato visual del método ya descrito en PILLARS y en los programas.
+export const METHOD_STEPS: readonly MethodStep[] = [
   {
-    number: "01",
-    title: "Agenda tu clase de prueba",
-    description:
-      "Completa el formulario o escríbenos por WhatsApp con la categoría que te interesa. Te coordinamos día y hora.",
+    phase: "PUNTO DE PARTIDA",
+    title: "Encuentra tu lugar",
+    description: "Partimos por tu edad, experiencia y objetivos para ubicarte en el grupo que corresponde a tu momento.",
+    detail: "Cada categoría reúne personas con una etapa y un punto de partida similares.",
+    image: "/images/group-team.webp",
+    imageAlt: "Grupo de jugadores de Acción Fútbol reunido en la cancha",
+    cue: "GRUPO",
   },
   {
-    number: "02",
-    title: "Entrena gratis con tu grupo",
-    description:
-      "Te sumamos al grupo de WhatsApp de tu categoría, vienes a Club Oriente y vives una sesión completa sin pagar nada.",
+    phase: "TRABAJO CON INTENCIÓN",
+    title: "Entrena cada recurso",
+    description: "La sesión combina técnica y preparación física dentro de un plan, con desafíos adecuados para tu nivel.",
+    detail: "Un entrenamiento con estructura permite trabajar habilidades concretas, no solo jugar un partido.",
+    image: "/images/adults-dribble.webp",
+    imageAlt: "Dos jugadores disputan el balón durante un entrenamiento",
+    cue: "TÉCNICA",
   },
   {
-    number: "03",
-    title: "Inscríbete y sigue jugando",
-    description:
-      "Te contamos los valores de inscripción y mensualidad de la categoría que elegiste. La primera mensualidad puede ser proporcional a la fecha de ingreso.",
-  },
-];
-
-export type Faq = { question: string; answer: string };
-
-// Solo información publicada por la academia en accionfutbol.cl.
-export const FAQS: readonly Faq[] = [
-  {
-    question: "¿La clase de prueba tiene costo?",
-    answer:
-      "No. Tu primera clase es gratis y sin compromiso: vienes, entrenas con el grupo de tu categoría y después decides.",
+    phase: "LECTURA DE JUEGO",
+    title: "Decide en la cancha",
+    description: "Llevas lo aprendido a situaciones de juego: leer espacios, elegir movimientos y coordinarte con tu equipo.",
+    detail: "La táctica toma sentido cuando se practica junto a otras personas.",
+    image: "/images/action-strike.webp",
+    imageAlt: "Futbolista controla el balón en una acción de juego",
+    cue: "TÁCTICA",
   },
   {
-    question: "¿Cuáles son los valores de inscripción y mensualidad?",
-    answer:
-      "Los valores dependen de la categoría. Escríbenos y te compartimos la información vigente para el programa que te interesa.",
-  },
-  {
-    question: "¿Qué pasa si entro a mitad de mes?",
-    answer: "Pagas la mensualidad proporcional a la fecha en que te incorporas, no el mes completo.",
-  },
-  {
-    question: "¿Cómo se entra al programa Pro?",
-    answer:
-      "El programa Pro contempla una prueba de selección. Para conocer los requisitos de edad y los detalles vigentes, consúltanos directamente.",
-  },
-  {
-    question: "¿Dónde entrenan?",
-    answer:
-      "En Club Oriente, Nueva Bilbao 9495, Las Condes. Kids entrena en la cancha 7, AM Adultos y Pro en la 16, y PM Adultos y Femenino en la 17.",
+    phase: "PROGRESO COMPARTIDO",
+    title: "Vuelve y sigue creciendo",
+    description: "Cada sesión es una nueva oportunidad para entrenar, ajustar y disfrutar el fútbol con tu grupo.",
+    detail: "El progreso se construye con continuidad, motivación y comunidad.",
+    image: "/images/group-adults.webp",
+    imageAlt: "Equipo de adultos de Acción Fútbol posando en la cancha",
+    cue: "EQUIPO",
   },
 ];
 

@@ -85,3 +85,7 @@ src/lib/site.ts
 Las imágenes están en `public/images/` (formato WebP optimizado).
 Para optimizar imágenes nuevas: ponlas en `public/images/` y corre
 `node scripts/optimize-images.mjs`.
+
+### Metodología y base de conocimiento
+
+Las cuatro fases de la pizarra interactiva de «Cómo funciona» se editan en `METHOD_STEPS` de `src/lib/site.ts`. Las preguntas, respuestas, temas y palabras relacionadas del buscador están en `src/lib/knowledge-base.ts`. Cada respuesta debe basarse en información confirmada; el buscador local solo recupera entradas de esa base y muestra contacto directo cuando no encuentra una coincidencia. No genera respuestas con IA ni consulta servicios externos. Al cambiar horarios o programas, revisa también las entradas relacionadas y ejecuta `npm test`.

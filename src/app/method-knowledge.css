@@ -1,0 +1,83 @@
+.method-knowledge-section {
+  background: #f3f0ea;
+  color: #201b1d;
+  border-top: 1px solid #ded7d4;
+}
+.method-kicker, .knowledge-kicker { color: #9b1f5d; font-weight: 800; }
+.method-playbook-heading h2 { font-size: clamp(2.65rem, 6vw, 6.2rem); line-height: .93; letter-spacing: -.065em; }
+.method-playbook-heading h2 span { color: #a42c65; }
+.method-lede, .knowledge-intro { color: #51474b; }
+.method-board { background: #181619; box-shadow: 0 30px 70px rgb(33 18 25 / .2); }
+.method-board-nav { color: #f9f2f3; background: radial-gradient(circle at 10% 0, #3b1b2c, #1d191d 65%); }
+.method-board-top { color: #f4afcc; font-size: .65rem; font-weight: 800; letter-spacing: .16em; }
+.method-track { position: relative; }
+.method-track::before { content: ""; position: absolute; top: 1.75rem; bottom: 1.75rem; left: 2.42rem; width: 1px; background: rgb(255 255 255 / .16); }
+.method-step { position: relative; border: 1px solid transparent; color: #eadde3; transition: background .3s, border-color .3s, transform .3s; }
+.method-step:hover { background: rgb(255 255 255 / .055); transform: translateX(4px); }
+.method-step.is-active { border-color: rgb(255 156 194 / .46); background: rgb(231 79 144 / .13); color: white; }
+.method-step-icon { position: relative; z-index: 1; border: 1px solid rgb(255 255 255 / .26); background: #281e25; color: #ffb8d5; transition: background .3s, color .3s; }
+.method-step.is-active .method-step-icon { background: #f27bae; color: #28131d; border-color: #f27bae; }
+.method-step-phase { color: #db9ebb; }
+.method-step-title { color: white; }
+.method-step-arrow { opacity: .35; transition: opacity .2s, transform .2s; }
+.method-step.is-active .method-step-arrow, .method-step:hover .method-step-arrow { opacity: 1; transform: translate(2px, -2px); }
+.method-board-hint { color: #bcaab2; }
+.method-hint-line { width: 1.6rem; height: 1px; background: #ed7ba9; }
+.method-scene { background: #2d2428; color: white; }
+.method-scene-shade { background: linear-gradient(180deg, rgb(0 0 0 / .48), rgb(0 0 0 / .11) 30%, rgb(16 9 13 / .8) 70%, #160d13); pointer-events: none; }
+.method-scene-grid { opacity: .16; background-image: linear-gradient(rgb(255 255 255 / .18) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / .18) 1px, transparent 1px); background-size: 55px 55px; mask-image: linear-gradient(180deg, #000, transparent 67%); pointer-events: none; }
+.method-route { opacity: .72; pointer-events: none; filter: drop-shadow(0 0 7px rgb(250 97 166 / .8)); }
+.method-scene-chip { border: 1px solid rgb(255 255 255 / .6); background: rgb(14 10 13 / .4); padding: .55rem .75rem; font-size: .62rem; font-weight: 800; letter-spacing: .13em; backdrop-filter: blur(8px); }
+.method-scene-counter { font-size: 1.7rem; font-weight: 900; line-height: 1; }
+.method-scene-counter small { font-size: .7rem; font-weight: 500; }
+.method-scene-cue { color: #ffb4d1; font-size: .7rem; font-weight: 800; letter-spacing: .15em; }
+.method-scene-content p { color: #fff1f4; }
+.method-scene-detail { border-color: #f57caf; color: #eacdd9 !important; }
+.method-scene-footer { border-color: rgb(255 255 255 / .24); color: #ffc5dc; }
+.method-nav-arrow { border: 1px solid rgb(255 255 255 / .55); color: white; transition: background .2s, color .2s; }
+.method-nav-arrow:hover { background: #f27bae; color: #23131a; }
+.method-playbook-bottom { color: #51474b; }
+.method-playbook-bottom a { color: #8d1b53; transition: gap .2s; }
+.method-playbook-bottom a:hover { gap: .75rem; }
+
+.knowledge-shell { border-top: 1px solid #d9ced0; padding-top: 4rem; }
+.knowledge-heading h3 { color: #201b1d; }
+.knowledge-search-area label { color: #74224c; }
+.knowledge-search-box { border: 1px solid #a78998; background: #fffdfb; color: #201b1d; box-shadow: 0 9px 25px rgb(69 35 49 / .07); transition: border-color .2s, box-shadow .2s; }
+.knowledge-search-box:focus-within { border-color: #9d235d; box-shadow: 0 0 0 3px rgb(162 42 101 / .15); }
+.knowledge-search-box input { color: #201b1d; }
+.knowledge-search-box input::placeholder { color: #665b60; }
+.knowledge-search-box input:focus { outline: none; }
+.knowledge-clear { color: #6b3c51; }
+.knowledge-clear:hover { background: #f1e3e9; }
+.knowledge-suggestions { color: #62575b; }
+.knowledge-suggestions button { border: 1px solid #cfb8c2; border-radius: 999px; padding: .35rem .65rem; color: #78304f; transition: background .2s, border-color .2s; }
+.knowledge-suggestions button:hover { border-color: #ae5480; background: #f9e4ec; }
+.knowledge-content { border-color: #d9ced0; }
+.knowledge-topics { color: #322b2e; }
+.knowledge-topic { border: 1px solid #d6c9cb; background: #fbf8f6; transition: background .2s, border-color .2s; }
+.knowledge-topic:hover { border-color: #b7658b; }
+.knowledge-topic.is-active { border-color: #9c285e; background: #f6d9e6; color: #65153d; font-weight: 800; }
+.knowledge-results-header { color: #704057; }
+.knowledge-item { border-top: 1px solid #cbbfc0; }
+.knowledge-item:last-child { border-bottom: 1px solid #cbbfc0; }
+.knowledge-item summary { color: #201b1d; }
+.knowledge-item summary::-webkit-details-marker { display: none; }
+.knowledge-item summary:focus-visible { outline: 2px solid #9d235d; outline-offset: 3px; }
+.knowledge-item-topic { color: #9d235d; }
+.knowledge-plus { border: 1px solid #cdb7c1; color: #79224f; transition: background .2s; }
+.knowledge-item[open] .knowledge-plus, .knowledge-item summary:hover .knowledge-plus { background: #f5d5e3; }
+.knowledge-answer, .knowledge-note { color: #53484d; }
+.knowledge-more, .knowledge-empty a { color: #8c2053; }
+.knowledge-more:hover, .knowledge-empty a:hover { color: #5d1034; }
+.knowledge-empty { border: 1px solid #d3b7c4; background: #fff8fa; color: #3b2931; }
+
+@media (max-width: 640px) {
+  .method-playbook-heading h2 { max-width: 10ch; }
+  .method-track::before { left: 2.15rem; }
+  .method-scene { min-height: 570px; }
+  .knowledge-shell { padding-top: 3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .method-step:hover, .method-step-arrow, .method-playbook-bottom a { transform: none; transition: none; }
+}

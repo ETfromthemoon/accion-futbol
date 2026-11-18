@@ -7,6 +7,7 @@ import "./globals.css";
 import "./experiences.css";
 import "./hero.css";
 import "./booking.css";
+import "./method-knowledge.css";
 
 // Display: grotesca pesada estilo gráfica de transmisión deportiva.
 const archivo = Archivo({
