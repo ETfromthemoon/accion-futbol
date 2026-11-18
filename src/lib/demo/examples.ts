@@ -2,48 +2,97 @@ import type { FormDefinition } from "@/lib/forms/schema";
 import type { NewsPost } from "@/lib/news/schema";
 import type { PopupDefinition } from "@/lib/popups/schema";
 
-// Datos ficticios versionados para mostrar el producto sin crear leads ni contactos reales.
+// Piezas ficticias, versionadas y compatibles con los modelos reales del panel.
 export const demoForm: FormDefinition = {
-  slug: "muestra-clase-de-prueba", title: "Reserva tu clase de prueba", version: 1, status: "draft",
+  slug: "muestra-clase-kids",
+  title: "Tu primera clase en Acción Fútbol Kids",
+  description: "Cuéntanos un poco sobre tu futuro jugador o jugadora. Nuestro equipo te contactará para coordinar su primera experiencia en la cancha.",
+  coverImage: "/images/kids-joy.webp",
+  coverAlt: "Niños y niñas disfrutando juntos de un entrenamiento de fútbol",
+  version: 1,
+  status: "draft",
   fields: [
-    { id: "nombre", label: "Nombre y apellido", type: "text", required: true },
-    { id: "correo", label: "Correo electrónico", type: "email", required: true },
-    { id: "telefono", label: "Teléfono de contacto", type: "tel", required: true },
-    { id: "programa", label: "Programa de interés", type: "select", required: true, options: [
-      { value: "kids", label: "Kids · niños y niñas" }, { value: "adultos", label: "Adultos" }, { value: "femenino", label: "Femenino" },
+    { id: "apoderado", label: "Nombre de madre, padre o apoderado", type: "text", required: true },
+    { id: "correo", label: "Correo electrónico de contacto", type: "email", required: true },
+    { id: "telefono", label: "Teléfono o WhatsApp", type: "tel", required: true },
+    { id: "jugador", label: "Nombre del niño o niña", type: "text", required: true },
+    { id: "edad", label: "Tramo de edad", type: "select", required: true, options: [
+      { value: "cuatro-ocho", label: "4 a 8 años" },
+      { value: "nueve-catorce", label: "9 a 14 años" },
     ] },
-    { id: "mensaje", label: "¿Qué te gustaría contarnos?", type: "textarea", required: false },
-    { id: "contacto", label: "Acepto que me contacten para coordinar la clase", type: "checkbox", required: true },
+    { id: "experiencia", label: "Experiencia previa", type: "select", required: true, options: [
+      { value: "primera-vez", label: "Será su primera experiencia" },
+      { value: "recreativo", label: "Juega de forma recreativa" },
+      { value: "equipo", label: "Ha entrenado en un equipo" },
+    ] },
+    { id: "objetivo", label: "¿Qué le gustaría desarrollar en la cancha?", type: "textarea", required: false },
+    { id: "origen", label: "¿Cómo conociste la academia?", type: "select", required: false, options: [
+      { value: "recomendacion", label: "Recomendación" },
+      { value: "redes", label: "Redes sociales" },
+      { value: "buscador", label: "Búsqueda en internet" },
+      { value: "otro", label: "Otro medio" },
+    ] },
+    { id: "contacto", label: "Acepto que el equipo me contacte para coordinar la clase de prueba", type: "checkbox", required: true },
   ],
 };
 
 export const demoAnswers: Record<string, string | boolean> = {
-  nombre: "Camila Ejemplo", correo: "camila@example.com", telefono: "+56 9 0000 0000",
-  programa: "kids", mensaje: "Me gustaría conocer los horarios disponibles.", contacto: true,
+  apoderado: "Camila Ejemplo",
+  correo: "camila@example.com",
+  telefono: "+56 9 0000 0000",
+  jugador: "Tomás Ejemplo",
+  edad: "nueve-catorce",
+  experiencia: "recreativo",
+  objetivo: "Que gane confianza, disfrute entrenar y aprenda a trabajar en equipo.",
+  origen: "recomendacion",
+  contacto: true,
 };
 
 export const demoNews: NewsPost = {
-  id: "00000000-0000-4000-8000-000000000001", slug: "muestra-noticia-entrenamiento",
-  title: "Una tarde para descubrir el fútbol en equipo",
-  summary: "Así podría verse una noticia de la academia en la portada y en la página de publicaciones.",
-  body: "En Acción Fútbol creemos que cada entrenamiento es una oportunidad para aprender, compartir y disfrutar la cancha. Esta publicación es una muestra de cómo se presentarán las novedades de la academia.\n\nAquí se podrán contar actividades, fechas importantes y experiencias de la comunidad. El equipo podrá actualizar el título, la imagen, el resumen y el contenido desde el panel de administración.\n\nEste texto es únicamente de demostración; no anuncia una actividad ni una fecha real.",
-  coverImage: "/images/kids-joy.webp", coverAlt: "Niños disfrutando de una jornada de fútbol",
-  status: "draft", publishedAt: null, createdAt: "2026-11-17T12:00:00.000Z", updatedAt: "2026-11-17T12:00:00.000Z",
+  id: "00000000-0000-4000-8000-000000000001",
+  slug: "muestra-la-cancha-donde-empieza-la-confianza",
+  title: "La cancha donde empieza la confianza",
+  summary: "Un entrenamiento puede ser el comienzo de algo grande: movimiento, amistades y la seguridad de atreverse a jugar.",
+  body: "No todos llegan a la cancha de la misma manera. Algunos corren hacia la pelota sin pensarlo; otros necesitan unos minutos para mirar, respirar y descubrir que también tienen un lugar en el equipo. En Acción Fútbol, cada primer paso cuenta.\n\nEn los entrenamientos Kids, el juego abre espacio para aprender a escuchar, compartir y tomar decisiones. El balón es el punto de partida, pero lo que sucede alrededor también importa: celebrar un pase, volver a intentarlo y acompañar a quien está aprendiendo.\n\nEl programa recibe a niños y niñas de 4 a 14 años en Club Oriente, Las Condes. Los grupos de 4 a 8 y de 9 a 14 años entrenan los sábados en horarios diferenciados. Así cada etapa puede vivir el fútbol a su ritmo.\n\n¿Quieres conocer la experiencia de cerca? En el sitio puedes explorar los programas y solicitar una clase de prueba. El equipo confirmará los detalles contigo antes del entrenamiento.",
+  coverImage: "/images/kids-joy.webp",
+  coverAlt: "Niños y niñas celebrando juntos durante un entrenamiento de fútbol",
+  status: "draft",
+  publishedAt: null,
+  createdAt: "2026-11-17T12:00:00.000Z",
+  updatedAt: "2026-11-17T12:00:00.000Z",
 };
 
 export const demoPopup: PopupDefinition = {
-  name: "Muestra · clase de prueba", status: "draft", template: "split", path: "/",
-  trigger: "delay", delaySeconds: 5, scrollPercent: 50, frequencyDays: 7,
-  startsAt: "", endsAt: "", eyebrow: "ACCIÓN FÚTBOL", title: "Tu próximo momento empieza en la cancha",
-  message: "Conoce cómo se vería una invitación con imagen, mensaje y botón. Esta es una vista de prueba.",
-  imageUrl: "/images/group-team.webp", imageAlt: "Equipo de fútbol reunido en la cancha",
-  ctaLabel: "Conocer los programas", ctaHref: "#programas",
+  name: "Muestra · primera clase Kids",
+  status: "draft",
+  template: "split",
+  path: "/",
+  trigger: "delay",
+  delaySeconds: 8,
+  scrollPercent: 50,
+  frequencyDays: 7,
+  startsAt: "",
+  endsAt: "",
+  eyebrow: "TU PRIMER ENTRENAMIENTO",
+  title: "Hay un lugar para ti en la cancha",
+  message: "Conoce los programas de Acción Fútbol y solicita una clase de prueba. Nuestro equipo te ayudará a encontrar tu lugar para empezar.",
+  imageUrl: "/images/group-team.webp",
+  imageAlt: "Jugadores de Acción Fútbol reunidos después de entrenar",
+  ctaLabel: "Solicitar clase de prueba",
+  ctaHref: "#inscripcion",
 };
 
+// Concepto editorial: el módulo de newsletter aún no administra ni envía campañas.
 export const demoNewsletter = {
-  subject: "Novedades desde la cancha · edición de muestra",
-  preheader: "Un vistazo de cómo podría verse un correo de Acción Fútbol.",
-  heading: "El fútbol se vive en equipo",
-  body: "Hola, Camila. Este es un ejemplo visual de una futura comunicación por correo. Aquí podrían compartirse noticias de la academia, actividades y enlaces útiles para la comunidad.",
+  subject: "La cancha nos reúne · una mirada a Acción Fútbol",
+  preheader: "Historias, programas y nuevas razones para salir a jugar.",
+  heading: "El fútbol se vive mejor en equipo.",
+  introduction: "Cada entrenamiento trae una oportunidad distinta: aprender un movimiento, conocer a alguien o simplemente volver a disfrutar el juego. Queremos compartir contigo lo que pasa dentro y fuera de la cancha.",
+  featureTitle: "Una cancha para cada momento",
+  featureBody: "Desde las primeras jugadas de Kids hasta los entrenamientos de adultos y femenino, hay distintas maneras de vivir Acción Fútbol.",
+  featureHref: "/#programas",
+  storyTitle: demoNews.title,
+  storyBody: demoNews.summary,
+  storyHref: "/muestras/noticia",
   email: "camila@example.com",
 } as const;

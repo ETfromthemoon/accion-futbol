@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { FormBuilder } from "./form-builder";
 import type { FormDefinition } from "@/lib/forms/schema";
+import { demoForm } from "@/lib/demo/examples";
 import { PopupsAdmin } from "@/components/campaign/popups-admin";
 import { NewsletterAdmin } from "@/components/newsletter/newsletter-admin";
 import { NewsAdmin } from "@/components/news/news-admin";
@@ -123,7 +124,7 @@ export function FormsAdmin({ authenticated, sheetsConfigured }: { authenticated:
     {tab === "forms" && <div className="admin-content">
     {!sheetsConfigured && <p className="admin-notice text-sm">Las respuestas se guardan en este panel. La copia a Google Sheets se habilitará cuando esté lista la hoja del cliente.</p>}
     <section className="admin-panel space-y-5"><div className="admin-panel-intro"><h3 className="text-xl">{editing ? "Preparar formulario" : "Crear formulario"}</h3><p>Define las preguntas y revisa el resultado antes de publicarlo.</p><a className="admin-button admin-button-primary w-fit" href="/muestras/formulario" target="_blank" rel="noopener noreferrer">Ver post de prueba ↗</a></div>
-      <div className="space-y-2"><p className="text-sm text-muted">Bases orientativas: solo incluyen nombre y enlace sugeridos. Completa sus campos después de revisar los formularios actuales del cliente.</p><div className="flex flex-wrap gap-2">{templateDrafts.map((template) => <button key={template.slug} type="button" className="admin-button admin-button-quiet" onClick={() => { setEditing(template); setDraft(template); }}>Usar base: {template.title}</button>)}</div></div>
+      <div className="space-y-2"><p className="text-sm text-muted">Puedes cargar una muestra completa en el editor. Solo se guarda en la base de datos si pulsas Guardar borrador o Publicar versión.</p><div className="flex flex-wrap gap-2"><button type="button" className="admin-button admin-button-primary" onClick={() => { setEditing(demoForm); setDraft(demoForm); setEditorRevision((value) => value + 1); }}>Cargar ejemplo completo</button>{templateDrafts.map((template) => <button key={template.slug} type="button" className="admin-button admin-button-quiet" onClick={() => { setEditing(template); setDraft(template); setEditorRevision((value) => value + 1); }}>Usar base: {template.title}</button>)}</div></div>
       <FormBuilder key={`${editing ? `${editing.slug}-${editing.version}` : "new"}-${editorRevision}`} initialDraft={editing ?? emptyDraft} onDraftChange={setDraft} />
       <div className="admin-actions"><button type="button" className="admin-button" disabled={busy} onClick={() => save("draft")}>Guardar borrador</button><button type="button" className="admin-button admin-button-primary" disabled={busy} onClick={() => save("published")}>Publicar versión</button>
         {editing && <button type="button" className="admin-button admin-button-quiet" onClick={() => { setEditing(null); setDraft(emptyDraft); setEditorRevision((value) => value + 1); }}>Nuevo formulario</button>}</div>

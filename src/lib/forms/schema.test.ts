@@ -25,4 +25,9 @@ describe("formularios", () => {
   it("rechaza identificadores duplicados", () => {
     expect(formDefinitionSchema.safeParse({ ...form, fields: [form.fields[0], form.fields[0]] }).success).toBe(false);
   });
+  it("admite una portada accesible y rechaza URL e imagen sin descripción", () => {
+    expect(formDefinitionSchema.safeParse({ ...form, description: "Inscríbete", coverImage: "/images/kids-joy.webp", coverAlt: "Jugadores en la cancha" }).success).toBe(true);
+    expect(formDefinitionSchema.safeParse({ ...form, coverImage: "/images/kids-joy.webp" }).success).toBe(false);
+    expect(formDefinitionSchema.safeParse({ ...form, coverImage: "javascript:alert(1)", coverAlt: "Imagen" }).success).toBe(false);
+  });
 });

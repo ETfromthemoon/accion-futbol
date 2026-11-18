@@ -1,6 +1,7 @@
 # Formularios dinámicos
 
 - `GET /formularios/{slug}` y `GET /api/forms/{slug}` exponen solo definiciones publicadas.
+- Cada definición admite título, descripción e imagen de portada opcionales con texto alternativo, además de campos de texto, correo, teléfono, área de texto, selector y casilla. Las definiciones anteriores siguen siendo válidas sin los nuevos datos de portada.
 - `POST /api/forms/{slug}` valida las respuestas contra la definición publicada y las guarda en Postgres.
 - Aplicar `migration.sql` con el proceso de migraciones acordado antes de activar el flujo. Requiere `DATABASE_URL`; no hay modo demo que declare respuestas persistidas.
 - Los envíos aceptados se limitan localmente a 10 por IP y formulario cada 10 minutos (más un límite de instancia). El honeypot filtra bots simples. Estos límites en memoria no se comparten entre réplicas: antes del lanzamiento, configurar rate limiting distribuido en el edge/hosting para `POST /api/forms/*`.

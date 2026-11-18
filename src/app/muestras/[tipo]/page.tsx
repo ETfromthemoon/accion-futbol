@@ -1,33 +1,38 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { DemoForm } from "@/components/demo/demo-form";
+import { DemoNews } from "@/components/demo/demo-news";
+import { DemoNewsletter } from "@/components/demo/demo-newsletter";
 import { DemoPopup } from "@/components/demo/demo-popup";
-import { demoAnswers, demoForm, demoNews, demoNewsletter } from "@/lib/demo/examples";
 
 type Sample = "formulario" | "noticia" | "newsletter" | "popup";
 type Props = { params: Promise<{ tipo: string }> };
-const titles: Record<Sample, string> = { formulario: "Formulario", noticia: "Noticia", newsletter: "Newsletter", popup: "Pop-up" };
-const sampleKinds = Object.keys(titles) as Sample[];
-const inputClass = "w-full rounded-xl border border-white/20 bg-background px-4 py-3 text-foreground disabled:opacity-80";
+const samples: Record<Sample, { number: string; label: string; title: string; summary: string }> = {
+  formulario: { number: "01", label: "Formulario", title: "Una inscripción que llega completa.", summary: "Una portada clara, nueve preguntas bien elegidas y una respuesta ordenada para que el equipo pueda continuar la conversación." },
+  noticia: { number: "02", label: "Noticia", title: "Una historia que merece ser leída.", summary: "Imagen, titular, resumen y un relato que presenta la academia con la misma información que aparecería en portada." },
+  newsletter: { number: "03", label: "Newsletter", title: "Una comunidad que sigue en contacto.", summary: "Un concepto visual de correo y la solicitud que hoy puede registrarse desde el sitio, con sus límites claramente identificados." },
+  popup: { number: "04", label: "Pop-up", title: "Un mensaje en el momento justo.", summary: "Una campaña de muestra con imagen, enlace y activador, presentada en las tres plantillas disponibles en el panel." },
+};
+const kinds = Object.keys(samples) as Sample[];
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tipo } = await params;
-  return { title: `${titles[tipo as Sample] ?? "Muestra"} de prueba | Acción Fútbol`, robots: { index: false, follow: false } };
+  return { title: `${samples[tipo as Sample]?.label ?? "Muestra"} de prueba | Acción Fútbol`, robots: { index: false, follow: false } };
 }
 
 export default async function SamplePage({ params }: Props) {
   const { tipo } = await params;
-  if (!sampleKinds.includes(tipo as Sample)) notFound();
+  if (!kinds.includes(tipo as Sample)) notFound();
   const kind = tipo as Sample;
-  return <main className="mx-auto min-h-screen max-w-6xl px-5 pb-24 pt-8 sm:px-8 sm:pt-14">
-    <header className="flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-6"><Link href="/" className="font-display text-xl font-black tracking-tight">ACCIÓN<span className="text-primary">FÚTBOL</span></Link><Link href="/muestras" className="rounded-full border border-white/25 px-5 py-3 text-sm font-bold hover:border-primary">Todas las muestras ↗</Link></header>
-    <div className="py-10 sm:py-14"><p className="section-tag">Vista previa · {titles[kind]}</p><h1 className="mt-4 font-display text-4xl font-black sm:text-5xl">{titles[kind]} de prueba</h1><p className="mt-4 max-w-3xl rounded-xl border border-primary/40 bg-primary/10 p-4 text-sm leading-relaxed">Contenido ficticio guardado en el proyecto para revisión. Esta página no publica contenido real, no registra respuestas y no envía correos.</p></div>
-    {kind === "formulario" && <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,.7fr)]">
-      <section className="rounded-3xl border border-white/15 bg-surface p-6 sm:p-9"><p className="section-tag">Así lo vería una familia</p><h2 className="mt-4 font-display text-3xl font-black">{demoForm.title}</h2><p className="mt-3 text-sm text-muted">Los campos marcados con * son obligatorios. Muestra sin envío.</p><div className="mt-8 space-y-5">{demoForm.fields.map((field) => <div key={field.id} className="space-y-2"><label htmlFor={`demo-${field.id}`} className="block font-medium">{field.label}{field.required && " *"}</label>{field.type === "checkbox" ? <input id={`demo-${field.id}`} type="checkbox" checked={demoAnswers[field.id] === true} disabled className="size-5 accent-primary" /> : field.type === "textarea" ? <textarea id={`demo-${field.id}`} className={inputClass} value={String(demoAnswers[field.id] ?? "")} rows={3} disabled /> : field.type === "select" ? <select id={`demo-${field.id}`} className={inputClass} value={String(demoAnswers[field.id] ?? "")} disabled>{field.options?.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select> : <input id={`demo-${field.id}`} type={field.type} className={inputClass} value={String(demoAnswers[field.id] ?? "")} disabled />}</div>)}<span className="inline-flex min-h-12 items-center rounded-full bg-primary px-6 font-bold text-primary-foreground">Enviar respuesta</span><p className="text-xs text-muted">En esta vista el botón es ilustrativo.</p></div></section>
-      <aside className="h-fit rounded-3xl border border-white/15 bg-surface p-6 sm:p-8"><p className="section-tag">Así se vería en el panel</p><h2 className="mt-4 font-display text-2xl font-black">Respuesta guardada · muestra</h2><p className="mt-2 text-sm text-muted">Datos inventados. Ninguna respuesta fue insertada en la base de clientes.</p><dl className="mt-6 space-y-4">{demoForm.fields.map((field) => <div key={field.id} className="border-b border-white/10 pb-3"><dt className="text-xs font-bold uppercase tracking-wider text-muted">{field.label}</dt><dd className="mt-1 break-words font-medium">{field.type === "checkbox" ? "Sí" : field.type === "select" ? field.options?.find((option) => option.value === demoAnswers[field.id])?.label : String(demoAnswers[field.id] ?? "—")}</dd></div>)}</dl></aside>
-    </div>}
-    {kind === "noticia" && <article className="mx-auto max-w-3xl"><p className="section-tag">Noticias de la cancha</p><p className="mt-5 text-sm text-muted">Publicación de muestra · sin fecha real</p><h2 className="mt-4 font-display text-4xl font-black leading-tight sm:text-6xl">{demoNews.title}</h2><p className="mt-7 border-l-2 border-primary pl-5 text-lg text-foreground/80 sm:text-xl">{demoNews.summary}</p><figure className="mt-10"><div role="img" aria-label={demoNews.coverAlt} className="aspect-[16/9] rounded-3xl bg-cover bg-center" style={{ backgroundImage: `url(${JSON.stringify(demoNews.coverImage)})` }} /><figcaption className="mt-2 text-sm text-muted">{demoNews.coverAlt}</figcaption></figure><div className="mt-12 space-y-6 text-base leading-8 text-foreground/85 sm:text-lg">{demoNews.body.split(/\n\s*\n/).map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div><Link href="/noticias" className="mt-12 inline-flex min-h-11 items-center font-bold text-primary hover:text-foreground">Ver noticias reales ↗</Link></article>}
-    {kind === "newsletter" && <div className="mx-auto max-w-3xl space-y-6"><section className="overflow-hidden rounded-3xl border border-white/15 bg-surface"><div className="border-b border-white/15 px-6 py-5 text-sm sm:px-10"><p><strong>Asunto:</strong> {demoNewsletter.subject}</p><p className="mt-2 text-muted"><strong>Vista previa:</strong> {demoNewsletter.preheader}</p><p className="mt-2 text-muted"><strong>Para:</strong> {demoNewsletter.email} · dirección ficticia</p></div><div className="p-6 sm:p-10"><p className="font-display text-xl font-black">ACCIÓN<span className="text-primary">FÚTBOL</span></p><div role="img" aria-label="Jugadores entrenando juntos" className="mt-8 aspect-[16/9] rounded-2xl bg-cover bg-center" style={{ backgroundImage: "url('/images/group-team.webp')" }} /><p className="section-tag mt-8">Novedades de la cancha</p><h2 className="mt-4 font-display text-3xl font-black sm:text-4xl">{demoNewsletter.heading}</h2><p className="mt-5 leading-7 text-foreground/80">{demoNewsletter.body}</p><span className="mt-8 inline-flex min-h-12 items-center rounded-full bg-primary px-6 font-bold text-primary-foreground">Ver noticias del sitio</span><p className="mt-8 border-t border-white/15 pt-5 text-xs text-muted">Muestra de correo; ningún mensaje fue enviado.</p></div></section><section className="rounded-3xl border border-white/15 bg-surface p-6 sm:p-8"><p className="section-tag">Estado en el panel · muestra</p><h2 className="mt-3 font-display text-2xl font-black">Solicitud recibida</h2><div className="mt-5 grid gap-3 rounded-xl border border-white/15 p-4 text-sm sm:grid-cols-2"><span>{demoNewsletter.email}</span><span className="text-primary">Pendiente de confirmación</span></div><p className="mt-4 text-sm text-muted">Este contacto es ficticio y no figura en la base de suscriptores.</p></section></div>}
-    {kind === "popup" && <div className="mx-auto max-w-3xl"><DemoPopup /></div>}
+  const sample = samples[kind];
+  return <main className="mx-auto min-h-screen max-w-7xl px-5 pb-24 pt-8 sm:px-8 sm:pt-14">
+    <header className="flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-6"><Link href="/" className="font-display text-xl font-black tracking-tight">ACCIÓN<span className="text-primary">FÚTBOL</span></Link><Link href="/muestras" className="inline-flex min-h-11 items-center rounded-full border border-white/25 px-5 text-sm font-bold hover:border-primary hover:text-primary">Todas las muestras ↗</Link></header>
+    <nav aria-label="Tipos de muestra" className="mt-7 flex flex-wrap gap-2">{kinds.map((item) => <Link key={item} href={`/muestras/${item}`} aria-current={item === kind ? "page" : undefined} className={`inline-flex min-h-10 items-center rounded-full border px-4 text-xs font-bold transition-colors ${item === kind ? "border-primary bg-primary text-primary-foreground" : "border-white/20 text-muted hover:border-primary hover:text-foreground"}`}>{samples[item].number} / {samples[item].label}</Link>)}</nav>
+    <div className="max-w-4xl pb-9 pt-14 sm:pt-20"><p className="section-tag">Demostración / {sample.number} / {sample.label}</p><h1 className="mt-5 font-display text-4xl font-black leading-[1.05] tracking-tight sm:text-6xl">{sample.title}</h1><p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">{sample.summary}</p><p className="mt-6 inline-flex rounded-xl border border-primary/35 bg-primary/10 px-4 py-3 text-xs leading-relaxed text-foreground/80">Contenido de ejemplo guardado en el proyecto. No crea publicaciones, respuestas, contactos ni envíos reales.</p></div>
+    {kind === "formulario" && <DemoForm />}
+    {kind === "noticia" && <DemoNews />}
+    {kind === "newsletter" && <DemoNewsletter />}
+    {kind === "popup" && <DemoPopup />}
   </main>;
 }

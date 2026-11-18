@@ -11,6 +11,7 @@ const types: { value: FieldType; label: string }[] = [
   { value: "select", label: "Lista de opciones" }, { value: "checkbox", label: "Casilla" },
 ];
 const inputClass = "w-full rounded-lg border border-border bg-background px-3 py-2 text-foreground";
+const images = ["", "/images/kids-joy.webp", "/images/group-team.webp", "/images/group-adults.webp", "/images/femenino.webp"];
 
 const newField = (): Field => ({ id: `campo-${crypto.randomUUID().slice(0, 8)}`, label: "Nuevo campo", type: "text", required: false });
 
@@ -37,6 +38,10 @@ export function FormBuilder({ initialDraft, onDraftChange }: {
       <section aria-labelledby="builder-title" className="admin-subpanel space-y-5">
         <div><h2 id="builder-title" className="text-2xl font-bold">Constructor de formularios</h2><p className="text-sm text-muted">Borrador local: los cambios se perderán al salir de esta página.</p></div>
         <label className="block space-y-1"><span>Título</span><input className={inputClass} maxLength={120} value={draft.title} onChange={(event) => change({ ...draft, title: event.target.value })} /></label>
+        <label className="block space-y-1"><span>Descripción de apertura</span><textarea className={inputClass} rows={3} maxLength={500} value={draft.description ?? ""} onChange={(event) => change({ ...draft, description: event.target.value })} /></label>
+        <label className="block space-y-1"><span>Imagen de portada</span><select className={inputClass} value={images.includes(draft.coverImage ?? "") ? (draft.coverImage ?? "") : "custom"} onChange={(event) => change({ ...draft, coverImage: event.target.value === "custom" ? "" : event.target.value })}>{images.map((image) => <option key={image} value={image}>{image || "Sin imagen"}</option>)}<option value="custom">URL propia</option></select></label>
+        <label className="block space-y-1"><span>URL de imagen</span><input className={inputClass} maxLength={500} placeholder="/images/portada.webp o https://..." value={draft.coverImage ?? ""} onChange={(event) => change({ ...draft, coverImage: event.target.value })} /></label>
+        <label className="block space-y-1"><span>Descripción de imagen</span><input className={inputClass} maxLength={140} value={draft.coverAlt ?? ""} onChange={(event) => change({ ...draft, coverAlt: event.target.value })} /><small className="text-muted">Obligatoria si agregas una imagen.</small></label>
         <label className="block space-y-1"><span>Identificador de enlace</span><input className={inputClass} maxLength={80} value={draft.slug} onChange={(event) => change({ ...draft, slug: event.target.value })} aria-describedby="slug-help" /><small id="slug-help" className="text-muted">Usa minúsculas, números y guiones.</small></label>
         <p role="status" className="admin-status text-sm">Estado: borrador · {valid ? "Datos válidos" : "Completa los campos y el identificador"}</p>
         {draft.fields.map((field, index) => (
@@ -59,7 +64,9 @@ export function FormBuilder({ initialDraft, onDraftChange }: {
       <section aria-labelledby="preview-title" className="admin-subpanel h-fit space-y-4">
         <h2 id="preview-title" className="text-xl font-bold">Vista previa</h2>
         <p className="text-sm text-muted">Vista de muestra; no envía respuestas.</p>
+        {draft.coverImage && <div role="img" aria-label={draft.coverAlt || draft.title} className="h-36 rounded-xl bg-cover bg-center" style={{ backgroundImage: `url(${JSON.stringify(draft.coverImage)})` }} />}
         <h3 className="text-lg font-semibold">{draft.title || "Formulario sin título"}</h3>
+        {draft.description && <p className="text-sm text-muted">{draft.description}</p>}
         {draft.fields.map((field) => <div key={field.id} className="space-y-1"><label htmlFor={`preview-${field.id}`} className="block">{field.label || "Campo sin título"}{field.required && " *"}</label>{field.type === "textarea" ? <textarea id={`preview-${field.id}`} className={inputClass} disabled /> : field.type === "select" ? <select id={`preview-${field.id}`} className={inputClass} disabled><option>Selecciona una opción</option>{field.options?.map((o) => <option key={o.value}>{o.label}</option>)}</select> : <input id={`preview-${field.id}`} type={field.type} className={field.type === "checkbox" ? "size-4" : inputClass} disabled />}</div>)}
       </section>
     </div>

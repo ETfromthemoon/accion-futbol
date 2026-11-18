@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { NewsInput, NewsPost } from "@/lib/news/schema";
+import { demoNews } from "@/lib/demo/examples";
 
 const initial: NewsInput = {
   slug: "nueva-noticia", title: "Nueva noticia", summary: "", body: "",
@@ -17,6 +18,12 @@ export function NewsAdmin() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const update = <K extends keyof NewsInput>(key: K, value: NewsInput[K]) => setDraft((old) => ({ ...old, [key]: value }));
+  function loadDemo() {
+    const { id: _id, publishedAt: _publishedAt, createdAt: _createdAt, updatedAt: _updatedAt, ...content } = demoNews;
+    void _id; void _publishedAt; void _createdAt; void _updatedAt;
+    setDraft(content);
+    setMessage("Ejemplo cargado. Revisa los datos antes de guardarlo como borrador.");
+  }
 
   const load = useCallback(async () => {
     const response = await fetch("/api/news/admin", { cache: "no-store" });
@@ -54,7 +61,7 @@ export function NewsAdmin() {
     <div className="admin-panel admin-panel-intro">
       <h2 className="text-2xl font-bold">Noticias del sitio</h2>
       <p>Crea publicaciones para la portada y el archivo de noticias. El newsletter continúa separado.</p>
-      <a className="admin-button admin-button-primary w-fit" href="/muestras/noticia" target="_blank" rel="noopener noreferrer">Ver post de prueba ↗</a>
+      <div className="flex flex-wrap gap-2"><a className="admin-button admin-button-primary w-fit" href="/muestras/noticia" target="_blank" rel="noopener noreferrer">Ver post de prueba ↗</a><button type="button" className="admin-button" onClick={loadDemo}>Cargar ejemplo en editor</button></div>
     </div>
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,.8fr)]">
       <div className="admin-panel space-y-5">

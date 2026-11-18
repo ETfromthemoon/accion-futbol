@@ -3,6 +3,14 @@ import { z } from "zod";
 // Las definiciones son datos: nunca contienen código ejecutable ni HTML.
 const identifier = z.string().regex(/^[a-z][a-z0-9_-]{0,39}$/);
 const optionSchema = z.object({ value: identifier, label: z.string().trim().min(1).max(100) }).strict();
+const coverImageSchema = z.string().trim().max(500).refine((value) => {
+  if (!value) return true;
+  if (/^\/images\/[a-zA-Z0-9/_-]+\.(?:webp|png|jpe?g|avif)$/.test(value)) return true;
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" && !url.username && !url.password;
+  } catch { return false; }
+});
 const fieldSchema = z.object({
   id: identifier,
   label: z.string().trim().min(1).max(120),
@@ -20,12 +28,18 @@ const fieldSchema = z.object({
 export const formDefinitionSchema = z.object({
   slug: z.string().min(1).max(80).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   title: z.string().trim().min(1).max(120),
+  description: z.string().trim().max(500).optional(),
+  coverImage: coverImageSchema.optional(),
+  coverAlt: z.string().trim().max(140).optional(),
   version: z.number().int().positive(),
   status: z.enum(["draft", "published", "archived"]),
   fields: z.array(fieldSchema).min(1).max(30),
 }).strict().superRefine((form, ctx) => {
   if (new Set(form.fields.map((field) => field.id)).size !== form.fields.length) {
     ctx.addIssue({ code: "custom", message: "Los identificadores de campo deben ser únicos" });
+  }
+  if (form.coverImage && !form.coverAlt) {
+    ctx.addIssue({ code: "custom", path: ["coverAlt"], message: "Describe la imagen para lectores de pantalla" });
   }
 });
 
